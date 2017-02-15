@@ -1,4 +1,4 @@
-package main.java.client.socketClient;
+package client.socketClient;
 
 public enum Parameter {
 	ID,

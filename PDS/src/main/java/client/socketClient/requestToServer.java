@@ -1,13 +1,13 @@
 
-package main.java.client.socketClient;
+package client.socketClient;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-import main.java.serv.dao.DAOFactory;
-import main.java.serv.dao.Vehicule;
-import main.java.serv.dao.VehiculeDAOImpl;
-import main.java.serv.json.Json;
+import serv.dao.ConnectionPool;
+import serv.dao.Vehicule;
+import serv.dao.VehiculeDAOImpl;
+import serv.json.Json;
 
 public class requestToServer {
 
@@ -18,7 +18,7 @@ public class requestToServer {
 	LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
 
 /*
- * Méthode permettant de traduire et d'executer la requête du client
+ * Mï¿½thode permettant de traduire et d'executer la requï¿½te du client
  */
 	public String evalRequest() throws IOException{
 		String reponse="";
@@ -51,7 +51,7 @@ public class requestToServer {
 					
 				}
 				/*
-				 * UPDATE PREND 1 param :  le  vehicule mis à jour
+				 * UPDATE PREND 1 param :  le  vehicule mis ï¿½ jour
 				 */
 			case UPDATE :	
 				switch (listParam.size()){
