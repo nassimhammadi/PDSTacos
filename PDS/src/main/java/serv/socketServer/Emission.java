@@ -1,4 +1,4 @@
-package main.java.serv.socketServer;
+package serv.socketServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +34,7 @@ public class Emission implements Runnable {
 		  
 		  while(true){
 			  if (!message.equals(ccs.getLastMessageClient())){
-			    System.out.println("La réponse du serveur est :");
+			    System.out.println("La rï¿½ponse du serveur est :");
 				message = ccs.getLastMessageClient();
 				String reponse="Pas de reponse";
 				Json<requestToServer> jsonRequest= new Json<requestToServer>(requestToServer.class);

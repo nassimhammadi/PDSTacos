@@ -1,4 +1,4 @@
-package main.java.serv.json;
+package serv.json;
 
 
 public class Composant {

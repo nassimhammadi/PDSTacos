@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.client.IHM;
+package client.IHM;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.*;
@@ -107,7 +107,7 @@ public class Authentification extends JPanel {
 	
 	
 	/*
-	 * Processus attendant une réponse du serveur
+	 * Processus attendant une rï¿½ponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 		Authentification A;

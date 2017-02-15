@@ -1,4 +1,4 @@
-package main.java.client.json;
+package client.json;
 
 import java.io.IOException;
 import java.util.ArrayList;

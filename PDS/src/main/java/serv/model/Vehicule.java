@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main.java.serv.model;
+package serv.model;
 import java.sql.Timestamp;
 
 /**

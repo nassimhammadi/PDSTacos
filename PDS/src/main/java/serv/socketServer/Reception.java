@@ -1,4 +1,4 @@
-package main.java.serv.socketServer;
+package serv.socketServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class Reception implements Runnable {
 	        	
 			message = in.readLine();
 			ccs.setLastMessageClient(message);
-			System.out.println("Le client a formulé la requête suivante :");
+			System.out.println("Le client a formulï¿½ la requï¿½te suivante :");
 			System.out.println(login+" : "+message);
 			
 			
