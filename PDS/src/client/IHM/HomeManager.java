@@ -113,7 +113,6 @@ public class HomeManager extends JFrame{
         southLeft.setBackground(Color.white);
         BoxLayout layoutSouthLeft = new BoxLayout(southLeft, BoxLayout.Y_AXIS);
         southLeft.setLayout(layoutSouthLeft);
-
         southLeft.add(new JLabel("Modèle : "));
         southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Année : "));
