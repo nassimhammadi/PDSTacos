@@ -10,7 +10,8 @@
  */
 package serv.DB;
 
-import main.java.serv.model.*;
+import serv.model.User;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

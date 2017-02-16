@@ -14,13 +14,12 @@ import static javafx.scene.paint.Color.TRANSPARENT;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import main.java.client.json.Json;
-import main.java.client.socketClient.Client;
-import main.java.client.socketClient.Parameter;
-import main.java.client.socketClient.TypeRequest;
-import main.java.client.socketClient.requestToServer;
-import main.java.serv.dao.DAOFactory;
-import main.java.serv.socketServer.Serveur;
+import client.json.Json;
+import client.socketClient.Client;
+import client.socketClient.Parameter;
+import client.socketClient.TypeRequest;
+import client.socketClient.requestToServer;
+import serv.socketServer.Serveur;
 
 
 /**

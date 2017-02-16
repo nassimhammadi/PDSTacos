@@ -6,7 +6,8 @@
 package serv.DB;
 
 
-import main.java.serv.model.*;
+import serv.model.Vehicule;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

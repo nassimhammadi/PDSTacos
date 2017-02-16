@@ -2,16 +2,19 @@
 package client.socketClient;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.LinkedHashMap;
 
-import serv.dao.ConnectionPool;
-import serv.dao.Vehicule;
-import serv.dao.VehiculeDAOImpl;
+import serv.DB.ConnectionPool;
+import serv.DB.VehiculeDAOImpl;
 import serv.json.Json;
+import serv.model.Vehicule;
+import serv.socketServer.Serveur;
 
 public class requestToServer {
 
-	DAOFactory dao=new DAOFactory("jdbc:mysql://localhost:8889/tacos", "root", "root");
+
+	Connection co=Serveur.CP.getConnectionPool();
 	private String classe;
 	private TypeRequest type;
 	private String objectJson="";
@@ -25,7 +28,7 @@ public class requestToServer {
 		
 		switch (classe){
 		case "vehicle" : 
-			VehiculeDAOImpl vdao= new VehiculeDAOImpl(dao);
+			VehiculeDAOImpl vdao= new VehiculeDAOImpl(Serveur.CP);
 			switch (type){
 			case SELECT : 
 				switch (listParam.size()){
