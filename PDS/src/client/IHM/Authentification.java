@@ -5,12 +5,10 @@
  */
 package client.IHM;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedHashMap;
 
-import static javafx.scene.paint.Color.TRANSPARENT;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 

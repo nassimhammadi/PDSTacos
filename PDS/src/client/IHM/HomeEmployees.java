@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package client.IHM;
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -13,7 +12,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.io.File;
-import static java.sql.JDBCType.NULL;
 import javax.imageio.ImageIO;
 
 import javax.swing.BorderFactory;

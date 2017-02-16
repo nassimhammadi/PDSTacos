@@ -19,7 +19,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javafx.beans.binding.Bindings.and;
 import static javax.management.Query.and;
 
 
