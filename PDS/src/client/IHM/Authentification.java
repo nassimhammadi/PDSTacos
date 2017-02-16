@@ -5,12 +5,10 @@
  */
 package client.IHM;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedHashMap;
 
-import static javafx.scene.paint.Color.TRANSPARENT;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -123,7 +121,7 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						HomeEmployees HE= new HomeEmployees();
+						HomeManager HE= new HomeManager();
 						
 						fin=true;
 					}

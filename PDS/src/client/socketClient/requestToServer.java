@@ -14,7 +14,6 @@ import serv.socketServer.Serveur;
 public class requestToServer {
 
 
-	Connection co=Serveur.CP.getConnectionPool();
 	private String classe;
 	private TypeRequest type;
 	private String objectJson="";

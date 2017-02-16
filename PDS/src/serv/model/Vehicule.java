@@ -23,7 +23,7 @@ public class Vehicule {
     /**
      * The vehicle's entry date into the database
      */
-    private Timestamp year;
+    private String year;
     private int type;
     private Boolean is_electric;
     private Boolean is_present;
@@ -32,7 +32,7 @@ public class Vehicule {
 
     public Vehicule(){}
     
-    public Vehicule(int identifiant, String license , Timestamp yearV, int typeV, Boolean electric, Boolean present, String brandV, String modelV){
+    public Vehicule(int identifiant, String license , String yearV, int typeV, Boolean electric, Boolean present, String brandV, String modelV){
         this.id= identifiant;
         this.license_number = license;
         this.year = yearV;
@@ -60,15 +60,22 @@ public class Vehicule {
         this.license_number = license_number;
     }
 
-    public Timestamp getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Timestamp year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
-    public int getType() {
+    @Override
+	public String toString() {
+		return "Vehicule [id=" + id + ", license_number=" + license_number + ", year=" + year + ", type=" + type
+				+ ", is_electric=" + is_electric + ", is_present=" + is_present + ", brand=" + brand + ", model="
+				+ model + "]";
+	}
+
+	public int getType() {
         return type;
     }
 
