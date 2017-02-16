@@ -19,6 +19,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import client.socketClient.Parameter;
+
 import static javax.management.Query.and;
 
 
@@ -31,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 	/**
 	 * Instance of DAOFactory
 	 */
-    private final ConnectionPool connectionPool;
+    
     
     /**
      * Instance of Connection to the database
@@ -42,9 +45,9 @@ public class UserDAOImpl implements UserDAO {
      * Class contructor
      * @param daoFactory an instance of DAOFactory
      */
-    public UserDAOImpl(ConnectionPool connect) {
-        this.connectionPool = connect;
-        this.connection = connectionPool.getConnectionPool();
+    public UserDAOImpl(Connection co) {
+        
+        this.connection = co;
     }
     
     /**
@@ -189,22 +192,23 @@ public class UserDAOImpl implements UserDAO {
     }
     
     public Boolean checkUserdb(String username, String password){
-        String u_name =null ;
-        String pswd = null;
-        Boolean bool = null;
+        String u_name ="" ;
+        String pswd = "";
+        Boolean bool = false;
         
         try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select email,pass_word from employees where email = "+username;
+        String sql = "select email,pass_word from employees where email = '"+username+"'";
       
         try {
            ResultSet rs = ordre.executeQuery(sql);
            while(rs.next()){
                u_name = rs.getString(1);
                pswd = rs.getString(2);
+               System.out.println(u_name + " " + pswd );
            }
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -216,7 +220,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(u_name == username && pswd == password){
+        if(u_name.equals(username) && pswd.equals(password)){
             bool = true;
         }
         else{
