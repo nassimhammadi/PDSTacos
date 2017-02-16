@@ -1,5 +1,6 @@
 
 package client.socketClient;
+import serv.DB.*;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,7 +28,7 @@ public class requestToServer {
 		
 		switch (classe){
 		case "vehicle" : 
-			VehiculeDAOImpl vdao= new VehiculeDAOImpl(Serveur.CP);
+			VehiculeDAOImpl vdao= new VehiculeDAOImpl(Client.CO);
 			switch (type){
 			case SELECT : 
 				switch (listParam.size()){
@@ -92,12 +93,15 @@ public class requestToServer {
 
 			}
 		case "employee" :
+			UserDAOImpl udao= new UserDAOImpl(Client.CO);
 			switch(type){
 			case LOGIN:
 				switch (listParam.size()){
 				case 2 :
 					// Checkout login
-					if (listParam.get(Parameter.NAME).equals("bonlogin") && listParam.get(Parameter.PWD).equals("bonpwd")){
+					System.out.println(listParam.get(Parameter.NAME) + " " + listParam.get(Parameter.PWD) );
+					Boolean checkU = udao.checkUserdb(listParam.get(Parameter.NAME), listParam.get(Parameter.PWD));
+					if (checkU){
 						System.out.println("connection ok");
 						reponse="connection ok";
 					}

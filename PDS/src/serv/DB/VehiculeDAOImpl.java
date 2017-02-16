@@ -27,7 +27,6 @@ public class VehiculeDAOImpl implements VehiculeDAO {
 	/**
 	 * Instance of DAOFactory
 	 */
-    private final ConnectionPool connectionPool;
     
     /**
      * Instance of Connection to the database
@@ -38,9 +37,8 @@ public class VehiculeDAOImpl implements VehiculeDAO {
      * Class contructor
      * @param daoFactory an instance of DAOFactory
      */
-    public VehiculeDAOImpl(ConnectionPool connect) {
-        this.connectionPool = connect;
-        this.connection = connectionPool.getConnectionPool();
+    public VehiculeDAOImpl(Connection c) {
+        this.connection = c;
     }
     
     /**
