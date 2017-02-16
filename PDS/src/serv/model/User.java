@@ -11,7 +11,13 @@ package serv.model;
  */
 public class User {
     
-    private int id_employee;
+    @Override
+	public String toString() {
+		return "User [id_employee=" + id_employee + ", password=" + password + ", last_name=" + last_name
+				+ ", first_name=" + first_name + ", email=" + email + ", is_manager=" + is_manager + "]";
+	}
+
+	private int id_employee;
     private String password;
     private String last_name;
     private String first_name;

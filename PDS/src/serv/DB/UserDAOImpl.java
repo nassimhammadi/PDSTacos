@@ -107,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-       String sql = "INSERT INTO employees  VALUES("+id+","+pswd+","+last_name+","+first_name+","+mail+","+manager+")";
+       String sql = "INSERT INTO employees  VALUES("+id+",'"+pswd+"','"+last_name+"','"+first_name+"','"+mail+"',"+manager+")";
        
         try {
             ordre.executeUpdate(sql);
@@ -142,7 +142,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "UPDATE employees SET  pass_word ="+pswd+" where id = "+id; 
+        String sql = "UPDATE employees SET  pass_word ="+pswd+" where id_employee = "+id; 
       
         try {
             ordre.executeUpdate(sql);
@@ -171,7 +171,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "DELETE from employees where id = "+id;
+        String sql = "DELETE from employees where id_employee = "+id;
       
         try {
             ordre.executeUpdate(sql);
