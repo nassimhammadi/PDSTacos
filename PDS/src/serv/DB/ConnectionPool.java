@@ -41,13 +41,12 @@ public class ConnectionPool {
 	 */
 	private final String password = "root";
 	
-        public ConnectionPool(){
-        }
 	/**
 	 * Class constructor
 	 * @param nbConnection The number of connections in the pool
 	 */
-	public ConnectionPool(int nbConnection) {
+	public ConnectionPool() {
+		int nbConnection=20;
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e1) {

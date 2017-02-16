@@ -4,12 +4,13 @@ package serv.socketServer;
 import java.io.*;
 import java.net.*;
 
-import main.java.serv.socketServer.Accepter_connexion;
+import serv.DB.ConnectionPool;
+
 
 public class Serveur {
  public static ServerSocket ss = null;
  public static Thread t;
- 
+ public static ConnectionPool CP= new ConnectionPool();
  
  	public void launch(){
 		

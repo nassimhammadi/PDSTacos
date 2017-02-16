@@ -6,8 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import main.java.client.socketClient.requestToServer;
-import main.java.serv.json.Json;
+import client.socketClient.requestToServer;
+import serv.json.Json;
+
 
 
 public class Emission implements Runnable {
