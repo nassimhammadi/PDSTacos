@@ -208,7 +208,7 @@ public class UserDAOImpl implements UserDAO {
            while(rs.next()){
                u_name = rs.getString(1);
                pswd = rs.getString(2);
-               System.out.println(u_name + " " + pswd );
+               
            }
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
