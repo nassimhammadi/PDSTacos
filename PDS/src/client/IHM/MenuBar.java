@@ -18,6 +18,8 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar {
     private JMenuBar jmenu = new JMenuBar();
+    private JMenu deconnexion = new JMenu("Déconnection");
+    private JMenuItem sd = new JMenuItem("Se déconnecter");
     private JMenu management = new JMenu("Gestion");
     private JMenu repairs = new JMenu("Réparation");
     private JMenu information = new JMenu("Informations");
@@ -53,9 +55,11 @@ public class MenuBar {
         this.information.add(bike);
         this.information.add(car);
         this.information.add(component);
+        this.deconnexion.add(sd);
         this.jmenu.add(management);
         this.jmenu.add(repairs);
         this.jmenu.add(information);
+        this.jmenu.add(deconnexion);
          
     }
     
