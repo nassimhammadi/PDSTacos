@@ -18,6 +18,7 @@ public class requestToServer {
 	private String classe;
 	private TypeRequest type;
 	private String objectJson="";
+	private Vehicule v;
 	LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
 
 /*
@@ -36,7 +37,8 @@ public class requestToServer {
 					break;
 				case 1 :
 					if (listParam.containsKey(Parameter.ID)) {
-						vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
+						this.v = vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
+						reponse ="select";
 					}
 					else if (listParam.containsKey(Parameter.IMMAT)) {
 						//	 vdao.findByImmat(Integer.parseInt(listParam.get(Parameter.IMMAT)));
@@ -60,10 +62,11 @@ public class requestToServer {
 				switch (listParam.size()){
 				case 0 : //RIEN
 					break;
-				case 1 : 	
+				case 1 : 
 					Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
 					Vehicule v= myJSon.deSerialize(objectJson);
 					vdao.update(v);
+					reponse = "update";
 					break;
 
 
@@ -130,4 +133,9 @@ public class requestToServer {
 		this.type = type;
 		this.objectJson = objectJson;
 		this.listParam = listParam;
-	}}
+	}
+	
+	public Vehicule getVehicleFromServ(){
+		return this.v;
+	}
+}
