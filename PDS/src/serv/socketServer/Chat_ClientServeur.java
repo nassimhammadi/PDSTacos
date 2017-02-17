@@ -40,6 +40,7 @@ public class Chat_ClientServeur implements Runnable {
 		while (!fin){
 			if (!socket.isConnected()){
 				socket.close();
+				Serveur.CP.ConnectionToPool(co);
 				fin=true;
 			}
 		}

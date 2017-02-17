@@ -54,7 +54,7 @@ import serv.socketServer.Serveur;
 public class HomeManager extends JFrame{
     
 	
-	private Client c= new Client();
+	private Client c;
     private CheckboxGroup cbg_type = new CheckboxGroup();
     private CheckboxGroup cbg_motorisation = new CheckboxGroup();
     private CheckboxGroup cbg_insert_presence = new CheckboxGroup();
@@ -85,10 +85,9 @@ public class HomeManager extends JFrame{
     private JTextField id_del;
     
     
-    public HomeManager(){
-      
+    public HomeManager(Client cli){
+    	this.c=cli;
     	this.jf = this;
-		c.connect();
         // Add Menu
         MenuBar menu = new MenuBar();
         JPanel panelNord = new JPanel();

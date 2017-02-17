@@ -116,11 +116,9 @@ public class requestToServer {
 						System.out.println("connection ok");
 						reponse="connection ok";
 					}
-					// On rend la connexion
 					else {
 						System.out.println("connection ko");
 						reponse="connection ko";
-						Serveur.CP.ConnectionToPool(co);
 					}
 					break;
 				default :

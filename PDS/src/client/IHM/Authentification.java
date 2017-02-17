@@ -45,7 +45,6 @@ public class Authentification extends JPanel {
 		c.connect();
 
 
-
 		this.myJFrame=myJFrame;
 		JPanel pannel = new JPanel();
 
@@ -122,7 +121,7 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						HomeManager HE= new HomeManager();
+						HomeManager HM= new HomeManager(c);
 						
 						fin=true;
 					}
