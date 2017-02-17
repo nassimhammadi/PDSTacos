@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import client.json.Json;
+import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
@@ -91,7 +92,7 @@ public class Authentification extends JPanel {
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.NAME, name);
 			param.put(Parameter.PWD,pwd);
-			requestToServer rts=new requestToServer("employee",TypeRequest.LOGIN,"",param);
+			requestToServer rts=new requestToServer(AllClasses.EMPLOYEE,TypeRequest.LOGIN,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();

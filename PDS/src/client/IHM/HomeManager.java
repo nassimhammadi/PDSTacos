@@ -40,6 +40,7 @@ import javax.swing.border.TitledBorder;
 
 import client.json.Json;
 import client.model.Vehicule;
+import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
@@ -314,7 +315,7 @@ public class HomeManager extends JFrame{
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, identif);
 			param.put(Parameter.PRESENCE, bool);
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.UPDATE,"",param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -339,7 +340,7 @@ public class HomeManager extends JFrame{
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, id_del.getText());
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.DELETE,"",param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.DELETE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -366,7 +367,7 @@ public class HomeManager extends JFrame{
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, identif);
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.SELECT,"",param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.SELECT,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -409,7 +410,7 @@ public class HomeManager extends JFrame{
 			Json myJSon_ins= new Json(Vehicule.class);
 			String v_i= myJSon_ins.serialize(v_ins);
 			param.put(Parameter.ID, v_i);
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.INSERT,v_i,param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.INSERT,v_i,param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();

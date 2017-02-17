@@ -15,12 +15,12 @@ import serv.socketServer.Serveur;
 public class requestToServer {
 
 
-	private String classe;
+	private AllClasses classe;
 	private TypeRequest type;
 	private String objectJson="";
 	private Vehicule v;
-	LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
-
+	private LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
+	private Connection co;
 /*
  * M�thode permettant de traduire et d'executer la requ�te du client
  */
@@ -28,8 +28,8 @@ public class requestToServer {
 		String reponse="";
 		
 		switch (classe){
-		case "vehicle" : 
-			VehiculeDAOImpl vdao= new VehiculeDAOImpl(Client.CO);
+		case VEHICULE : 
+			VehiculeDAOImpl vdao= new VehiculeDAOImpl(co);
 			switch (type){
 			case SELECT: 
 				
@@ -103,8 +103,8 @@ public class requestToServer {
 
 
 			}
-		case "employee" :
-			UserDAOImpl udao= new UserDAOImpl(Client.CO);
+		case EMPLOYEE :
+			UserDAOImpl udao= new UserDAOImpl(co);
 			switch(type){
 			case LOGIN:
 				switch (listParam.size()){
@@ -116,9 +116,11 @@ public class requestToServer {
 						System.out.println("connection ok");
 						reponse="connection ok";
 					}
+					// On rend la connexion
 					else {
 						System.out.println("connection ko");
 						reponse="connection ko";
+						Serveur.CP.ConnectionToPool(co);
 					}
 					break;
 				default :
@@ -135,12 +137,20 @@ public class requestToServer {
 		return reponse;
 	}
 
-	public requestToServer(String classe, TypeRequest type, String objectJson,
+	public requestToServer(AllClasses classe, TypeRequest type, String objectJson,
 			LinkedHashMap<Parameter, String> listParam) {
 		this.classe = classe;
 		this.type = type;
 		this.objectJson = objectJson;
 		this.listParam = listParam;
+	}
+
+	public Connection getCo() {
+		return co;
+	}
+
+	public void setCo(Connection co) {
+		this.co = co;
 	}
 	
 	
