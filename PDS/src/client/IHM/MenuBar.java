@@ -18,7 +18,7 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar {
     private JMenuBar jmenu = new JMenuBar();
-    private JMenu deconnexion = new JMenu("Déconnection");
+    private JMenu deconnexion = new JMenu("Déconnexion");
     private JMenuItem sd = new JMenuItem("Se déconnecter");
     private JMenu management = new JMenu("Gestion");
     private JMenu repairs = new JMenu("Réparation");
