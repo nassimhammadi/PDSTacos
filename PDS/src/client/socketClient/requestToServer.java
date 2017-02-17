@@ -18,6 +18,7 @@ public class requestToServer {
 	private String classe;
 	private TypeRequest type;
 	private String objectJson="";
+	private Vehicule v;
 	LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
 
 /*
@@ -30,13 +31,18 @@ public class requestToServer {
 		case "vehicle" : 
 			VehiculeDAOImpl vdao= new VehiculeDAOImpl(Client.CO);
 			switch (type){
-			case SELECT : 
+			case SELECT: 
+				
 				switch (listParam.size()){
 				case 0 : //return Vehicule.getAllVehicule();
 					break;
 				case 1 :
 					if (listParam.containsKey(Parameter.ID)) {
-						vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
+						this.v = vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
+						Json<Vehicule> jV = new Json<Vehicule>(Vehicule.class);
+						String jsonVehicle = jV.serialize(this.v);
+						return reponse = "select/"+jsonVehicle;
+						
 					}
 					else if (listParam.containsKey(Parameter.IMMAT)) {
 						//	 vdao.findByImmat(Integer.parseInt(listParam.get(Parameter.IMMAT)));
@@ -48,7 +54,7 @@ public class requestToServer {
 				switch (listParam.size()){
 				case 1 :
 						vdao.delete(Integer.parseInt(listParam.get(Parameter.ID)));
-						break;
+						return reponse = "delete";
 				default :
 					break;
 					
@@ -56,15 +62,20 @@ public class requestToServer {
 				/*
 				 * UPDATE PREND 1 param :  le  vehicule mis � jour
 				 */
-			case UPDATE :	
+			case UPDATE:	
+				
 				switch (listParam.size()){
 				case 0 : //RIEN
 					break;
-				case 1 : 	
-					Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-					Vehicule v= myJSon.deSerialize(objectJson);
-					vdao.update(v);
-					break;
+				case 2 : 
+					Vehicule v_update = vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
+					System.out.println(v_update);
+					Boolean bool =Boolean.valueOf(listParam.get(Parameter.PRESENCE));
+					Vehicule v_update2 = new Vehicule(v_update.getId(),v_update.getLicense_number(),v_update.getYear(),v_update.getType(),v_update.getIs_electric(),bool,v_update.getBrand(),v_update.getModel());
+					System.out.println(v_update2);
+					vdao.update(v_update2);
+					return reponse = "update";
+					
 
 
 				default :
@@ -83,7 +94,7 @@ public class requestToServer {
 					Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
 					Vehicule v= myJSon.deSerialize(objectJson);
 					vdao.insert(v);;
-					break;
+					return reponse = "insert";
 				default :
 					break;
 
@@ -99,7 +110,7 @@ public class requestToServer {
 				switch (listParam.size()){
 				case 2 :
 					// Checkout login
-					System.out.println(listParam.get(Parameter.NAME) + " " + listParam.get(Parameter.PWD) );
+					
 					Boolean checkU = udao.checkUserdb(listParam.get(Parameter.NAME), listParam.get(Parameter.PWD));
 					if (checkU){
 						System.out.println("connection ok");
@@ -130,4 +141,7 @@ public class requestToServer {
 		this.type = type;
 		this.objectJson = objectJson;
 		this.listParam = listParam;
-	}}
+	}
+	
+	
+}

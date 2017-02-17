@@ -89,7 +89,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
      * @param id The vehicle's id
      */
     public void insert(Vehicule v) throws DAOException {
-        int identifiant = v.getId();
+       
         String license = v.getLicense_number() ;
         String year = v.getYear();
         int type = v.getType();
@@ -104,7 +104,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "INSERT INTO vehicles  VALUES("+identifiant+",'"+license+"',"+year+","+type+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
+        String sql = "INSERT INTO vehicles (license_number,type_vehicle,year_vehicle,is_electric,is_present,brand,model) VALUES('"+license+"',"+year+","+type+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
        
         try {
             ordre.executeUpdate(sql);

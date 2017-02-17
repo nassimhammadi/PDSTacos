@@ -14,6 +14,8 @@ public class Chat_ClientServeur implements Runnable {
 	private Scanner sc;
 	private Thread t3, t4;
 	private String lastMessageFromServer="", lastMessageToServer="";
+;
+	private String vehicleFromServer;
 	
 	
 	public Chat_ClientServeur(Socket s){
@@ -42,6 +44,14 @@ public class Chat_ClientServeur implements Runnable {
 	public synchronized String getLastMessageFromServeur() {
 		return lastMessageFromServer;
 	}
+	
+	public synchronized String getVehicleFromServeur(){
+		return vehicleFromServer;
+	}
+	
+	public synchronized void setVehicleFromServeur(String veh){
+		this.vehicleFromServer = veh;
+	}
 
 	public synchronized void setLastMessageFromServer(String lastMessageServeur) {
 		this.lastMessageFromServer = lastMessageServeur;
@@ -54,5 +64,7 @@ public class Chat_ClientServeur implements Runnable {
 	public synchronized void setLastMessageToServer(String lastMessageToServer) {
 		this.lastMessageToServer = lastMessageToServer;
 	}
+	
+
 
 }

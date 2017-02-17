@@ -4,5 +4,8 @@ public enum Parameter {
 	ID,
 	IMMAT,
 	NAME,
-	PWD
+	PWD, 
+	YEAR, 
+	PRESENCE, 
+	VEHICULE
 }
