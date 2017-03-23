@@ -85,7 +85,22 @@ public class ConnectionPool {
 	public synchronized void ConnectionToPool(Connection co) {
 		pool.add(co);
 	}
-        
+       
+	/**
+	 * Close all connections to prevent to waste resources
+	 */
+	public void closeAllConnection(){
+		for (int i=0; i < pool.size(); i++){
+			try {
+				pool.get(i).close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pool.remove(i);
+		}
+		System.out.println("Connections are well closed !");
+	}
        
 }
 
