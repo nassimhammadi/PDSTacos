@@ -8,7 +8,13 @@ import java.util.Scanner;
 
 import client.socketClient.requestToServer;
 import serv.json.Json;
-
+/***
+ * 
+ * @author lazaredantz
+ *	Waits for LastMessageClient attribute to change
+ *	When it does, we catch the request sent, and we resolve it
+ *
+ */
 
 
 public class Emission implements Runnable {

@@ -84,7 +84,15 @@ public class HomeManager extends JFrame{
     private Checkbox cp2_ins;
     private JTextField id_del;
     
+
+    /**
+     * 
+     * @param cli
+     * Constructor which create the manager view
+     */
+
     
+
     public HomeManager(Client cli){
     	this.c=cli;
     	this.jf = this;
@@ -281,10 +289,20 @@ public class HomeManager extends JFrame{
 
     }
 
+   /**
+    * 
+    * @return
+    * Return id_update
+    */
 	public JTextField getId_update() {
 		return id_update;
 	}
 
+	/**
+	 * 
+	 * @param id_update
+	 * Set id_update
+	 */
 	public void setId_update(JTextField id_update) {
 		this.id_update = id_update;
 	}
@@ -292,7 +310,13 @@ public class HomeManager extends JFrame{
     
 
 
-    
+    /**
+     * 
+     * @author nassimhammadi laurahollard
+     * Inner class which implements ActionListener.
+     * Uses when the user click on update
+     *
+     */
     class updateListener implements ActionListener{
 
 		private HomeManager hm;
@@ -325,7 +349,13 @@ public class HomeManager extends JFrame{
 		}
 	}
     
-    
+    	/**
+    	 * 
+    	 * @author nassimhammadi laurahollard
+    	 * Inner class which implements ActionListener.
+    	 * Uses when the user click on delete
+    	 *
+    	 */
     	class deleteListener implements ActionListener{
 
 		private HomeManager hm;
@@ -351,7 +381,13 @@ public class HomeManager extends JFrame{
     	}
 	
 	
-	
+	/**
+	 * 
+	 * @author nassimhammadi laurahollard
+	 * Inner class which implements ActionListener.
+     * Uses when the user click on find
+	 *
+	 */
 	class selectListener implements ActionListener{
 
 		private HomeManager hm;
@@ -377,6 +413,13 @@ public class HomeManager extends JFrame{
 		}
 	}
 	
+	/**
+	 * 
+	 * @author nassimhammadi laurahollard
+	 * Inner class which implements ActionListener.
+     * Uses when the user click on find
+	 *
+	 */
 	class insertListener implements ActionListener{
 
 		private HomeManager hm;
@@ -422,8 +465,10 @@ public class HomeManager extends JFrame{
 	
 	
 
-	/*
-	 * Processus attendant une r�ponse du serveur
+	/**
+	 * 
+	 * @author nassimhammadi laurahollard
+	 * Processus attendant une réponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 		
@@ -449,13 +494,20 @@ public class HomeManager extends JFrame{
 					
 					if (c.getCcs().getLastMessageFromServeur().equals("update")){
 						JOptionPane d2 = new JOptionPane();
-						d2.showMessageDialog(jf, "Véhicule mit à jour");
+						d2.showMessageDialog(jf, "Véhicule mis à jour");
 						
 						
 						fin=true;
 					}
 					else if (part1.equals("select")){
 						if(strings.length == 1){
+							immatricul.setText("");
+							yearv.setText("");
+							brand.setText("");
+							model.setText("");
+							motor.setText("");
+							present.setSelected(false);
+							type.setText("");
 							JOptionPane d = new JOptionPane();
 							d.showMessageDialog(jf, "Véhicule non trouvé");
 							fin = true; 

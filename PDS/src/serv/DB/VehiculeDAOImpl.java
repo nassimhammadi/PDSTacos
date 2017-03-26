@@ -53,7 +53,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select * from vehicles where id_vehicle = "+id;
+        String sql = "select * from VEHICLES where ID_VEHICLE = "+id;
       
         try {
            ResultSet rs = ordre.executeQuery(sql);
@@ -104,7 +104,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "INSERT INTO vehicles (license_number,type_vehicle,year_vehicle,is_electric,is_present,brand,model) VALUES('"+license+"',"+year+","+type+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
+        String sql = "INSERT INTO VEHICLES (LICENSE_NUMBER,TYPE_VEHICLE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL) VALUES('"+license+"',"+year+","+type+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
        
         try {
             ordre.executeUpdate(sql);
@@ -140,7 +140,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "UPDATE vehicles SET   is_present ="+is_present+" where id_vehicle = "+id; 
+        String sql = "UPDATE VEHICLES SET IS_PRESENT ="+is_present+" where ID_VEHICLE = "+id; 
       
         try {
             ordre.executeUpdate(sql);
@@ -169,7 +169,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "DELETE from vehicles where id_vehicle = "+id;
+        String sql = "DELETE from VEHICLES where ID_VEHICLE = "+id;
       
         try {
             ordre.executeUpdate(sql);

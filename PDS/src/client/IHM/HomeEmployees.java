@@ -25,7 +25,10 @@ import javax.swing.JPanel;
  */
 public class HomeEmployees extends JFrame {
 
-    public HomeEmployees(){
+    /**
+     * Constructor (create the main panel)
+     */
+	public HomeEmployees(){
       
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension dimEcran = tk.getScreenSize(); 

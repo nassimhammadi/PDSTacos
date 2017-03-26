@@ -12,6 +12,15 @@ import serv.json.Json;
 import serv.model.Vehicule;
 import serv.socketServer.Serveur;
 
+
+
+/***
+ * 	
+ * @author lazaredantz
+ * Represent a request sent from client to server, 
+ * in order to handle every kind of possible request
+ */
+
 public class requestToServer {
 
 
@@ -93,7 +102,7 @@ public class requestToServer {
 				case 1 : 	
 					Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
 					Vehicule v= myJSon.deSerialize(objectJson);
-					vdao.insert(v);;
+					vdao.insert(v);
 					return reponse = "insert";
 				default :
 					break;

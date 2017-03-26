@@ -102,8 +102,6 @@ public class UserDAOImpl implements UserDAO {
         String mail = u.getEmail();
         Boolean manager = u.getIs_manager();
         
-        
-        
         try {
              ordre = connection.createStatement();
              
@@ -135,11 +133,7 @@ public class UserDAOImpl implements UserDAO {
         
         int id = u.getId_employee();
         String pswd = u.getPassword();
-        String last_name = u.getLast_name();
-        String first_name = u.getFirst_name();
-        String mail = u.getEmail();
-        Boolean manager = u.getIs_manager();
-        
+       
          try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {

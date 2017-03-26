@@ -70,7 +70,7 @@ public class ConnectionPool {
 	 * @return an available connection
 	 */
 	public synchronized Connection getConnectionPool() {
-                System.out.println(pool.size());
+                System.out.println(pool.size()-1);
 		if(pool.isEmpty()) {
 			System.out.println("There are no connection available");
 			return null;
@@ -84,6 +84,7 @@ public class ConnectionPool {
 	 */
 	public synchronized void ConnectionToPool(Connection co) {
 		pool.add(co);
+		System.out.println(pool.size());
 	}
        
 	/**

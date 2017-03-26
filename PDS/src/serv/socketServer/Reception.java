@@ -2,7 +2,12 @@ package serv.socketServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-
+/***
+ * 
+ * @author lazaredantz
+ * We wait for a new message from client
+ * When we get a new message, we update the lastMessageClient attribute
+ */
 
 public class Reception implements Runnable {
 

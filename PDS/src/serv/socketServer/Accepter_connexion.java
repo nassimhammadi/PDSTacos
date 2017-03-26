@@ -2,7 +2,13 @@ package serv.socketServer;
 
 import java.io.*;
 import java.net.*;
-
+/***
+ * 
+ * @author lazaredantz
+ * Waits for a new client to connect
+ * Each time a client open a connection, we accept it and give him a
+ * Chat_ClientServer instance 
+ */
 
 public class Accepter_connexion implements Runnable{
 
@@ -27,7 +33,7 @@ public class Accepter_connexion implements Runnable{
 			
 
             t1 = new Thread(new Chat_ClientServeur(socket,"user"));
-
+            
             t1.start();
 			
 			}

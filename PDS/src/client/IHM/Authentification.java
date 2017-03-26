@@ -33,10 +33,12 @@ public class Authentification extends JPanel {
 	private Serveur s=new Serveur();
 	private Client c= new Client();
 
+	/**
+	 * 
+	 * @param myJFrame
+	 * Constructor of the Authentification class
+	 */
 	public Authentification(JFrame myJFrame){
-
-
-
 		/*
 		 * Lancement du serveur
 		 */
@@ -74,15 +76,28 @@ public class Authentification extends JPanel {
 
 
 	}
-
+/**
+ * 
+ * @author nassimhammadi laurahollard
+ * Inner class which implements ActionListener
+ * 
+ */
 	class enterListener implements ActionListener{
 
 		Authentification A;
 
+		/**
+		 * 
+		 * @param authentification
+		 * Constructor
+		 */
 		public enterListener(Authentification authentification) {
 			A=authentification;
 		}
 
+		/**
+		 * Method which checks if the login and the password match with the database 
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String name=enterID.getText();

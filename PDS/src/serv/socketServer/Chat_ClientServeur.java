@@ -7,6 +7,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.Connection;
 
+/***
+ * 
+ * @author lazaredantz
+ *	Handle the reception and emission of message regarding to the client
+ */
+
 
 public class Chat_ClientServeur implements Runnable {
 
