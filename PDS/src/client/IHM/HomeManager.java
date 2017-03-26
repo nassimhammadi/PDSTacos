@@ -84,11 +84,15 @@ public class HomeManager extends JFrame{
     private Checkbox cp2_ins;
     private JTextField id_del;
     
+
     /**
      * 
      * @param cli
      * Constructor which create the manager view
      */
+
+    
+
     public HomeManager(Client cli){
     	this.c=cli;
     	this.jf = this;
