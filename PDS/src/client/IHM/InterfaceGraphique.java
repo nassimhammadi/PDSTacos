@@ -26,7 +26,11 @@ public class InterfaceGraphique extends JFrame {
             setVisible(true);
             }
     
-    
+    /**
+     * 
+     * @param args
+     * Main
+     */
       public static void main(String[] args) {
        	
           InterfaceGraphique inter = new InterfaceGraphique();

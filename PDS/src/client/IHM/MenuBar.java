@@ -39,7 +39,9 @@ public class MenuBar {
     private JMenuItem car = new JMenuItem("Voiture");
     private JMenuItem component = new JMenuItem("Pièces");
 
-    
+    /**
+     * Constructor which create the Menu of the panel
+     */
     public MenuBar(){
         this.references.add(ref_bike);
         this.references.add(ref_component);
@@ -63,6 +65,11 @@ public class MenuBar {
          
     }
     
+    /**
+     * 
+     * @return
+     * Return the menu 
+     */
     public JMenuBar getMenu(){
         return this.jmenu;   
     }

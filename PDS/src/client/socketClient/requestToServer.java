@@ -12,15 +12,24 @@ import serv.json.Json;
 import serv.model.Vehicule;
 import serv.socketServer.Serveur;
 
+
+
+/***
+ * 	
+ * @author lazaredantz
+ * Represent a request sent from client to server, 
+ * in order to handle every kind of possible request
+ */
+
 public class requestToServer {
 
 
-	private String classe;
+	private AllClasses classe;
 	private TypeRequest type;
 	private String objectJson="";
 	private Vehicule v;
-	LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
-
+	private LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
+	private Connection co;
 /*
  * M�thode permettant de traduire et d'executer la requ�te du client
  */
@@ -28,8 +37,8 @@ public class requestToServer {
 		String reponse="";
 		
 		switch (classe){
-		case "vehicle" : 
-			VehiculeDAOImpl vdao= new VehiculeDAOImpl(Client.CO);
+		case VEHICULE : 
+			VehiculeDAOImpl vdao= new VehiculeDAOImpl(co);
 			switch (type){
 			case SELECT: 
 				
@@ -93,7 +102,7 @@ public class requestToServer {
 				case 1 : 	
 					Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
 					Vehicule v= myJSon.deSerialize(objectJson);
-					vdao.insert(v);;
+					vdao.insert(v);
 					return reponse = "insert";
 				default :
 					break;
@@ -103,8 +112,8 @@ public class requestToServer {
 
 
 			}
-		case "employee" :
-			UserDAOImpl udao= new UserDAOImpl(Client.CO);
+		case EMPLOYEE :
+			UserDAOImpl udao= new UserDAOImpl(co);
 			switch(type){
 			case LOGIN:
 				switch (listParam.size()){
@@ -135,12 +144,20 @@ public class requestToServer {
 		return reponse;
 	}
 
-	public requestToServer(String classe, TypeRequest type, String objectJson,
+	public requestToServer(AllClasses classe, TypeRequest type, String objectJson,
 			LinkedHashMap<Parameter, String> listParam) {
 		this.classe = classe;
 		this.type = type;
 		this.objectJson = objectJson;
 		this.listParam = listParam;
+	}
+
+	public Connection getCo() {
+		return co;
+	}
+
+	public void setCo(Connection co) {
+		this.co = co;
 	}
 	
 	

@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import client.json.Json;
+import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
@@ -32,17 +33,18 @@ public class Authentification extends JPanel {
 	private Serveur s=new Serveur();
 	private Client c= new Client();
 
+	/**
+	 * 
+	 * @param myJFrame
+	 * Constructor of the Authentification class
+	 */
 	public Authentification(JFrame myJFrame){
-
-
-
 		/*
 		 * Lancement du serveur
 		 */
 
 		s.launch();
 		c.connect();
-
 
 
 		this.myJFrame=myJFrame;
@@ -74,15 +76,28 @@ public class Authentification extends JPanel {
 
 
 	}
-
+/**
+ * 
+ * @author nassimhammadi laurahollard
+ * Inner class which implements ActionListener
+ * 
+ */
 	class enterListener implements ActionListener{
 
 		Authentification A;
 
+		/**
+		 * 
+		 * @param authentification
+		 * Constructor
+		 */
 		public enterListener(Authentification authentification) {
 			A=authentification;
 		}
 
+		/**
+		 * Method which checks if the login and the password match with the database 
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String name=enterID.getText();
@@ -91,7 +106,7 @@ public class Authentification extends JPanel {
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.NAME, name);
 			param.put(Parameter.PWD,pwd);
-			requestToServer rts=new requestToServer("employee",TypeRequest.LOGIN,"",param);
+			requestToServer rts=new requestToServer(AllClasses.EMPLOYEE,TypeRequest.LOGIN,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -121,7 +136,7 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						HomeManager HE= new HomeManager();
+						HomeManager HM= new HomeManager(c);
 						
 						fin=true;
 					}

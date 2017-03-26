@@ -5,22 +5,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
+import java.sql.Connection;
+/***
+ * 
+ * @author lazaredantz
+ *	Handle the reception and emission of message regarding to the client
+ */
 
 public class Chat_ClientServeur implements Runnable {
 
 	private Socket socket = null;
 	private BufferedReader in = null;
 	private PrintWriter out = null;
-	private String login = "zero";
+	private String login = "";
 	private String lastMessageClient="";
 	private Thread t3, t4;
-	
+	private Connection co=Serveur.CP.getConnectionPool();
 	
 	public Chat_ClientServeur(Socket s, String log){
 		
 		socket = s;
 		login = log;
+		
 	}
 	public void run() {
 		
@@ -34,6 +40,16 @@ public class Chat_ClientServeur implements Runnable {
 		Thread t4 = new Thread(new Emission(out, this));
 		t4.start();
 		
+		boolean fin=false;
+		while (!fin){
+			if (!socket.isConnected()){
+				socket.close();
+				Serveur.CP.ConnectionToPool(co);
+				fin=true;
+			}
+		}
+		
+		
 		} catch (IOException e) {
 			System.err.println(login +"s'est déconnecté ");
 		}
@@ -43,5 +59,11 @@ public class Chat_ClientServeur implements Runnable {
 	}
 	public synchronized void setLastMessageClient(String lastMessageClient) {
 		this.lastMessageClient = lastMessageClient;
+	}
+	public Connection getCo() {
+		return co;
+	}
+	public void setCo(Connection co) {
+		this.co = co;
 	}
 }

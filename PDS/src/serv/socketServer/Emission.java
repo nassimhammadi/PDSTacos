@@ -8,7 +8,13 @@ import java.util.Scanner;
 
 import client.socketClient.requestToServer;
 import serv.json.Json;
-
+/***
+ * 
+ * @author lazaredantz
+ *	Waits for LastMessageClient attribute to change
+ *	When it does, we catch the request sent, and we resolve it
+ *
+ */
 
 
 public class Emission implements Runnable {
@@ -41,6 +47,7 @@ public class Emission implements Runnable {
 				Json<requestToServer> jsonRequest= new Json<requestToServer>(requestToServer.class);
 				try {
 					requestToServer rts= jsonRequest.deSerialize(message);
+					rts.setCo(ccs.getCo());
 					reponse=rts.evalRequest();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -50,65 +57,5 @@ public class Emission implements Runnable {
 			    out.flush();
 			  }
 			  }
-	}
-	
-
-	private String resolveRequest(String message2) {
-		
-		
-		String result="Votre requête n'est pas valide";
-		if (message2.equals("1")){
-		result=getListVehicule();
-		}
-		
-		else if (message2.equals("2")){
-		result=getListEmployee();
-		}
-		
-		
-		
-		return result;
-	}
-
-
-	private String getListEmployee() {
-		// Appel JDBC, puis serialise via Gson
-
-		String workspace=System.getProperty("user.dir");
-		byte[] encoded;
-		String monJson="";
-		try {
-			encoded = Files.readAllBytes(Paths.get(workspace+"/src/main/java/client/json/listEmployee.json"));
-			// Récupération du contenu du fichier version décodé
-			monJson= new String(encoded, "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		return monJson;
-	}
-
-
-	private String getListVehicule() {
-		// Appel JDBC, puis serialise via Gson
-
-		String workspace=System.getProperty("user.dir");
-		byte[] encoded;
-		String monJson="";
-		try {
-			encoded = Files.readAllBytes(Paths.get(workspace+"/src/main/java/client/json/listVoiture.json"));
-			// Récupération du contenu du fichier version décodé
-			monJson= new String(encoded, "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		return monJson;
 	}
 }

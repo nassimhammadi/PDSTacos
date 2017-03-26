@@ -40,6 +40,7 @@ import javax.swing.border.TitledBorder;
 
 import client.json.Json;
 import client.model.Vehicule;
+import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
@@ -53,7 +54,7 @@ import serv.socketServer.Serveur;
 public class HomeManager extends JFrame{
     
 	
-	private Client c= new Client();
+	private Client c;
     private CheckboxGroup cbg_type = new CheckboxGroup();
     private CheckboxGroup cbg_motorisation = new CheckboxGroup();
     private CheckboxGroup cbg_insert_presence = new CheckboxGroup();
@@ -83,11 +84,14 @@ public class HomeManager extends JFrame{
     private Checkbox cp2_ins;
     private JTextField id_del;
     
-    
-    public HomeManager(){
-      
+    /**
+     * 
+     * @param cli
+     * Constructor which create the manager view
+     */
+    public HomeManager(Client cli){
+    	this.c=cli;
     	this.jf = this;
-		c.connect();
         // Add Menu
         MenuBar menu = new MenuBar();
         JPanel panelNord = new JPanel();
@@ -281,10 +285,20 @@ public class HomeManager extends JFrame{
 
     }
 
+   /**
+    * 
+    * @return
+    * Return id_update
+    */
 	public JTextField getId_update() {
 		return id_update;
 	}
 
+	/**
+	 * 
+	 * @param id_update
+	 * Set id_update
+	 */
 	public void setId_update(JTextField id_update) {
 		this.id_update = id_update;
 	}
@@ -292,7 +306,13 @@ public class HomeManager extends JFrame{
     
 
 
-    
+    /**
+     * 
+     * @author nassimhammadi laurahollard
+     * Inner class which implements ActionListener.
+     * Uses when the user click on update
+     *
+     */
     class updateListener implements ActionListener{
 
 		private HomeManager hm;
@@ -314,7 +334,7 @@ public class HomeManager extends JFrame{
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, identif);
 			param.put(Parameter.PRESENCE, bool);
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.UPDATE,"",param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -325,7 +345,13 @@ public class HomeManager extends JFrame{
 		}
 	}
     
-    
+    	/**
+    	 * 
+    	 * @author nassimhammadi laurahollard
+    	 * Inner class which implements ActionListener.
+    	 * Uses when the user click on delete
+    	 *
+    	 */
     	class deleteListener implements ActionListener{
 
 		private HomeManager hm;
@@ -339,7 +365,7 @@ public class HomeManager extends JFrame{
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, id_del.getText());
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.DELETE,"",param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.DELETE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -351,7 +377,13 @@ public class HomeManager extends JFrame{
     	}
 	
 	
-	
+	/**
+	 * 
+	 * @author nassimhammadi laurahollard
+	 * Inner class which implements ActionListener.
+     * Uses when the user click on find
+	 *
+	 */
 	class selectListener implements ActionListener{
 
 		private HomeManager hm;
@@ -366,7 +398,7 @@ public class HomeManager extends JFrame{
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, identif);
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.SELECT,"",param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.SELECT,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -377,6 +409,13 @@ public class HomeManager extends JFrame{
 		}
 	}
 	
+	/**
+	 * 
+	 * @author nassimhammadi laurahollard
+	 * Inner class which implements ActionListener.
+     * Uses when the user click on find
+	 *
+	 */
 	class insertListener implements ActionListener{
 
 		private HomeManager hm;
@@ -409,7 +448,7 @@ public class HomeManager extends JFrame{
 			Json myJSon_ins= new Json(Vehicule.class);
 			String v_i= myJSon_ins.serialize(v_ins);
 			param.put(Parameter.ID, v_i);
-			requestToServer rts=new requestToServer("vehicle",TypeRequest.INSERT,v_i,param);
+			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.INSERT,v_i,param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -422,8 +461,10 @@ public class HomeManager extends JFrame{
 	
 	
 
-	/*
-	 * Processus attendant une r�ponse du serveur
+	/**
+	 * 
+	 * @author nassimhammadi laurahollard
+	 * Processus attendant une réponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 		
@@ -449,13 +490,20 @@ public class HomeManager extends JFrame{
 					
 					if (c.getCcs().getLastMessageFromServeur().equals("update")){
 						JOptionPane d2 = new JOptionPane();
-						d2.showMessageDialog(jf, "Véhicule mit à jour");
+						d2.showMessageDialog(jf, "Véhicule mis à jour");
 						
 						
 						fin=true;
 					}
 					else if (part1.equals("select")){
 						if(strings.length == 1){
+							immatricul.setText("");
+							yearv.setText("");
+							brand.setText("");
+							model.setText("");
+							motor.setText("");
+							present.setSelected(false);
+							type.setText("");
 							JOptionPane d = new JOptionPane();
 							d.showMessageDialog(jf, "Véhicule non trouvé");
 							fin = true; 

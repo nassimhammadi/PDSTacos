@@ -15,7 +15,6 @@ public class Client {
 	public static Socket socket = null;
 	public static Thread t1;
 	private Chat_ClientServeur ccs;
-	public static Connection CO;
 	
 	public synchronized Chat_ClientServeur getCcs() {
 		return ccs;
@@ -35,7 +34,6 @@ public class Client {
 			System.out.println("Demande de connexion");
 			socket = new Socket("127.0.0.1",2009);
 			System.out.println("Connexion etablie avec le serveur :"); // Si le message s'affiche c'est que je suis connecté
-			this.CO= (Connection) Serveur.CP.getConnectionPool();
 			ccs=new Chat_ClientServeur(socket);
 			t1 = new Thread(ccs);
 			t1.start();
