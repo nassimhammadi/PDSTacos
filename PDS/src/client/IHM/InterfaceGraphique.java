@@ -20,9 +20,12 @@ public class InterfaceGraphique extends JFrame {
             Authentification fenetre = new Authentification(this);
             setTitle("Interface");
             setSize(800, 400);
-            setLocationRelativeTo(null); 
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.getContentPane().add(fenetre);
+            this.pack();
+            setLocationRelativeTo(null); 
+            setVisible(true);
+            HomeManager test = new HomeManager(null);
             setVisible(true);
             }
     

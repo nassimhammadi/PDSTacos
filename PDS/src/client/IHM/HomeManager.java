@@ -213,48 +213,59 @@ public class HomeManager extends JFrame{
 		 
         JPanel southLeft =  new JPanel(new GridLayout(9,1));
         southLeft.setBackground(Color.white);
-       // BoxLayout layoutSouthLeft = new BoxLayout(southLeft, BoxLayout.Y_AXIS);
-        //southLeft.setLayout(layoutSouthLeft);
-
+        BoxLayout layoutSouthLeft = new BoxLayout(southLeft, BoxLayout.Y_AXIS);
+        southLeft.setLayout(layoutSouthLeft);
+        
+        JPanel southRight = new JPanel(new GridLayout(9,1));
+        southRight.setBackground(Color.white);
+        southLeft.add(Box.createGlue());
+        
+        
+        present = new JRadioButton("Présent dans le dépôt");
+        southLeft.add(present);
+        
+        
         southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Immatriculation : "));
         immatricul = new JLabel();
-        
         southLeft.add(immatricul);
+        
         southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Type de véhicule : "));
         type = new JLabel();
+        southLeft.add(type);
         
-        southLeft.add(type);     
+        
+        southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Année de mise en circulation : "));
         yearv = new JLabel();
-        
         southLeft.add(yearv);
+        
         southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Motorisation : "));
         motor = new JLabel();
-        
         southLeft.add(motor);
-        southLeft.add(Box.createGlue());
-        southLeft.add(new JLabel("Présence dans le dépôt : "));
-        present = new JRadioButton("Présent");
-        southLeft.add(present);
+
+     
+        
         southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Marque : "));
         brand = new JLabel();
-        
         southLeft.add(brand);
+        
         southLeft.add(Box.createGlue());
         southLeft.add(new JLabel("Modèle : "));
         model = new JLabel();
-        
         southLeft.add(model);
+        
         southLeft.add(Box.createGlue());
         panelSouth.add(southLeft);
+        panelSouth.add(southRight);
+        
 
     
 
-      /*  southRight.add(Box.createGlue());
+        southRight.add(Box.createGlue());
         int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
         int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED; 
         JScrollPane jsp=new JScrollPane(southRight,v,h);
@@ -266,7 +277,7 @@ public class HomeManager extends JFrame{
             southRight.add(new JLabel("      - Test histo numero "+i));
             southRight.add(Box.createVerticalGlue());
         }  
-        panelSouth.add(jsp);*/
+        panelSouth.add(jsp);
         
       
 
