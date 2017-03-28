@@ -32,6 +32,7 @@ public class Authentification extends JPanel {
 	private JTextField enterPWD;
 	private Serveur s=new Serveur();
 	private Client c= new Client();
+	
 
 	/**
 	 * 
@@ -53,27 +54,29 @@ public class Authentification extends JPanel {
 		pannel.setBackground(Color.WHITE);
 
 		pannel.setLayout(new GridLayout(3,3));
-		pannel.setPreferredSize(new Dimension(450,120));
+		pannel.setPreferredSize(new Dimension(450,150));
 		add(pannel);
-		pannel.setBorder(new TitledBorder("Authentifiez vous")); 
+		pannel.setBorder(new TitledBorder("Authentifiez-vous")); 
 		pannel.setLayout(new BoxLayout(pannel, BoxLayout.Y_AXIS)); 
 
 		JLabel id = new JLabel();
 		id.setText("Identifiant :");
-		this.enterID = new JTextField("Entrez votre identifiant", 20);
+		this.enterID = new JTextField("", 20);
 		pannel.add(id);
 		pannel.add(enterID);
 		JLabel mdp = new JLabel();
 		mdp.setText("Mot de passe :");
-		this.enterPWD = new JTextField("Entrez votre mot de passe", 20);
+		this.enterPWD = new JTextField("", 20);
 		JButton bouton1=new JButton("Se connecter");
 		pannel.add(mdp);
 		pannel.add(enterPWD);
 		pannel.add(bouton1);
+		
 		enterListener listener=new enterListener(this);
 		bouton1.addActionListener(listener);
+		
 		setVisible(true);
-
+		this.myJFrame.pack();
 
 	}
 /**
