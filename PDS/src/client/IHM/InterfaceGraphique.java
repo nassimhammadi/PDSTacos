@@ -24,8 +24,8 @@ public class InterfaceGraphique extends JFrame {
             this.getContentPane().add(fenetre);
             this.pack();
             setLocationRelativeTo(null); 
-            setVisible(true);
-            HomeManager test = new HomeManager(null);
+    
+         
             setVisible(true);
             }
     
