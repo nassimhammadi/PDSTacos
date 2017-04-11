@@ -30,7 +30,6 @@ public class Authentification extends JPanel {
 	private JCheckBox c1, c2;
 	private JTextField enterID;
 	private JTextField enterPWD;
-	private Serveur s=new Serveur();
 	private Client c= new Client();
 	
 
@@ -40,11 +39,7 @@ public class Authentification extends JPanel {
 	 * Constructor of the Authentification class
 	 */
 	public Authentification(JFrame myJFrame){
-		/*
-		 * Lancement du serveur
-		 */
-
-		s.launch();
+		
 		c.connect();
 
 
