@@ -76,13 +76,12 @@ public class requestToServer {
 				switch (listParam.size()){
 				case 0 : //RIEN
 					break;
-				case 2 : 
-					Vehicule v_update = vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
-					System.out.println(v_update);
+				case 1 : 
+					
+					Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
+					Vehicule v_update = myJSon.deSerialize(objectJson);
 					Boolean bool =Boolean.valueOf(listParam.get(Parameter.PRESENCE));
-					Vehicule v_update2 = new Vehicule(v_update.getId(),v_update.getLicense_number(),v_update.getYear(),v_update.getType(),v_update.getIs_electric(),bool,v_update.getBrand(),v_update.getModel());
-					System.out.println(v_update2);
-					vdao.update(v_update2);
+					vdao.update(v_update);
 					return reponse = "update";
 					
 
