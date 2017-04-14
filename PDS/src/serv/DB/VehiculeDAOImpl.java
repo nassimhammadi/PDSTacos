@@ -127,20 +127,20 @@ public class VehiculeDAOImpl implements VehiculeDAO {
      */
     public void update(Vehicule v) throws DAOException {
         int id = v.getId();
-        //String license = v.getLicense_number() ;
-        //Timestamp year = v.getYear();
-        //int type = v.getType();
-        //Boolean is_electric = v.getIs_electric();
+        String license = v.getLicense_number() ;
+        String year = v.getYear();
+        int type = v.getType();
+        Boolean is_electric = v.getIs_electric();
         Boolean is_present = v.getIs_present();
-        //String brand = v.getBrand();
-        //String model = v.getModel();
+        String brand = v.getBrand();
+        String model = v.getModel();
         
         try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "UPDATE VEHICLES SET IS_PRESENT ="+is_present+" where ID_VEHICLE = "+id; 
+        String sql = "UPDATE VEHICLES SET LICENSE_NUMBER= '"+license+"', TYPE_VEHICLE="+type+",YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"' where ID_VEHICLE = "+id; 
       
         try {
             ordre.executeUpdate(sql);
