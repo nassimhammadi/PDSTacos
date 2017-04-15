@@ -57,6 +57,8 @@ public class HomeManager extends JFrame{
 	private Client c;
     private CheckboxGroup cbg_type = new CheckboxGroup();
     private CheckboxGroup cbg_motorisation = new CheckboxGroup();
+    private CheckboxGroup cbg_type_up = new CheckboxGroup();
+    private CheckboxGroup cbg_motorisation_up = new CheckboxGroup();
     private CheckboxGroup cbg_insert_presence = new CheckboxGroup();
     private CheckboxGroup cbg_update_presence = new CheckboxGroup();
     Checkbox cb_update_presence = new Checkbox("Oui",cbg_update_presence,true);
@@ -82,6 +84,17 @@ public class HomeManager extends JFrame{
     private JTextField id_ins;
     private Checkbox cp1_ins;
     private Checkbox cp2_ins;
+    private JTextField im_up;
+    private Checkbox ct1_up;
+    private Checkbox ct2_up;
+    private JTextField year_up;
+    private Checkbox cm1_up;
+    private Checkbox cm2_up;
+    private JTextField brand_up;
+    private JTextField model_up;
+    private JTextField id_up;
+    private Checkbox cp1_up;
+    private Checkbox cp2_up;
     private JTextField id_del;
     
 
@@ -122,22 +135,51 @@ public class HomeManager extends JFrame{
         panelWest1.add(search);
         
         // JPanel to update vehicle year
-        JPanel panelWest2 = new JPanel(new GridLayout(5,1));
+        JPanel panelWest2 = new JPanel(new GridLayout(10,2));
         panelWest2.setBackground(Color.white);
         panelWest2.setPreferredSize(new Dimension(300, 200));
-        panelWest2.setBorder(new TitledBorder("Mettre à jour présence véhicule : "));
-        panelWest2.add(new JLabel("Identifiant du véhicule :"));
-        this.setId_update(new JTextField());
-        panelWest2.add(getId_update());
+        panelWest2.setBorder(new TitledBorder("Mettre à jour un véhicule : "));
+        panelWest2.add(new JLabel("Identifiant :"));
+        id_up = new JTextField();
+        panelWest2.add(id_up);
+        panelWest2.add(new JLabel("Type de véhicule :"));
+        JPanel panelWest22 = new JPanel(new GridLayout(1,2));
+        ct1_up = new Checkbox("Voiture",cbg_type_up,true);
+        ct2_up = new Checkbox("Vélo",cbg_type_up,false);
+        panelWest22.add(ct1_up);
+        panelWest22.add(ct2_up);
+        panelWest2.add(panelWest22);
+        panelWest2.add(new JLabel("Immatriculation :"));
+        im_up = new JTextField();
+        panelWest2.add(im_up);
+        panelWest2.add(new JLabel("Année du véhicule :"));
+        year_up = new JTextField();
+        panelWest2.add(year_up);
+        panelWest2.add(new JLabel("Motorisation :"));
+        JPanel panelWest3 = new JPanel(new GridLayout(1,2));
+        cm1_up = new Checkbox("Thermique",cbg_motorisation_up,true);
+        cm2_up = new Checkbox("Elec",cbg_motorisation_up,false);
+        panelWest3.add(cm1_up);
+        panelWest3.add(cm2_up);
+        panelWest2.add(panelWest3);
+        panelWest2.add(new JLabel("Marque :"));
+        brand_up = new JTextField();
+        panelWest2.add(brand_up);
+        panelWest2.add(new JLabel("Modèle :"));
+        model_up = new JTextField();
+        panelWest2.add(model_up);
         panelWest2.add(new JLabel("Présence dans le dépôt :"));
-        JPanel panelEast25 = new JPanel(new GridLayout(1,2));
-        panelEast25.add(cb_update_presence);
-        panelEast25.add(cb_update_no_presence);
-        panelWest2.add(panelEast25);
-        JButton update_btn = new JButton("Mettre à jour");
+        JPanel panelWest4 = new JPanel(new GridLayout(1,2));
+        cp1_up = new Checkbox("Oui",cbg_update_presence,true);
+        cp2_up = new Checkbox("Non",cbg_update_presence,false);
+        panelWest4.add(cp1_up);
+        panelWest4.add(cp2_up);
+        panelWest2.add(panelWest4);
+        JButton update_button = new JButton("Ajouter");
+        update_button.setBackground(Color.white);
         updateListener upl = new updateListener(this);
-        update_btn.addActionListener(upl);
-        panelWest2.add(update_btn);
+        update_button.addActionListener(upl);
+        panelWest2.add(update_button);
         
         // JPanel to delete vehicle
         JPanel panelEast1 = new JPanel(new GridLayout(5,1));
@@ -153,16 +195,13 @@ public class HomeManager extends JFrame{
         panelEast1.add(delete_btn);
         
         // Jpanel to add a vehicle
-        JPanel panelEast2 = new JPanel(new GridLayout(9,2));
+        JPanel panelEast2 = new JPanel(new GridLayout(10,2));
         panelEast2.setBackground(Color.white);
         panelEast2.setPreferredSize(new Dimension(300, 200));
         panelEast2.setBorder(new TitledBorder("Ajouter un véhicule : "));
-        //panelEast2.add(new JLabel("Identifiant :"));
+        panelEast2.add(new JLabel("Identifiant :"));
         id_ins = new JTextField();
-       // panelEast2.add(id_ins);
-        panelEast2.add(new JLabel("Immatriculation :"));
-        im_ins = new JTextField();
-        panelEast2.add(im_ins);
+        panelEast2.add(id_ins);
         panelEast2.add(new JLabel("Type de véhicule :"));
         JPanel panelEast22 = new JPanel(new GridLayout(1,2));
         ct1_ins = new Checkbox("Voiture",cbg_type,true);
@@ -170,6 +209,9 @@ public class HomeManager extends JFrame{
         panelEast22.add(ct1_ins);
         panelEast22.add(ct2_ins);
         panelEast2.add(panelEast22);
+        panelEast2.add(new JLabel("Immatriculation :"));
+        im_ins = new JTextField();
+        panelEast2.add(im_ins);
         panelEast2.add(new JLabel("Année du véhicule :"));
         year_ins = new JTextField();
         panelEast2.add(year_ins);
@@ -338,21 +380,36 @@ public class HomeManager extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String identif=hm.getId_update().getText();
-			boolean jckb = cb_update_presence.getState();
-			String bool;
-			if(jckb){
-				bool = "true";
-			}
-			else{ bool = "false";}
+			String identif=id_search.getText();
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			param.put(Parameter.ID, identif);
-			param.put(Parameter.PRESENCE, bool);
-			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,"",param);
+			int t_up;
+		    Boolean m_up = false;
+		    Boolean p_up = false;
+		    if(ct1_up.getState()){
+		    	t_up = 1;
+		    } else t_up = 0;
+		    
+		    if(cm1_up.getState()){
+		    	m_up = true;
+		    }
+		    
+		    if(cp1_up.getState()){
+		    	p_up = true;
+		    }
+			Vehicule v_up = new Vehicule(Integer.parseInt(id_up.getText()),im_up.getText(),t_up,year_up.getText(),m_up,p_up,brand_up.getText(),model_up.getText());
+			
+			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
+			Json myJSon_up= new Json(Vehicule.class);
+			String v_i= myJSon_up.serialize(v_up);
+			param.put(Parameter.ID, id_up.getText());
+			
+			System.out.println("Param"+Parameter.ID);
+			requestToServer rtsu=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,v_i,param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rts);
+			String jsonAuth = jsonRTS.serialize(rtsu);
 			rep=c.getCcs().getLastMessageFromServeur();
+			System.out.println("Last Message :"+rep);
 			c.getCcs().setLastMessageToServer(jsonAuth);
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
@@ -506,8 +563,6 @@ public class HomeManager extends JFrame{
 					if (c.getCcs().getLastMessageFromServeur().equals("update")){
 						JOptionPane d2 = new JOptionPane();
 						d2.showMessageDialog(jf, "Véhicule mis à jour");
-						
-						
 						fin=true;
 					}
 					else if (part1.equals("select")){

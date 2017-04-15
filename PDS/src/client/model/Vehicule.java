@@ -221,6 +221,13 @@ public class Vehicule {
         this.model = model;
     }
 
+	@Override
+	public String toString() {
+		return "Vehicule [id=" + id + ", license_number=" + license_number + ", type=" + type + ", year=" + year
+				+ ", is_electric=" + is_electric + ", is_present=" + is_present + ", brand=" + brand + ", model="
+				+ model + "]";
+	}
+
     /**
      * Class constructor
      */
