@@ -23,8 +23,9 @@ public class Vehicule {
     /**
      * The vehicle's entry date into the database
      */
-    private int type;
     private String year;
+    private int type;
+   
     private Boolean is_electric;
     private Boolean is_present;
     private String brand;
@@ -72,6 +73,17 @@ public class Vehicule {
     public Vehicule(String license , int typeV, String yearV, Boolean electric, Boolean present, String brandV, String modelV){
         
         this.license_number = license;
+        this.type = typeV;
+        this.year = yearV;
+        this.is_electric = electric;
+        this.is_present = present;
+        this.brand = brandV;
+        this.model = modelV;
+    }
+    
+public Vehicule( int typeV, String yearV, Boolean electric, Boolean present, String brandV, String modelV){
+        
+       
         this.type = typeV;
         this.year = yearV;
         this.is_electric = electric;
