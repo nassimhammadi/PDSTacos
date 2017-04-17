@@ -19,12 +19,15 @@ import static java.awt.PageAttributes.ColorType.COLOR;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -79,11 +82,13 @@ public class HomeManager extends JFrame{
     private JTextField year_ins;
     private Checkbox cm1_ins;
     private Checkbox cm2_ins;
+    private JLabel im_j_ins;
     private JTextField brand_ins;
     private JTextField model_ins;
     private JTextField id_ins;
     private Checkbox cp1_ins;
     private Checkbox cp2_ins;
+    private JLabel im_j_up;
     private JTextField im_up;
     private Checkbox ct1_up;
     private Checkbox ct2_up;
@@ -146,10 +151,26 @@ public class HomeManager extends JFrame{
         JPanel panelWest22 = new JPanel(new GridLayout(1,2));
         ct1_up = new Checkbox("Voiture",cbg_type_up,true);
         ct2_up = new Checkbox("Vélo",cbg_type_up,false);
+        ct2_up.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {    
+            	
+                im_j_up.setVisible(false);
+                im_up.setVisible(false);
+             }
+          });
+        ct1_up.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {    
+            	
+                im_j_up.setVisible(true);
+                im_up.setVisible(true);
+             }
+          });
+
         panelWest22.add(ct1_up);
         panelWest22.add(ct2_up);
         panelWest2.add(panelWest22);
-        panelWest2.add(new JLabel("Immatriculation :"));
+        im_j_up = new JLabel("Immatriculation :");
+        panelWest2.add(im_j_up);
         im_up = new JTextField();
         panelWest2.add(im_up);
         panelWest2.add(new JLabel("Année du véhicule :"));
@@ -206,10 +227,25 @@ public class HomeManager extends JFrame{
         JPanel panelEast22 = new JPanel(new GridLayout(1,2));
         ct1_ins = new Checkbox("Voiture",cbg_type,true);
         ct2_ins = new Checkbox("Vélo",cbg_type,false);
+        ct2_ins.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {    
+            	
+                im_j_ins.setVisible(false);
+                im_ins.setVisible(false);
+             }
+          });
+        ct1_ins.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {    
+            	
+                im_j_ins.setVisible(true);
+                im_ins.setVisible(true);
+             }
+          });
         panelEast22.add(ct1_ins);
         panelEast22.add(ct2_ins);
         panelEast2.add(panelEast22);
-        panelEast2.add(new JLabel("Immatriculation :"));
+        im_j_ins =new JLabel("Immatriculation :");
+        panelEast2.add(im_j_ins);
         im_ins = new JTextField();
         panelEast2.add(im_ins);
         panelEast2.add(new JLabel("Année du véhicule :"));
@@ -502,20 +538,28 @@ public class HomeManager extends JFrame{
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			int t_ins;
-		    Boolean m_ins = false;
+		    Boolean m_ins = true;
 		    Boolean p_ins = false;
+		    Vehicule v_ins=null;
 		    if(ct1_ins.getState()){
 		    	t_ins = 1;
 		    } else t_ins = 0;
 		    
 		    if(cm1_ins.getState()){
-		    	m_ins = true;
+		    	m_ins = false;
 		    }
 		    
 		    if(cp1_ins.getState()){
 		    	p_ins = true;
 		    }
-			Vehicule v_ins = new Vehicule(im_ins.getText(),t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
+		    if(!ct2_ins.getState()){
+		    	v_ins = new Vehicule(im_ins.getText(),t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
+		    }
+		    else if(ct2_ins.getState()){
+		    	v_ins = new Vehicule(t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
+		    }
+		   
+			
 			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
 			Json myJSon_ins= new Json(Vehicule.class);
 			String v_i= myJSon_ins.serialize(v_ins);
