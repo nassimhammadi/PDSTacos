@@ -10,16 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="serv.DB.DAOConfigurationException" project="PDS" 
-    file="/PDS/src/serv/DB/DAOConfigurationException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2590" y="611"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="3" language="java" name="serv.DB.UserDAO" project="PDS" file="/PDS/src/serv/DB/UserDAO.java" 
+  <interface id="2" language="java" name="serv.DB.UserDAO" project="PDS" file="/PDS/src/serv/DB/UserDAO.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2566" y="852"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -28,7 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="4" language="java" name="serv.DB.VehiculeDAOImpl" project="PDS" 
+  <class id="3" language="java" name="serv.DB.VehiculeDAOImpl" project="PDS" 
     file="/PDS/src/serv/DB/VehiculeDAOImpl.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="3288" y="794"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -37,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="serv.DB.UserDAOImpl" project="PDS" file="/PDS/src/serv/DB/UserDAOImpl.java" 
+  <class id="4" language="java" name="serv.DB.UserDAOImpl" project="PDS" file="/PDS/src/serv/DB/UserDAOImpl.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2882" y="656"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,16 +37,16 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="6" language="java" name="serv.DB.VehiculeDAO" project="PDS" file="/PDS/src/serv/DB/VehiculeDAO.java" 
+  <interface id="5" language="java" name="serv.DB.VehiculeDAO" project="PDS" file="/PDS/src/serv/DB/VehiculeDAO.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3505" y="952"/>    
+    <position height="-1" width="-1" x="3225" y="1092"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="7" language="java" name="serv.DB.DAOException" project="PDS" file="/PDS/src/serv/DB/DAOException.java" 
+  <class id="6" language="java" name="serv.DB.DAOException" project="PDS" file="/PDS/src/serv/DB/DAOException.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2921" y="884"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="8" language="java" name="client.socketClient.AllClasses" project="PDS" 
+  <enumeration id="7" language="java" name="client.socketClient.AllClasses" project="PDS" 
     file="/PDS/src/client/socketClient/AllClasses.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2301" y="990"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="9" language="java" name="client.socketClient.Chat_ClientServeur" project="PDS" 
+  <class id="8" language="java" name="client.socketClient.Chat_ClientServeur" project="PDS" 
     file="/PDS/src/client/socketClient/Chat_ClientServeur.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1763" y="1200"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="client.socketClient.Reception" project="PDS" 
+  <class id="9" language="java" name="client.socketClient.Reception" project="PDS" 
     file="/PDS/src/client/socketClient/Reception.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1682" y="1533"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="11" language="java" name="client.socketClient.TypeRequest" project="PDS" 
+  <enumeration id="10" language="java" name="client.socketClient.TypeRequest" project="PDS" 
     file="/PDS/src/client/socketClient/TypeRequest.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2098" y="1915"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="12" language="java" name="client.socketClient.Emission" project="PDS" 
+  <class id="11" language="java" name="client.socketClient.Emission" project="PDS" 
     file="/PDS/src/client/socketClient/Emission.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1992" y="1623"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +100,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="client.socketClient.requestToServer" project="PDS" 
+  <class id="12" language="java" name="client.socketClient.requestToServer" project="PDS" 
     file="/PDS/src/client/socketClient/requestToServer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2534" y="1245"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="client.socketClient.Client" project="PDS" 
+  <class id="13" language="java" name="client.socketClient.Client" project="PDS" 
     file="/PDS/src/client/socketClient/Client.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1647" y="879"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -127,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="15" language="java" name="client.socketClient.Parameter" project="PDS" 
+  <enumeration id="14" language="java" name="client.socketClient.Parameter" project="PDS" 
     file="/PDS/src/client/socketClient/Parameter.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2333" y="1926"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -136,25 +127,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="16" language="java" name="client.model.User" project="PDS" file="/PDS/src/client/model/User.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3442" y="1314"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="17" language="java" name="client.model.Vehicule" project="PDS" file="/PDS/src/client/model/Vehicule.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3062" y="1390"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="18" language="java" name="serv.json.Json" project="PDS" file="/PDS/src/serv/json/Json.java" binary="false" 
+  <class id="15" language="java" name="serv.json.Json" project="PDS" file="/PDS/src/serv/json/Json.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2778" y="1530"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,7 +136,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="19" language="java" name="serv.socketServer.Serveur" project="PDS" 
+  <class id="16" language="java" name="serv.socketServer.Serveur" project="PDS" 
     file="/PDS/src/serv/socketServer/Serveur.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2000" y="514"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -172,7 +145,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="serv.socketServer.Reception" project="PDS" 
+  <class id="17" language="java" name="serv.socketServer.Reception" project="PDS" 
     file="/PDS/src/serv/socketServer/Reception.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1706" y="534"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -181,7 +154,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="serv.socketServer.Emission" project="PDS" 
+  <class id="18" language="java" name="serv.socketServer.Emission" project="PDS" 
     file="/PDS/src/serv/socketServer/Emission.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2592" y="1822"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -190,7 +163,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="serv.socketServer.Chat_ClientServeur" project="PDS" 
+  <class id="19" language="java" name="serv.socketServer.Chat_ClientServeur" project="PDS" 
     file="/PDS/src/serv/socketServer/Chat_ClientServeur.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2030" y="1060"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -199,7 +172,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="serv.socketServer.Accepter_connexion" project="PDS" 
+  <class id="20" language="java" name="serv.socketServer.Accepter_connexion" project="PDS" 
     file="/PDS/src/serv/socketServer/Accepter_connexion.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1974" y="718"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -208,186 +181,186 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <dependency id="24">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="25">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <dependency id="26">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="23"/>  
-  </dependency>  
-  <dependency id="27">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="13"/>  
-  </dependency>  
-  <dependency id="28">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <association id="29">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="30" name="ccs">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="31" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="32">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="33">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <realization id="34">    
+  <dependency id="21">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="6"/>  
-  </realization>  
-  <association id="35">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="36" name="ccs">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="37" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="38">    
-    <end type="SOURCE" refId="13"/>    
+  </dependency>  
+  <dependency id="22">    
+    <end type="SOURCE" refId="18"/>    
     <end type="TARGET" refId="15"/>  
   </dependency>  
-  <association id="39">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="40" name="ccs">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="41" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="42">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="43">    
-    <bendpoint x="2166" y="696"/>    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="19"/>  
-  </dependency>  
-  <dependency id="44">    
-    <end type="SOURCE" refId="22"/>    
+  <dependency id="23">    
+    <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="20"/>  
   </dependency>  
-  <dependency id="45">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="46">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <dependency id="47">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="48">    
-    <end type="SOURCE" refId="9"/>    
+  <dependency id="24">    
+    <end type="SOURCE" refId="18"/>    
     <end type="TARGET" refId="12"/>  
   </dependency>  
-  <association id="49">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="50" name="type">        
-        <position height="0" width="0" x="-40" y="7"/>      
-      </attribute>      
-      <multiplicity id="51" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-40" y="7"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="52">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="22"/>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
   </dependency>  
-  <dependency id="53">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <association id="54">    
-    <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="55" name="CP">        
+  <association id="26">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="27" name="ccs">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="56" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="57">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="58" name="ccs">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="59" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="60">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="61" name="classe">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="62" minimum="0" maximum="1">        
+      <multiplicity id="28" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="63">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="3"/>  
+  <dependency id="29">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="30">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <realization id="31">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
   </realization>  
-  <association id="64">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="65" name="ccs">        
+  <association id="32">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="33" name="ccs">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="66" minimum="0" maximum="1">        
+      <multiplicity id="34" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="67">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="10"/>  
+  <dependency id="35">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
   </dependency>  
-  <dependency id="68">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="21"/>  
+  <association id="36">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="37" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="38" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="39">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="40">    
+    <bendpoint x="2166" y="696"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <dependency id="41">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="43">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="45">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="46">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="47" name="type">        
+        <position height="0" width="0" x="-40" y="7"/>      
+      </attribute>      
+      <multiplicity id="48" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-40" y="7"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="50">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="51">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="52" name="CP">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="53" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="54">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="55" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="56" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="58" name="classe">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="59" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="60">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="61">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="62" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="64">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="65">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="18"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
