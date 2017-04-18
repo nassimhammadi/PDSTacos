@@ -33,6 +33,16 @@ public class Authentification extends JPanel {
 	private Client c= new Client();
 	
 
+	public Client getC() {
+		return c;
+	}
+
+
+	public void setC(Client c) {
+		this.c = c;
+	}
+
+
 	/**
 	 * 
 	 * @param myJFrame
