@@ -93,7 +93,7 @@
   </class>  
   <enumeration id="11" language="java" name="client.socketClient.TypeRequest" project="PDS" 
     file="/PDS/src/client/socketClient/TypeRequest.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2138" y="1908"/>    
+    <position height="-1" width="-1" x="2098" y="1915"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -208,139 +208,187 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="24">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <association id="25">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="26" name="ccs"/>      
-      <multiplicity id="27" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <dependency id="24">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="27">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
   <dependency id="28">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="22"/>  
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
   </dependency>  
   <association id="29">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="30" name="ccs"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+      <attribute id="30" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="32">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="33" name="classe"/>      
-      <multiplicity id="34" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <dependency id="32">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="33">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <realization id="34">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
   <association id="35">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="36" name="ccs"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="36" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <dependency id="38">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="13"/>  
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="15"/>  
   </dependency>  
-  <dependency id="39">    
+  <association id="39">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="40" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="41" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="43">    
     <bendpoint x="2166" y="696"/>    
     <end type="SOURCE" refId="22"/>    
     <end type="TARGET" refId="19"/>  
   </dependency>  
-  <dependency id="40">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="18"/>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="20"/>  
   </dependency>  
-  <dependency id="41">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <association id="42">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="43" name="ccs"/>      
-      <multiplicity id="44" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <dependency id="45">    
     <end type="SOURCE" refId="22"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <dependency id="46">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="18"/>  
   </dependency>  
   <dependency id="47">    
     <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="48">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="18"/>  
-  </dependency>  
-  <dependency id="49">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="50">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="15"/>  
-  </dependency>  
-  <dependency id="51">    
-    <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="4"/>  
   </dependency>  
-  <realization id="52">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="3"/>  
-  </realization>  
-  <dependency id="53">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="23"/>  
+  <dependency id="48">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
   </dependency>  
-  <dependency id="54">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <association id="55">    
+  <association id="49">    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="56" name="type"/>      
-      <multiplicity id="57" minimum="0" maximum="1"/>    
+      <attribute id="50" name="type">        
+        <position height="0" width="0" x="-40" y="7"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-40" y="7"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="58">    
+  <dependency id="52">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="53">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="54">    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="59" name="CP"/>      
-      <multiplicity id="60" minimum="0" maximum="1"/>    
+      <attribute id="55" name="CP">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="56" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="61">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <association id="62">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="63" name="ccs"/>      
-      <multiplicity id="64" minimum="0" maximum="1"/>    
+  <association id="57">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="58" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="59" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="22" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="60">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="61" name="classe">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="62" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="63">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <association id="64">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="65" name="ccs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="66" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="67">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="68">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
