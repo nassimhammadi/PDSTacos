@@ -16,17 +16,25 @@ import javax.swing.*;
 public class InterfaceGraphique extends JFrame {
     
         Image img;
+        Authentification fenetre;
     public InterfaceGraphique(){
-            Authentification fenetre = new Authentification(this);
+            fenetre = new Authentification(this);
             setTitle("Interface");
             setSize(800, 400);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.getContentPane().add(fenetre);
             this.pack();
             setLocationRelativeTo(null); 
-    
-         
             setVisible(true);
+            
+            // When the user exit the application, we close his socket
+            this.addWindowListener(new WindowAdapter() {
+
+                public void windowClosing(WindowEvent e) {
+                   fenetre.getC().getSocket().close();
+                }
+            
+            
             }
     
     /**

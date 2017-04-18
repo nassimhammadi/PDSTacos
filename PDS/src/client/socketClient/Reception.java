@@ -28,7 +28,9 @@ public class Reception implements Runnable {
 	        try {
 	        	
 			message = in.readLine();
-			
+			if (message==null){
+				message="";
+			}
 			
 			if (!message.equals(ccs.getLastMessageFromServeur())){
 			System.out.println("Le serveur vous dit :" +message);
