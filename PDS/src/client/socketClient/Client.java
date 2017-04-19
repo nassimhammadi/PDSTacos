@@ -8,6 +8,7 @@ import java.net.*;
 
 import com.mysql.jdbc.Connection;
 
+import client.IHM.InterfaceGraphique;
 import serv.socketServer.Serveur;
 
 public class Client {
@@ -32,11 +33,12 @@ public class Client {
 		try {
 			
 			System.out.println("Demande de connexion");
-			socket = new Socket("127.0.0.1",3306);
+			socket = new Socket("127.0.0.1",2009);
 			System.out.println("Connexion etablie avec le serveur :"); // Si le message s'affiche c'est que je suis connecté
 			ccs=new Chat_ClientServeur(socket);
 			t1 = new Thread(ccs);
 			t1.start();
+			
 			
 			
 		} catch (UnknownHostException e) {
@@ -50,6 +52,15 @@ public class Client {
 	
 	
 	
+	public static void main(String[] args) {
 	
+		
+
+        InterfaceGraphique inter = new InterfaceGraphique();
+		
+		
+	
+
+	}
 
 }

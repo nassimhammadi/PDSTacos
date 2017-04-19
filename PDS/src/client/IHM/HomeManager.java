@@ -105,6 +105,7 @@ public class HomeManager extends JFrame{
     private ListVehicle listV;
     private JPanel southRight;
     private Thread t_all;
+    
 
     /**
      * 
@@ -225,9 +226,9 @@ public class HomeManager extends JFrame{
         panelEast2.setBackground(Color.white);
         panelEast2.setPreferredSize(new Dimension(300, 200));
         panelEast2.setBorder(new TitledBorder("Ajouter un véhicule : "));
-        panelEast2.add(new JLabel("Identifiant :"));
+       /* panelEast2.add(new JLabel("Identifiant :"));
         id_ins = new JTextField();
-        panelEast2.add(id_ins);
+        panelEast2.add(id_ins);*/
         panelEast2.add(new JLabel("Type de véhicule :"));
         JPanel panelEast22 = new JPanel(new GridLayout(1,2));
         ct1_ins = new Checkbox("Voiture",cbg_type,true);
@@ -415,12 +416,20 @@ public class HomeManager extends JFrame{
 
 	public void displayAllVehicle(){
     	getAllVehicle();
-    	try{
-    		t_all.join();
-    	}
-    	catch(InterruptedException ex){
-    		
-    	}
+    	Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	southRight.add(new JLabel("ID    Immatriculation    Modèle"));
     	for(Vehicule vehicle : listV.getListv()){
             southRight.add(new JLabel(vehicle.getId()+"    "+vehicle.getLicense_number()+"              "+vehicle.getModel()));
@@ -609,7 +618,7 @@ public class HomeManager extends JFrame{
 	/**
 	 * 
 	 * @author nassimhammadi laurahollard
-	 * Process waiting for server response   
+	 * Processus attendant une réponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 		
@@ -637,6 +646,8 @@ public class HomeManager extends JFrame{
 						JOptionPane d2 = new JOptionPane();
 						d2.showMessageDialog(jf, "Véhicule mis à jour");
 						fin=true;
+						
+				    	
 					}
 					else if (part1.equals("select")){
 						if(strings.length == 1){
@@ -663,7 +674,7 @@ public class HomeManager extends JFrame{
 						}
 						System.out.println(v);
 						immatricul.setText(v.getLicense_number());
-						yearv.setText(v.getYear());
+						yearv.setText(String.valueOf(v.getType()));
 						brand.setText(v.getBrand());
 						model.setText(v.getModel());
 						if(v.getIs_electric())
@@ -675,7 +686,7 @@ public class HomeManager extends JFrame{
 							present.setSelected(true);
 						} 
 						else present.setSelected(false);
-						if(v.getType() == 1){
+						if(Integer.parseInt(v.getYear()) == 1){
 							type.setText("Voiture");
 						}
 						else type.setText("Vélo");
@@ -696,6 +707,8 @@ public class HomeManager extends JFrame{
 						JOptionPane d3 = new JOptionPane();
 						d3.showMessageDialog(jf, "Véhicule supprimé");
 						fin = true;
+						southRight.removeAll();
+				    	displayAllVehicle();
 					}
 					
 					else if(part1.equals("selectAll")){
@@ -703,6 +716,7 @@ public class HomeManager extends JFrame{
 						 
 						try {
 							listV = myJSon.deSerialize(part2);
+							
 							System.out.println("All :"+listV);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -712,7 +726,7 @@ public class HomeManager extends JFrame{
 					}
 					else {
 						
-						System.out.println("error");
+						System.out.println("erreur");
 						fin=true;
 					}
 

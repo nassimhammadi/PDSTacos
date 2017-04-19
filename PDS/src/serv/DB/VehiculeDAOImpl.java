@@ -25,7 +25,7 @@ import static javax.management.Query.and;
  * @author hammadin hollardl
  */
 public class VehiculeDAOImpl implements VehiculeDAO {
-    /* Implementation of the method trouver() defined in the interface UtilisateurDao */
+    /* Implémentation de la méthode trouver() définie dans l'interface UtilisateurDao */
 	/**
 	 * Instance of DAOFactory
 	 */
@@ -150,7 +150,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "INSERT INTO VEHICLES (LICENSE_NUMBER,TYPE_VEHICLE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL) VALUES('"+license+"',"+year+","+type+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
+        String sql = "INSERT INTO VEHICLES (LICENSE_NUMBER,TYPE_VEHICLE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL) VALUES('"+license+"',"+type+","+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
        
         try {
             ordre.executeUpdate(sql);

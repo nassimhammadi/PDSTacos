@@ -37,7 +37,7 @@ public class Chat_ClientServeur implements Runnable {
 		   
 		    
 		} catch (IOException e) {
-			System.err.println(" The remote server disconnected !  ");
+			System.err.println("Le serveur distant s'est déconnecté !");
 		}
 	}
 
