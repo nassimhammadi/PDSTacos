@@ -712,7 +712,7 @@ public class HomeManager extends JFrame{
 					}
 					else {
 						
-						System.out.println("erreur");
+						System.out.println("error");
 						fin=true;
 					}
 
