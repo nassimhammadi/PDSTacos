@@ -42,6 +42,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
 import client.json.Json;
+import client.model.ListVehicle;
 import client.model.Vehicule;
 import client.socketClient.AllClasses;
 import client.socketClient.Client;
@@ -101,7 +102,9 @@ public class HomeManager extends JFrame{
     private Checkbox cp1_up;
     private Checkbox cp2_up;
     private JTextField id_del;
-    
+    private ListVehicle listV;
+    private JPanel southRight;
+    private Thread t_all;
 
     /**
      * 
@@ -112,8 +115,10 @@ public class HomeManager extends JFrame{
     
 
     public HomeManager(Client cli){
+    	
     	this.c=cli;
     	this.jf = this;
+    	getAllVehicle();
         // Add Menu
         MenuBar menu = new MenuBar();
         JPanel panelNord = new JPanel();
@@ -121,7 +126,7 @@ public class HomeManager extends JFrame{
         panelNord.setBackground(c);
         panelNord.setLayout(new GridLayout(1, 1)); // 1 ligne, 2 colonnes
         panelNord.add(menu.getMenu());
-        
+        System.out.println(listV);
         
         JPanel panelWest = new JPanel(new GridLayout(1,4));
         panelWest.setBackground(Color.white);
@@ -294,7 +299,7 @@ public class HomeManager extends JFrame{
         BoxLayout layoutSouthLeft = new BoxLayout(southLeft, BoxLayout.Y_AXIS);
         southLeft.setLayout(layoutSouthLeft);
         
-        JPanel southRight = new JPanel(new GridLayout(9,1));
+        southRight = new JPanel(new GridLayout(9,1));
         southRight.setBackground(Color.white);
         southLeft.add(Box.createGlue());
         
@@ -343,18 +348,15 @@ public class HomeManager extends JFrame{
 
     
 
-        southRight.add(Box.createGlue());
+       
         int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
         int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED; 
         JScrollPane jsp=new JScrollPane(southRight,v,h);
         jsp.setBorder(new TitledBorder("Historique des réparations : "));
         BoxLayout layoutSouthRight = new BoxLayout(southRight, BoxLayout.Y_AXIS);
         southRight.setLayout(layoutSouthRight);
-
-        for(int i=0; i<30; i++){
-            southRight.add(new JLabel("      - Test histo numero "+i));
-            southRight.add(Box.createVerticalGlue());
-        }  
+        
+        displayAllVehicle();
         panelSouth.add(jsp);
         
       
@@ -397,8 +399,35 @@ public class HomeManager extends JFrame{
 	}
     
     
+	public void getAllVehicle(){
+		String identif ="";
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+	}
 
-
+	public void displayAllVehicle(){
+    	getAllVehicle();
+    	try{
+    		t_all.join();
+    	}
+    	catch(InterruptedException ex){
+    		
+    	}
+    	southRight.add(new JLabel("ID    Immatriculation    Modèle"));
+    	for(Vehicule vehicle : listV.getListv()){
+            southRight.add(new JLabel(vehicle.getId()+"    "+vehicle.getLicense_number()+"              "+vehicle.getModel()));
+        }  
+    	setVisible(true);
+    	
+    }
     /**
      * 
      * @author nassimhammadi laurahollard
@@ -658,12 +687,28 @@ public class HomeManager extends JFrame{
 						JOptionPane d3 = new JOptionPane();
 						d3.showMessageDialog(jf, "Véhicule inséré");
 						fin = true;
-						
+						southRight.removeAll();
+				    	
+				    	displayAllVehicle();
+				    	
 					}
 					else if (part1.equals("delete")){
 						JOptionPane d3 = new JOptionPane();
 						d3.showMessageDialog(jf, "Véhicule supprimé");
 						fin = true;
+					}
+					
+					else if(part1.equals("selectAll")){
+						Json <ListVehicle> myJSon= new Json<ListVehicle>(ListVehicle.class);
+						 
+						try {
+							listV = myJSon.deSerialize(part2);
+							System.out.println("All :"+listV);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fin =true;
 					}
 					else {
 						
