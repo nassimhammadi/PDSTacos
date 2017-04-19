@@ -30,7 +30,7 @@ import static javax.management.Query.and;
  * @author hammadin hollardl
  */
 public class UserDAOImpl implements UserDAO {
-    /* Implémentation de la méthode trouver() définie dans l'interface UtilisateurDao */
+    /* Implementation of the method trouver() defined in the interface UtilisateurDao */
 	/**
 	 * Instance of DAOFactory
 	 */
