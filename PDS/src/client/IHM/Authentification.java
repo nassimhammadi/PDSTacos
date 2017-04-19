@@ -142,14 +142,14 @@ public class Authentification extends JPanel {
 			while (!fin){
 				if(!rep.equals(c.getCcs().getLastMessageFromServeur())){
 					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
-						System.out.println("bon");
+						System.out.println("ok");
 						myJFrame.dispose();
 						HomeManager HM= new HomeManager(c);
 						
 						fin=true;
 					}
 					else {
-						System.out.println("erreur");
+						System.out.println("error");
 						fin=true;
 					}
 
