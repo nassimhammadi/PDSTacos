@@ -609,7 +609,7 @@ public class HomeManager extends JFrame{
 	/**
 	 * 
 	 * @author nassimhammadi laurahollard
-	 * Processus attendant une réponse du serveur
+	 * Process waiting for server response   
 	 */
 	class checkMessageChange implements Runnable{
 		
