@@ -30,7 +30,7 @@ public class requestToServer {
 	private Connection co;
 	private ListVehicle listV;
 /*
- * M�thode permettant de traduire et d'executer la requ�te du client
+ * Method which traduces and executes the customer’s request   
  
 	public String evalRequest() throws IOException{
 	
