@@ -5,6 +5,8 @@
  */
 package serv.DB;
 
+import java.util.ArrayList;
+
 import serv.model.*;
 /**
  * Interface VehiculeDAO
@@ -25,6 +27,8 @@ public interface VehiculeDAO {
      * @throws DAOException
      */
     Vehicule find( int id ) throws DAOException;
+    
+    ListVehicle findAll() throws DAOException;
     
     /**
      * Update a vehicle into the database

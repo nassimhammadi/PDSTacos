@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import client.socketClient.requestToServer;
+import serv.socketServer.requestToServer;
 import serv.json.Json;
 /***
  * 
