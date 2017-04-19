@@ -127,7 +127,7 @@ public class Authentification extends JPanel {
 	
 	
 	/*
-	 * Processus attendant une r�ponse du serveur
+	 * Process waiting for server response
 	 */
 	class checkMessageChange implements Runnable{
 		Authentification A;
