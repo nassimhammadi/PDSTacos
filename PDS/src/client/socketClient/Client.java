@@ -8,6 +8,7 @@ import java.net.*;
 
 import com.mysql.jdbc.Connection;
 
+import client.IHM.InterfaceGraphique;
 import serv.socketServer.Serveur;
 
 public class Client {
@@ -51,6 +52,15 @@ public class Client {
 	
 	
 	
+	public static void main(String[] args) {
 	
+		
+
+        InterfaceGraphique inter = new InterfaceGraphique();
+		
+		
+	
+
+	}
 
 }

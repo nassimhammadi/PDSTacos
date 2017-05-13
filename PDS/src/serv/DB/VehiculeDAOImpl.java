@@ -6,6 +6,7 @@
 package serv.DB;
 
 
+import serv.model.ListVehicle;
 import serv.model.Vehicule;
 
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.management.Query.and;
@@ -82,6 +84,50 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         return v;
         
     }
+
+    
+    @SuppressWarnings("null")
+	public ListVehicle findAll(  ) throws DAOException {
+        
+       
+        ListVehicle list = null;
+        ArrayList<Vehicule> a_v = new ArrayList<Vehicule>();
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from VEHICLES";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+            int identifiant = rs.getInt(1);
+            String license = rs.getString(2) ;
+            String year = rs.getString(3);
+            int type = rs.getInt(4);
+            Boolean is_electric = rs.getBoolean(5);
+            Boolean is_present = rs.getBoolean(6);
+            String brand = rs.getString(7);
+            String model = rs.getString(8);
+            
+            Vehicule v = new Vehicule(identifiant, license, year, type, is_electric, is_present, brand, model);
+            a_v.add(v);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        list = new ListVehicle(a_v);
+        return list;
+        
+    }
     
     
     /**
@@ -104,7 +150,7 @@ public class VehiculeDAOImpl implements VehiculeDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "INSERT INTO VEHICLES (LICENSE_NUMBER,TYPE_VEHICLE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL) VALUES('"+license+"',"+year+","+type+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
+        String sql = "INSERT INTO VEHICLES (LICENSE_NUMBER,TYPE_VEHICLE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL) VALUES('"+license+"',"+type+","+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
        
         try {
             ordre.executeUpdate(sql);

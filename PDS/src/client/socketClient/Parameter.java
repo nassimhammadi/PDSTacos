@@ -7,5 +7,6 @@ public enum Parameter {
 	PWD, 
 	YEAR, 
 	PRESENCE, 
-	VEHICULE
+	VEHICULE,
+	ALL
 }

@@ -42,6 +42,7 @@ public class Chat_ClientServeur implements Runnable {
 	}
 
 	public synchronized String getLastMessageFromServeur() {
+		if(lastMessageFromServer == null){return "";}
 		return lastMessageFromServer;
 	}
 	

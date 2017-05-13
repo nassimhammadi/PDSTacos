@@ -4,13 +4,11 @@ import serv.DB.*;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import serv.DB.ConnectionPool;
-import serv.DB.VehiculeDAOImpl;
-import serv.json.Json;
-import serv.model.Vehicule;
-import serv.socketServer.Serveur;
+import client.model.ListVehicle;
+import client.model.Vehicule;
 
 
 
@@ -30,10 +28,12 @@ public class requestToServer {
 	private Vehicule v;
 	private LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
 	private Connection co;
+	private ListVehicle listV;
 /*
  * M�thode permettant de traduire et d'executer la requ�te du client
- */
+ 
 	public String evalRequest() throws IOException{
+	
 		String reponse="";
 		
 		switch (classe){
@@ -46,7 +46,13 @@ public class requestToServer {
 				case 0 : //return Vehicule.getAllVehicule();
 					break;
 				case 1 :
-					if (listParam.containsKey(Parameter.ID)) {
+					if(listParam.containsKey(Parameter.ALL)){
+						this.listV = vdao.findAll();
+						Json<ListVehicle> jV = new Json<ListVehicle>(ListVehicle.class);
+						String jsonVehicle = jV.serialize(listV);
+						return reponse = jsonVehicle;
+					}
+					else if (listParam.containsKey(Parameter.ID)) {
 						this.v = vdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
 						Json<Vehicule> jV = new Json<Vehicule>(Vehicule.class);
 						String jsonVehicle = jV.serialize(this.v);
@@ -68,9 +74,9 @@ public class requestToServer {
 					break;
 					
 				}
-				/*
+				
 				 * UPDATE PREND 1 param :  le  vehicule mis � jour
-				 */
+				 
 			case UPDATE:	
 				
 				switch (listParam.size()){
@@ -91,9 +97,9 @@ public class requestToServer {
 
 				}
 
-				/*
+				
 				 * UPDATE PREND 1 param :  le nouveau vehicule
-				 */
+				 
 			case INSERT:
 				switch (listParam.size()){
 				case 0 : //RIEN
@@ -141,7 +147,9 @@ public class requestToServer {
 		}
 		
 		return reponse;
-	}
+		*/
+	
+	
 
 	public requestToServer(AllClasses classe, TypeRequest type, String objectJson,
 			LinkedHashMap<Parameter, String> listParam) {

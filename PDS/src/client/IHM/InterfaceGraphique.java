@@ -5,6 +5,8 @@
  */
 package client.IHM;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 /*tesst*/
@@ -28,12 +30,24 @@ public class InterfaceGraphique extends JFrame {
          
             setVisible(true);
             }
-    
+ /* // When the user exit the application, we close his socket
+ 		this.addWindowListener(new WindowAdapter() {
+
+ 			public void windowClosing(WindowEvent e) {
+ 				JOptionPane.showMessageDialog(null, "Your connection has been closed !");
+ 				try {
+ 					fenetre.getC().socket.close();
+ 				} catch (IOException e1) {
+ 					e1.printStackTrace();
+ 				}
+ 			}
+ 		}*/
     /**
      * 
      * @param args
      * Main
      */
+//laura.hollard
       public static void main(String[] args) {
        	
           InterfaceGraphique inter = new InterfaceGraphique();
@@ -41,4 +55,5 @@ public class InterfaceGraphique extends JFrame {
 
 	
     }
+
 }
