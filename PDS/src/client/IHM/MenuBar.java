@@ -62,7 +62,7 @@ public class MenuBar {
         this.jmenu.add(repairs);
         this.jmenu.add(information);
         this.jmenu.add(deconnexion);
-         
+       //  ActivityDeposit.setJmenuBar(performance);
     }
     
     /**
