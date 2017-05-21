@@ -23,8 +23,9 @@ public class Vehicule {
     /**
      * The vehicle's entry date into the database
      */
-    private String year;
+    
     private int type;
+    private String year;
     private Boolean is_electric;
     private Boolean is_present;
     private String brand;

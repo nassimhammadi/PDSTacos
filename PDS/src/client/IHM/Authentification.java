@@ -30,18 +30,9 @@ public class Authentification extends JPanel {
 	private JCheckBox c1, c2;
 	private JTextField enterID;
 	private JTextField enterPWD;
+	private Serveur s=new Serveur();
 	private Client c= new Client();
 	
-
-	public Client getC() {
-		return c;
-	}
-
-
-	public void setC(Client c) {
-		this.c = c;
-	}
-
 
 	/**
 	 * 
@@ -49,7 +40,9 @@ public class Authentification extends JPanel {
 	 * Constructor of the Authentification class
 	 */
 	public Authentification(JFrame myJFrame){
-		
+		/*
+		 * Lancement du serveur
+		 */
 		c.connect();
 
 
@@ -127,7 +120,7 @@ public class Authentification extends JPanel {
 	
 	
 	/*
-	 * Process waiting for server response
+	 * Processus attendant une r�ponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 		Authentification A;
@@ -142,14 +135,14 @@ public class Authentification extends JPanel {
 			while (!fin){
 				if(!rep.equals(c.getCcs().getLastMessageFromServeur())){
 					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
-						System.out.println("ok");
+						System.out.println("bon");
 						myJFrame.dispose();
-						HomeManager HM= new HomeManager(c);
+						Repair HM= new Repair(c);
 						
 						fin=true;
 					}
 					else {
-						System.out.println("error");
+						System.out.println("erreur");
 						fin=true;
 					}
 
