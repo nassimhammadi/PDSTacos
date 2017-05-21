@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import serv.model.Car;
 import serv.model.ListVehicle;
 import serv.DB.ConnectionPool;
 import serv.DB.VehiculeDAOImpl;
@@ -35,6 +36,7 @@ public class requestToServer {
 	private Connection co;
 	private ListVehicle listV;
 	private priorizedList pList;
+	private Car car;
 /*
  * M�thode permettant de traduire et d'executer la requ�te du client
  */
@@ -132,6 +134,80 @@ public class requestToServer {
 
 
 			}
+			case CAR : 
+				CarDAOImpl cdao= new CarDAOImpl(co);
+				switch (type){
+				case SELECT: 
+					
+					switch (listParam.size()){
+					
+					case 1 :
+						
+						if (listParam.containsKey(Parameter.ID)) {
+							this.car = cdao.find(Integer.parseInt(listParam.get(Parameter.ID)));
+							Json<Car> jV2 = new Json<Car>(Car.class);
+							String jsonVehicle2 = jV2.serialize(this.car);
+							return reponse = "selectCar/"+jsonVehicle2;
+							
+						}
+						else if (listParam.containsKey(Parameter.IMMAT)) {
+							//	 vdao.findByImmat(Integer.parseInt(listParam.get(Parameter.IMMAT)));
+						}
+						break;
+					}
+					
+				case DELETE : 
+					switch (listParam.size()){
+					case 1 :
+							cdao.delete(Integer.parseInt(listParam.get(Parameter.ID)));
+							return reponse = "delete";
+					default :
+						break;
+						
+					}
+					/*
+					 * UPDATE PREND 1 param :  le  vehicule mis � jour
+					 */
+				case UPDATE:	
+					
+					switch (listParam.size()){
+					case 0 : //RIEN
+						break;
+					case 1 : 
+						
+						Json<Car> myJSon= new Json<Car>(Car.class);
+						Car c_update = myJSon.deSerialize(objectJson);
+						Boolean bool =Boolean.valueOf(listParam.get(Parameter.PRESENCE));
+						cdao.update(c_update);
+						return reponse = "update";
+						
+
+
+					default :
+						break;
+
+					}
+
+					/*
+					 * UPDATE PREND 1 param :  le nouveau vehicule
+					 */
+				case INSERT:
+					switch (listParam.size()){
+					case 0 : //RIEN
+						break;
+					case 1 : 	
+						Json<Car> myJSon= new Json<Car>(Car.class);
+						Car ca= myJSon.deSerialize(objectJson);
+						cdao.insert(ca);
+						return reponse = "insert";
+					default :
+						break;
+
+					}
+			
+
+
+				}
 		case EMPLOYEE :
 			UserDAOImpl udao= new UserDAOImpl(co);
 			switch(type){
