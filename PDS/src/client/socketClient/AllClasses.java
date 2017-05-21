@@ -4,5 +4,7 @@ public enum AllClasses {
 	VEHICULE,
 	EMPLOYEE,
 	LISTVEHICLE,
-	REPAIR
+	REPAIR,
+	BIKE,
+	CAR
 }
