@@ -44,6 +44,8 @@ import client.IHM.HomeManager.updateListener;
 import client.json.Json;
 import client.model.ListVehicle;
 import client.model.Vehicule;
+import client.model.priorizedList;
+import client.model.priorizedListObject;
 import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
@@ -98,6 +100,7 @@ public class Repair extends JFrame {
     private Checkbox cp2_up;
     private JTextField id_del;
     private ListVehicle listV;
+    private priorizedList prioList;
     private JPanel southRight;
     private Thread t_all;
     
@@ -399,7 +402,7 @@ public class Repair extends JFrame {
 		String identif ="";
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-		requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.SELECT,"",param);
+		requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.SELECT,"",param);
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();
@@ -426,8 +429,8 @@ public class Repair extends JFrame {
 			e.printStackTrace();
 		}
     	southRight.add(new JLabel("Priorité    Identifiant du véhicule    Date d'entrée"));
-    	for(Vehicule vehicle : listV.getListv()){
-            southRight.add(new JLabel(vehicle.getId()+"    "+vehicle.getLicense_number()+"              "+vehicle.getModel()));
+    	for(priorizedListObject pList : prioList.getPriorizedList()){
+            southRight.add(new JLabel(pList.getId_prio()+"    "+pList.getId_car()+"              "+pList.getDate_occured()));
         }  
     	setVisible(true);
     	
@@ -713,6 +716,19 @@ public class Repair extends JFrame {
 							listV = myJSon.deSerialize(part2);
 							
 							System.out.println("All :"+listV);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fin =true;
+					}
+					else if(part1.equals("selectAllPrio")){
+						Json <priorizedList> myJSon= new Json<priorizedList>(priorizedList.class);
+						 
+						try {
+							prioList = myJSon.deSerialize(part2);
+							
+							System.out.println("All :"+prioList);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
