@@ -5,6 +5,7 @@
  */
 package client.IHM;
 
+
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
