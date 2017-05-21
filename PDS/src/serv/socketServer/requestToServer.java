@@ -12,6 +12,7 @@ import serv.DB.ConnectionPool;
 import serv.DB.VehiculeDAOImpl;
 import serv.json.Json;
 import serv.model.Vehicule;
+import serv.model.priorizedList;
 import serv.socketServer.Serveur;
 
 
@@ -33,6 +34,7 @@ public class requestToServer {
 	private LinkedHashMap<Parameter,String> listParam = new LinkedHashMap<Parameter,String>();
 	private Connection co;
 	private ListVehicle listV;
+	private priorizedList pList;
 /*
  * M�thode permettant de traduire et d'executer la requ�te du client
  */
@@ -41,8 +43,17 @@ public class requestToServer {
 		
 		switch (classe){
 		case REPAIR :
-			
-		
+			priorizedListDAOimpl ldao = new priorizedListDAOimpl(co);
+			switch (type){
+				case SELECT: 
+					switch (listParam.size()){
+					case 0 : //return Vehicule.getAllVehicule();
+						this.pList = ldao.findAll();
+						Json<priorizedList> jV = new Json<priorizedList>(priorizedList.class);
+						String jsonListPrio = jV.serialize(pList);
+						return reponse = "selectAllPrio/"+jsonListPrio;
+					}
+		}
 		case VEHICULE : 
 			VehiculeDAOImpl vdao= new VehiculeDAOImpl(co);
 			switch (type){
