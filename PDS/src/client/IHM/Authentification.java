@@ -137,7 +137,7 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						HomeManager HM= new HomeManager(c);
+						Repair HM= new Repair(c);
 						
 						fin=true;
 					}

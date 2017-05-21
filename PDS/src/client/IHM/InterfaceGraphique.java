@@ -47,6 +47,7 @@ public class InterfaceGraphique extends JFrame {
      * @param args
      * Main
      */
+
 //laura.hollard
       public static void main(String[] args) {
        	
@@ -55,5 +56,6 @@ public class InterfaceGraphique extends JFrame {
 
 	
     }
+
 
 }
