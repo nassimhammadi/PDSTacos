@@ -367,89 +367,10 @@ public class Indicator extends JFrame{
 		}
 		@Override
 		public void run() {
-			/*boolean fin=false;
+			boolean fin=false;
 			
 			
 			
-			while (!fin){
-				if(!rep.equals(c.getCcs().getLastMessageFromServeur())){
-					String string = c.getCcs().getLastMessageFromServeur();
-					String [] strings = string.split("/");
-					String part1 = strings[0];
-					String part2 ="";
-					if(strings.length==2){
-						part2 = strings[1];
-					}
-					
-					if (c.getCcs().getLastMessageFromServeur().equals("update")){
-						JOptionPane d2 = new JOptionPane();
-						d2.showMessageDialog(jf, "Véhicule mis à jour");
-						fin=true;
-					}
-					else if (part1.equals("select")){
-						if(strings.length == 1){
-							immatricul.setText("");
-							yearv.setText("");
-							brand.setText("");
-							model.setText("");
-							motor.setText("");
-							present.setSelected(false);
-							type.setText("");
-							JOptionPane d = new JOptionPane();
-							d.showMessageDialog(jf, "Véhicule non trouvé");
-							fin = true; 
-							break;
-						}
-						else{
-						Json <Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-						Vehicule v = new Vehicule(); 
-						try {
-							v = myJSon.deSerialize(part2);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						System.out.println(v);
-						immatricul.setText(v.getLicense_number());
-						yearv.setText(v.getYear());
-						brand.setText(v.getBrand());
-						model.setText(v.getModel());
-						if(v.getIs_electric())
-						{
-							motor.setText("Electrique");
-						}
-						else motor.setText("Thermique");
-						if(v.getIs_present()){
-							present.setSelected(true);
-						} 
-						else present.setSelected(false);
-						if(v.getType() == 1){
-							type.setText("Voiture");
-						}
-						else type.setText("Vélo");
-						}
-						fin = true;
-						
-					}
-					else if (part1.equals("insert")){
-						JOptionPane d3 = new JOptionPane();
-						d3.showMessageDialog(jf, "Véhicule inséré");
-						fin = true;
-						
-					}
-					else if (part1.equals("delete")){
-						JOptionPane d3 = new JOptionPane();
-						d3.showMessageDialog(jf, "Véhicule supprimé");
-						fin = true;
-					}
-					else {
-						
-						System.out.println("erreur");
-						fin=true;
-					}
-
-				}
-			} */
 
 		}
 
