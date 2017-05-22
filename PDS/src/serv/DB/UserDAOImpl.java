@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -221,6 +222,46 @@ public class UserDAOImpl implements UserDAO {
             bool = false;
         }
         return bool;
+    }
+/**
+ * to get all employees
+ * 
+ * @return userList a list of all employees
+ */
+    public ArrayList<User> getAllUser(){
+    	ArrayList<User> userList= new ArrayList<User>();
+    	User u = null;
+    	try {
+    		ordre = connection.createStatement();
+    	} catch (SQLException ex) {
+    		Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    	}
+    	String sql = "select * from employees ";
+
+    	try {
+    		ResultSet rs = ordre.executeQuery(sql);
+    		while(rs.next()){
+    			int identifiant = rs.getInt(1);
+    			String pswd = rs.getString(2) ;
+    			String last_name = rs.getString(3);
+    			String first_name = rs.getString(4);
+    			String email =  rs.getString(5);
+    			Boolean is_manager = rs.getBoolean(6);
+    			u = new User(identifiant,pswd,last_name,first_name,email,is_manager);
+    			userList.add(u);
+    		}
+    	} catch (SQLException ex) {
+    		Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    	}
+
+
+    	try {
+    		ordre.close();
+    	} catch (SQLException ex) {
+    		Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    	}
+    	return userList;
+
     }
 }
 
