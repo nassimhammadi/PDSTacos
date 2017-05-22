@@ -46,8 +46,8 @@ public class CarDAOImpl implements CarDAO {
     }
     
     /**
-     * Find a vehicle into the database
-     * @param id The vehicle's id
+     * Find a CAR into the database
+     * @param id The CAR's id
      */
     public Car find( int id ) throws DAOException {
         
@@ -93,8 +93,8 @@ public class CarDAOImpl implements CarDAO {
     
     
     /**
-     * Insert a vehicle into the database
-     * @param id The vehicle's id
+     * Insert a CAR into the database
+     * @param id The CAR's id
      */
     public void insert(Car c) throws DAOException {
        
@@ -130,8 +130,8 @@ public class CarDAOImpl implements CarDAO {
     }
     
     /**
-     * Update a vehicle into the database
-     * @param id The vehicle's id
+     * Update a CAR into the database
+     * @param id The CAR's id
      */
     public void update(Car c) throws DAOException {
         int id = c.getId();
@@ -148,7 +148,7 @@ public class CarDAOImpl implements CarDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "UPDATE CAR SET LICENSE_NUMBER= '"+license+"',YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"' where ID_VEHICLE = "+id; 
+        String sql = "UPDATE CAR SET LICENSE_NUMBER= '"+license+"',YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"' where ID_CAR = "+id; 
       
         try {
             ordre.executeUpdate(sql);
@@ -166,8 +166,8 @@ public class CarDAOImpl implements CarDAO {
     }
 
     /**
-     * Delete a vehicle from the database
-     * @param id The vehicle's id
+     * Delete a CAR from the database
+     * @param id The CAR's id
      */
     public void delete(int id) throws DAOException {
         
@@ -177,7 +177,7 @@ public class CarDAOImpl implements CarDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "DELETE from CAR where ID_VEHICLE = "+id;
+        String sql = "DELETE from CAR where ID_CAR = "+id;
       
         try {
             ordre.executeUpdate(sql);
