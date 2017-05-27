@@ -14,7 +14,7 @@ import serv.model.*;
  */
 public interface CarDAO {
 	
-	/**
+	/**a
 	 * Insert a vehicle into the database
 	 * @param id the vehicle id
 	 * @throws DAOException
