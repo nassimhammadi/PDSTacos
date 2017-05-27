@@ -6,5 +6,6 @@ public enum AllClasses {
 	LISTVEHICLE,
 	REPAIR,
 	BIKE,
-	CAR
+	CAR,
+	BREAKDOWNS
 }
