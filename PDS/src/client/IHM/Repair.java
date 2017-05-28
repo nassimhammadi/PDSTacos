@@ -350,7 +350,7 @@ public class Repair extends JFrame {
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 		param.put(Parameter.ID, identif);
-		requestToServer rts=new requestToServer(AllClasses.BREAKDOWNS,TypeRequest.SELECT,"",param);
+		requestToServer rts=new requestToServer(AllClasses.BREAKDOWN,TypeRequest.SELECT,"",param);
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();

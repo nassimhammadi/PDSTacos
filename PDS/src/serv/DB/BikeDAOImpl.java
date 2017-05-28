@@ -5,11 +5,15 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import serv.model.Bike;
+import serv.model.Car;
+import serv.model.ListBike;
+import serv.model.ListCar;
 
 public class BikeDAOImpl {
    
@@ -51,7 +55,7 @@ public class BikeDAOImpl {
            String model = rs.getString(6);
            Date dateEntry = rs.getDate(7);
            
-           b = new Bike(identifiant, year, is_electric, is_present, brand, model,dateEntry);
+           b = new Bike(identifiant, year, is_electric, is_present, brand, model,dateEntry.toString());
           }
        } catch (SQLException ex) {
            Logger.getLogger(BikeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,5 +175,49 @@ public class BikeDAOImpl {
        }
        
    }
+   
+   
+   public ListBike findAll(  ) throws DAOException {
+       
+       
+       ListBike list = null;
+       ArrayList<Bike> a_c = new ArrayList<Bike>();
+       try {
+            ordre = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(BikeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       String sql = "select * from Bike";
+     
+       try {
+          ResultSet rs = ordre.executeQuery(sql);
+          while(rs.next()){
+              int identifiant = rs.getInt(1);
+              String year = rs.getString(2);
+              Boolean is_electric = rs.getBoolean(3);
+              Boolean is_present = rs.getBoolean(4);
+              String brand = rs.getString(5);
+              String model = rs.getString(6);
+              Date dateEntry = rs.getDate(7);
+              
+              Bike b = new Bike(identifiant, year, is_electric, is_present, brand, model,dateEntry.toString());
+              a_c.add(b);
+          }
+       } catch (SQLException ex) {
+           Logger.getLogger(BikeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       
+       try {
+           ordre.close();
+       } catch (SQLException ex) {
+           Logger.getLogger(BikeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       list = new ListBike(a_c);
+       return list;
+       
+   }
+   
+   
    
 }

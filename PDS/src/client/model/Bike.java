@@ -1,6 +1,6 @@
 package client.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Bike {
 	/**
@@ -17,7 +17,7 @@ public class Bike {
     private Boolean is_present;
     private String brand;
     private String model;
-    private Date dateEntry;
+    private String dateEntry;
 
     /**
      * Blank constructor
@@ -35,14 +35,14 @@ public class Bike {
      * @param modelV
      * Constructor
      */
-    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, Date dateE){
+    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, Timestamp dateE){
         this.id= identifiant;
         this.year = yearV;
         this.is_electric = electric;
         this.is_present = present;
         this.brand = brandV;
         this.model = modelV;
-        this.dateEntry = dateE;
+        this.dateEntry = dateE.toString();
     }
     
     /**
@@ -57,14 +57,14 @@ public class Bike {
      */
   
     
-    public Bike(String yearV, Boolean electric, Boolean present, String brandV, String modelV, Date dateE){
+    public Bike(String yearV, Boolean electric, Boolean present, String brandV, String modelV, Timestamp dateE){
     
         this.year = yearV;
         this.is_electric = electric;
         this.is_present = present;
         this.brand = brandV;
         this.model = modelV;
-        this.dateEntry = dateE;
+        this.dateEntry = dateE.toString();
     }
     
     
@@ -184,11 +184,11 @@ public class Bike {
 				+ model + "dateEntry=" + dateEntry + "]";
 	}
 
-	public Date getDateEntry() {
+	public String getDateEntry() {
 		return dateEntry;
 	}
 
-	public void setDateEntry(Date dateEntry) {
+	public void setDateEntry(String dateEntry) {
 		this.dateEntry = dateEntry;
 	}
 

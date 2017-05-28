@@ -30,7 +30,7 @@ import static javax.management.Query.and;
  * @author hammadin hollardl
  */
 public class UserDAOImpl implements UserDAO {
-    /* ImplÃ©mentation de la mÃ©thode trouver() dÃ©finie dans l'interface UtilisateurDao */
+    /* Implémentation de la méthode trouver() définie dans l'interface UtilisateurDao */
 	/**
 	 * Instance of DAOFactory
 	 */
@@ -185,9 +185,10 @@ public class UserDAOImpl implements UserDAO {
         
     }
     
-    public Boolean checkUserdb(String username, String password){
+    public int checkUserdb(String username, String password){
         String u_name ="" ;
         String pswd = "";
+        int id=0;
         Boolean bool = false;
         
         try {
@@ -195,13 +196,14 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select email,password from employees where email = '"+username+"'";
+        String sql = "select email,password,id_employee from employees where email = '"+username+"'";
       
         try {
            ResultSet rs = ordre.executeQuery(sql);
            while(rs.next()){
                u_name = rs.getString(1);
                pswd = rs.getString(2);
+        	   id= rs.getInt(3);
                
            }
         } catch (SQLException ex) {
@@ -219,8 +221,9 @@ public class UserDAOImpl implements UserDAO {
         }
         else{
             bool = false;
+            id=0;
         }
-        return bool;
+        return id;
     }
 }
 

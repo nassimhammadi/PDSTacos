@@ -7,5 +7,5 @@ public enum AllClasses {
 	REPAIR,
 	BIKE,
 	CAR,
-	BREAKDOWNS
+	BREAKDOWN
 }

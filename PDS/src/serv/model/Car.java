@@ -1,6 +1,7 @@
 package serv.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Car {
 
@@ -21,7 +22,7 @@ public class Car {
     private Boolean  is_present;
     private String brand;
     private String model;
-    private Date dateEntry;
+    private String dateEntry;
 
     /**
      * Blank constructor
@@ -39,7 +40,8 @@ public class Car {
      * @param modelV
      * Constructor
      */
-    public Car(int identifiant, String license , String yearV, Boolean electric, Boolean present, String brandV, String modelV, Date dateE){
+    
+    public Car(int identifiant, String license , String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE){
         this.id= identifiant;
         this.license_number = license;
         this.year = yearV;
@@ -60,7 +62,9 @@ public class Car {
      * @param modelV
      * Constructor without primary key
      */
-    public Car(String license ,  String yearV, Boolean electric, Boolean present, String brandV, String modelV, Date dateE){
+    
+	
+    public Car(String license ,  String yearV, Boolean electric, Boolean present, String brandV, String modelV, Timestamp dateE){
         
         this.license_number = license;
         this.year = yearV;
@@ -68,21 +72,22 @@ public class Car {
         this.is_present = present;
         this.brand = brandV;
         this.model = modelV;
-        this.dateEntry= dateE;
+        this.dateEntry= dateE.toString();
     }
     
-public Car(  String yearV, Boolean electric, Boolean present, String brandV, String modelV, Date dateE){
+public Car(  String yearV, Boolean electric, Boolean present, String brandV, String modelV, Timestamp dateE){
     
         this.year = yearV;
         this.is_electric = electric;
         this.is_present = present;
         this.brand = brandV;
         this.model = modelV;
-        this.dateEntry = dateE;
+        this.dateEntry = dateE.toString();
     }
     
     
-    /**
+    
+	/**
      * 
      * @return
      * Return id
@@ -214,12 +219,12 @@ public Car(  String yearV, Boolean electric, Boolean present, String brandV, Str
 				+ model + "dateEntry=" + dateEntry + "]";
 	}
 
-	public Date getDateEntry() {
-		return dateEntry;
+	public String getDateEntry() {
+		return dateEntry.toString();
 	}
 
-	public void setDateEntry(Date dateEntry) {
-		this.dateEntry = dateEntry;
+	public void setDateEntry(Timestamp dateEntry) {
+		this.dateEntry = dateEntry.toString();
 	}
 
     /**
