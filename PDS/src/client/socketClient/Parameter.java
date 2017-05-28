@@ -8,5 +8,7 @@ public enum Parameter {
 	YEAR, 
 	PRESENCE, 
 	VEHICULE,
-	ALL
+	ALL,
+	ID_BREAKDOWN,
+	MOTIF_BREAKDOWN
 }

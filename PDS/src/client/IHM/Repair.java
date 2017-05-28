@@ -109,6 +109,8 @@ public class Repair extends JFrame {
     private Thread t_all;
     private int sizeOfPrioList;
     private Car myCar;
+    private JScrollPane jsp;
+    private JPanel panelEast2;
     
 
     /**
@@ -133,10 +135,10 @@ public class Repair extends JFrame {
         panelNord.add(menu.getMenu());
         System.out.println(listV);
         
-        JPanel panelWest = new JPanel(new GridLayout(1,3));
+        JPanel panelWest = new JPanel(new BorderLayout());
         panelWest.setBackground(Color.white);
         
-        // JPanel to search vehicle thanks to ID
+        // JPanel to take a repair
         JPanel panelWest1 = new JPanel(new GridLayout(4,1));
         panelWest1.setBackground(Color.white);
         panelWest1.setPreferredSize(new Dimension(300, 200));
@@ -145,95 +147,15 @@ public class Repair extends JFrame {
         selectListener sl = new selectListener(this);
         search.addActionListener(sl);
         panelWest1.add(search);
-        /*
-        // JPanel to update vehicle year
-        JPanel panelWest2 = new JPanel(new GridLayout(10,2));
-        panelWest2.setBackground(Color.white);
-        panelWest2.setPreferredSize(new Dimension(300, 200));
-        panelWest2.setBorder(new TitledBorder("Mettre à jour un véhicule : "));
-        panelWest2.add(new JLabel("Identifiant :"));
-        id_up = new JTextField();
-        panelWest2.add(id_up);
-        panelWest2.add(new JLabel("Type de véhicule :"));
-        JPanel panelWest22 = new JPanel(new GridLayout(1,2));
-        ct1_up = new Checkbox("Voiture",cbg_type_up,true);
-        ct2_up = new Checkbox("Vélo",cbg_type_up,false);
-        ct2_up.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {    
-            	
-                im_j_up.setVisible(false);
-                im_up.setVisible(false);
-             }
-          });
-        ct1_up.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {    
-            	
-                im_j_up.setVisible(true);
-                im_up.setVisible(true);
-             }
-          });
-
-        panelWest22.add(ct1_up);
-        panelWest22.add(ct2_up);
-        panelWest2.add(panelWest22);
-        im_j_up = new JLabel("Immatriculation :");
-        panelWest2.add(im_j_up);
-        im_up = new JTextField();
-        panelWest2.add(im_up);
-        panelWest2.add(new JLabel("Année du véhicule :"));
-        year_up = new JTextField();
-        panelWest2.add(year_up);
-        panelWest2.add(new JLabel("Motorisation :"));
-        JPanel panelWest3 = new JPanel(new GridLayout(1,2));
-        cm1_up = new Checkbox("Thermique",cbg_motorisation_up,true);
-        cm2_up = new Checkbox("Elec",cbg_motorisation_up,false);
-        panelWest3.add(cm1_up);
-        panelWest3.add(cm2_up);
-        panelWest2.add(panelWest3);
-        panelWest2.add(new JLabel("Marque :"));
-        brand_up = new JTextField();
-        panelWest2.add(brand_up);
-        panelWest2.add(new JLabel("Modèle :"));
-        model_up = new JTextField();
-        panelWest2.add(model_up);
-        panelWest2.add(new JLabel("Présence dans le dépôt :"));
-        JPanel panelWest4 = new JPanel(new GridLayout(1,2));
-        cp1_up = new Checkbox("Oui",cbg_update_presence,true);
-        cp2_up = new Checkbox("Non",cbg_update_presence,false);
-        panelWest4.add(cp1_up);
-        panelWest4.add(cp2_up);
-        panelWest2.add(panelWest4);
-        JButton update_button = new JButton("Ajouter");
-        update_button.setBackground(Color.white);
-        updateListener upl = new updateListener(this);
-        update_button.addActionListener(upl);
-        panelWest2.add(update_button);
-        
-        // JPanel to delete vehicle
-        JPanel panelEast1 = new JPanel(new GridLayout(5,1));
-        panelEast1.setBackground(Color.white);
-        panelEast1.setPreferredSize(new Dimension(300, 200));
-        panelEast1.setBorder(new TitledBorder("Supprimer un véhicule de la base : "));
-        panelEast1.add(new JLabel("Identifiant du véhicule :"));
-        id_del = new JTextField();
-        JButton delete_btn = new JButton("Supprimer");
-        deleteListener dpl = new deleteListener(this);
-        delete_btn.addActionListener(dpl);
-        panelEast1.add(id_del);
-        panelEast1.add(delete_btn);
-        */
-        // Jpanel to add a vehicle
-        JPanel panelEast2 = new JPanel(new GridLayout(10,2));
+       
+        // Jpanel to check breakdowns on a specific vehicle
+        panelEast2 = new JPanel(new GridLayout(10,2));
         panelEast2.setBackground(Color.white);
         panelEast2.setPreferredSize(new Dimension(300, 200));
-        panelEast2.setBorder(new TitledBorder("Avancement : "));
+        panelEast2.setPreferredSize(new Dimension(500,500));
+        panelWest.add(panelWest1,BorderLayout.WEST);
+        panelWest.add(panelEast2,BorderLayout.CENTER);
        
-        panelWest.add(panelWest1);
-        JPanel panelEast1 = new JPanel();
-        panelEast1.setBackground(Color.WHITE);
-        panelWest.add(panelEast1);
-        panelWest.add(panelEast2);
-
         
         JPanel panelSouth =  new JPanel(new GridLayout(1,1));
         panelSouth.setBackground(Color.white);
@@ -298,7 +220,7 @@ public class Repair extends JFrame {
        
         int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
         int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED; 
-        JScrollPane jsp=new JScrollPane(southRight,v,h);
+        jsp=new JScrollPane(southRight,v,h);
         jsp.setBorder(new TitledBorder("Liste priorisée des réparations : "));
         BoxLayout layoutSouthRight = new BoxLayout(southRight, BoxLayout.Y_AXIS);
         southRight.setLayout(layoutSouthRight);
@@ -361,6 +283,84 @@ public class Repair extends JFrame {
 	}
 
 	public void displayAllVehicle(){
+    	getAllVehicle();
+    	Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		sizeOfPrioList =0;
+    	for(priorizedListObject pList : prioList.getPriorizedList()){
+            sizeOfPrioList+=1;
+        }  
+    	System.out.println(sizeOfPrioList);
+        // JPanel to show priorizedList of vehicle
+        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
+        list.setBackground(Color.WHITE);
+    	list.add(new JLabel("Priorité"));
+    	list.add(new JLabel("Identifiant du véhicule"));
+    	list.add(new JLabel("Date d'entrée"));
+    	int i =0;
+    	for(priorizedListObject pList : prioList.getPriorizedList()){
+    		int id;
+    		if(pList.getId_car() == 0){
+    			id=pList.getId_bike();
+    		}
+    		else{
+    			id=pList.getId_car();
+    		}
+    		if(i==0){
+    			JLabel j1 = new JLabel(""+pList.getId_prio());
+    			JLabel j2 = new JLabel(""+id);
+    			JLabel j3 = new JLabel(""+pList.getDate_occured());
+    			j1.setBackground(Color.RED);
+    			j1.setOpaque(true);
+    			j2.setBackground(Color.RED);
+    			j2.setOpaque(true);
+    			j3.setBackground(Color.RED);
+    			j3.setOpaque(true);
+    			list.add(j1);
+    			list.add(j2);
+    			list.add(j3);
+    			this.prioListObject = pList;
+    		} 
+    		else{
+            list.add(new JLabel(""+pList.getId_prio()));
+            list.add(new JLabel(""+id));
+            list.add(new JLabel(""+pList.getDate_occured()));
+    		}
+    		i++;
+        }  
+    	southRight.add(list);
+    	setVisible(true);
+    	
+    }
+	
+	public void getAllBreakDowns(){
+		String identif =String.valueOf(prioListObject.getId_car());
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		param.put(Parameter.ID, identif);
+		requestToServer rts=new requestToServer(AllClasses.BREAKDOWN,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+	}
+
+	public void displayAllBreakDowns(){
     	getAllVehicle();
     	Thread a = new Thread();
     	a.start();
@@ -734,6 +734,8 @@ public class Repair extends JFrame {
 						fin =true;
 					}
 					else if(part1.equals("selectCar")){
+						jsp.setVisible(false);
+						panelEast2.setBorder(new TitledBorder("Liste de(s) réparation(s): "));
 						Json <Car> myJSon= new Json<Car>(Car.class);
 						 
 						try {

@@ -30,7 +30,6 @@ public class Authentification extends JPanel {
 	private JCheckBox c1, c2;
 	private JTextField enterID;
 	private JTextField enterPWD;
-	private Serveur s=new Serveur();
 	private Client c= new Client();
 	
 
@@ -120,7 +119,7 @@ public class Authentification extends JPanel {
 	
 	
 	/*
-	 * Processus attendant une r�ponse du serveur
+	 * Processus attendant une r?ponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 		Authentification A;
@@ -134,10 +133,10 @@ public class Authentification extends JPanel {
 			boolean fin=false;
 			while (!fin){
 				if(!rep.equals(c.getCcs().getLastMessageFromServeur())){
-					if (c.getCcs().getLastMessageFromServeur().equals("connection ok")){
+					if (c.getCcs().getLastMessageFromServeur().startsWith("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						Repair HM= new Repair(c);
+						HomeManager HM= new HomeManager(c,Integer.parseInt(c.getCcs().getLastMessageFromServeur().split("\\+")[1]));
 						
 						fin=true;
 					}

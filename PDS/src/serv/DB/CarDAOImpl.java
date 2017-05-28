@@ -18,16 +18,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import serv.model.Car;
+import serv.model.ListCar;
 
 import static javax.management.Query.and;
 
 
 /**
- * Class which represent a implementation of VehiculeDAO
+ * Class which represent a implementation of CarDAO
  * @author hammadin hollardl
  */
 public class CarDAOImpl implements CarDAO {
-    /* ImplÃ©mentation de la mÃ©thode trouver() dÃ©finie dans l'interface UtilisateurDao */
+    /* Implémentation de la méthode trouver() définie dans l'interface UtilisateurDao */
 	/**
 	 * Instance of DAOFactory
 	 */
@@ -45,6 +46,63 @@ public class CarDAOImpl implements CarDAO {
         this.connection = c;
     }
     
+    
+    public int calculDuration(String license){
+    	Car c=findByLicense(license);
+         String sql ="SELECT SUM(DURATION) FROM LOGS_BREAKDOWNS, BREAKDOWNS WHERE LICENSE_NUMBER="+license+" AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN";
+    	int sum=0;
+         try {
+             ResultSet rs = ordre.executeQuery(sql);
+             while(rs.next()){
+               sum = rs.getInt(1);
+             }
+          } catch (SQLException ex) {
+              Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+          }
+      
+         
+		return sum;
+    	
+    }
+    
+    
+    
+public Car findByLicense( String license ) throws DAOException {
+        
+        Car c = null;
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from Car where LICENSE_NUMBER = '"+license+"'";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+            int identifiant = rs.getInt(1);
+            String year = rs.getString(3);
+            Boolean is_electric = rs.getBoolean(4);
+            Boolean is_present = rs.getBoolean(5);
+            String brand = rs.getString(6);
+            String model = rs.getString(7);
+            Date dateEntry = rs.getDate(8);
+            
+            c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString());
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
+        
+    }
     /**
      * Find a CAR into the database
      * @param id The CAR's id
@@ -71,7 +129,7 @@ public class CarDAOImpl implements CarDAO {
             String model = rs.getString(7);
             Date dateEntry = rs.getDate(8);
             
-            c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry);
+            c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString());
            }
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +139,7 @@ public class CarDAOImpl implements CarDAO {
         try {
             ordre.close();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return c;
         
@@ -110,7 +168,7 @@ public class CarDAOImpl implements CarDAO {
              ordre = connection.createStatement();
              
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql = "INSERT INTO CAR (LICENSE_NUMBER,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL,DATE_ENTRY) VALUES('"+license+"',"+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"','"+date+"')";
        
@@ -118,13 +176,13 @@ public class CarDAOImpl implements CarDAO {
             ordre.executeUpdate(sql);
             
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
             ordre.close();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }
@@ -146,7 +204,7 @@ public class CarDAOImpl implements CarDAO {
         try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql = "UPDATE CAR SET LICENSE_NUMBER= '"+license+"',YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"' where ID_CAR = "+id; 
       
@@ -154,13 +212,13 @@ public class CarDAOImpl implements CarDAO {
             ordre.executeUpdate(sql);
           
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
             ordre.close();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }
@@ -175,7 +233,7 @@ public class CarDAOImpl implements CarDAO {
         try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         String sql = "DELETE from CAR where ID_CAR = "+id;
       
@@ -183,16 +241,59 @@ public class CarDAOImpl implements CarDAO {
             ordre.executeUpdate(sql);
           
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
             ordre.close();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
+
+	public ListCar findAll(  ) throws DAOException {
+        
+	       
+        ListCar list = null;
+        ArrayList<Car> a_c = new ArrayList<Car>();
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from Car";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+               int identifiant = rs.getInt(1);
+               String license = rs.getString(2) ;
+               String year = rs.getString(3);
+               Boolean is_electric = rs.getBoolean(4);
+               Boolean is_present = rs.getBoolean(5);
+               String brand = rs.getString(6);
+               String model = rs.getString(7);
+               Date dateEntry = rs.getDate(8);
+               
+               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString());
+               a_c.add(c);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        list = new ListCar(a_c);
+        return list;
+        
+    }
+    
     
     
 }
