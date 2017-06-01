@@ -84,8 +84,9 @@ public class Indicator extends JFrame{
     private UserList listU;
     
     
-	public Indicator() {
+	public Indicator(Client client) {
 		this.jf = this;
+		this.c = client;
         // Add Menu
         MenuBar menu = new MenuBar();
         JPanel panelNord = new JPanel();
@@ -102,17 +103,17 @@ public class Indicator extends JFrame{
         JPanel panelWest1 = new JPanel(new GridLayout(6,1));
         panelWest1.setBackground(Color.white);
         panelWest1.setPreferredSize(new Dimension(300, 200));
-        panelWest1.setBorder(new TitledBorder("Listes des informations sur le véhicule : "));
-        panelWest1.add(new JLabel("Type de Véhicule :"));
+        panelWest1.setBorder(new TitledBorder("Listes des informations sur le vï¿½hicule : "));
+        panelWest1.add(new JLabel("Type de Vï¿½hicule :"));
         JComboBox<String> vehicletype= new JComboBox<String>();
-        vehicletype.addItem("Indifférent");
+        vehicletype.addItem("Indiffï¿½rent");
         vehicletype.addItem("Voiture");
         vehicletype.addItem("Velo");
         panelWest1.add(vehicletype);
-        panelWest1.add(new JLabel("Type d'opération :"));
+        panelWest1.add(new JLabel("Type d'opï¿½ration :"));
         JComboBox<String> operationtype= new JComboBox<String>();
         panelWest1.add(operationtype);
-        panelWest1.add(new JLabel("Employé :"));
+        panelWest1.add(new JLabel("Employï¿½ :"));
         JComboBox<String> employee= new JComboBox<String>();
         panelWest1.add(employee);
         Properties p = new Properties();
@@ -129,8 +130,8 @@ public class Indicator extends JFrame{
         panelWest1.add(dateBegin);
         panelWest1.add(new JLabel("Au:")); 
         panelWest1.add(dateEnd);
-        displayAllBreakdown();
-        displayAllEmployee();
+
+     
       
         JButton search = new JButton("Rechercher");
         
@@ -168,6 +169,7 @@ public class Indicator extends JFrame{
         this.setTitle("CSC App - Nassim Hammadi (M)");
         this.setBackground(Color.white);
         setVisible(true);
+        displayAllEmployee();        displayAllBreakdown();
 
     }
 
@@ -185,7 +187,7 @@ public class Indicator extends JFrame{
 	}
 	
 	public void displayAllEmployee(){
-		getAllBreakdown();
+		getAllEmployee();
 		Thread a = new Thread();
 		a.start();
 		try {
@@ -224,7 +226,7 @@ public class Indicator extends JFrame{
 		Thread a = new Thread();
 		a.start();
 		try {
-			a.sleep(1000);
+			a.sleep(10000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -464,8 +466,4 @@ public class Indicator extends JFrame{
 
 
 
-public static void main(String args[]){
-	System.out.println("test");
-	Indicator indicateur = new Indicator();
-}
 }

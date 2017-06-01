@@ -67,7 +67,11 @@ public class requestToServer {
 				String jsonListBreak = jV.serialize(bList);
 				return reponse = "selectAllBreakDown/"+jsonListBreak;
 			
-			
+			case SELECTID:
+				this.bList = bdao.findAll(Integer.parseInt(listParam.get(Parameter.ID)));
+				Json<BreakdownList> jV2 = new Json<BreakdownList>(BreakdownList.class);
+				String jsonListBreak2 = jV2.serialize(bList);
+				return reponse = "selectAllBreakDownId/"+jsonListBreak2;
 				
 			}
 			
@@ -239,14 +243,14 @@ public class requestToServer {
 
 					Json<Car> myJSon= new Json<Car>(Car.class);
 					Car ca= myJSon.deSerialize(objectJson);
-					// On vérifie l'existence du véhicule
+					// On vï¿½rifie l'existence du vï¿½hicule
 					Car c=cdao.findByLicense(ca.getLicense_number());
-					// Cas 1 : véhicule existe dans la BDD
+					// Cas 1 : vï¿½hicule existe dans la BDD
 					if (!(c==null)){
 					cdao.update(ca);
 					reponse="update";
 					}
-					// Cas 2 : véhicule non présent dans la BDD
+					// Cas 2 : vï¿½hicule non prï¿½sent dans la BDD
 					else {
 					cdao.insert(ca);
 					reponse="insert";
@@ -342,17 +346,17 @@ public class requestToServer {
 						break;
 					case 3 :
 						// A Faire :
-						//Gérer un numéro unique de vélo (style license)
+						//Gï¿½rer un numï¿½ro unique de vï¿½lo (style license)
 						Json<Bike> myJSon= new Json<Bike>(Bike.class);
 						Bike bike= myJSon.deSerialize(objectJson);
-						// On vérifie l'existence du véhicule
+						// On vï¿½rifie l'existence du vï¿½hicule
 						Bike b=bikedao.find(bike.getId());
-						// Cas 1 : véhicule existe dans la BDD
+						// Cas 1 : vï¿½hicule existe dans la BDD
 						if (!b.equals(null)){
 						bikedao.update(bike);
 						reponse="update";
 						}
-						// Cas 2 : véhicule non présent dans la BDD
+						// Cas 2 : vï¿½hicule non prï¿½sent dans la BDD
 						else {
 						bikedao.insert(bike);
 						reponse="insert";
@@ -376,6 +380,18 @@ public class requestToServer {
 		case EMPLOYEE :
 			UserDAOImpl udao= new UserDAOImpl(co);
 			switch(type){
+			case SELECT:
+				switch (listParam.size()){
+				case 0:
+				this.uList = udao.getAllUser();
+				Json<UserList> jV = new Json<UserList>(UserList.class);
+				String jsonListUser = jV.serialize(uList);
+				return reponse = "selectAllUser/"+jsonListUser;
+				default :
+					break;
+				
+				}
+
 			case LOGIN:
 				switch (listParam.size()){
 				case 2 :
@@ -397,16 +413,11 @@ public class requestToServer {
 
 				}
 			
-			case SELECT:
-				this.uList = udao.getAllUser();
-				Json<UserList> jV = new Json<UserList>(UserList.class);
-				String jsonListUser = jV.serialize(uList);
-				return reponse = "selectAllUser/"+jsonListUser;
 			
 			
 				
 			}
-
+		
 			break;
 		default :
 			break;

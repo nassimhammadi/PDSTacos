@@ -43,6 +43,8 @@ import client.IHM.HomeManager.insertListener;
 import client.IHM.HomeManager.selectListener;
 import client.IHM.HomeManager.updateListener;
 import client.json.Json;
+import client.model.Breakdown;
+import client.model.BreakdownList;
 import client.model.Car;
 import client.model.ListVehicle;
 import client.model.Vehicule;
@@ -111,6 +113,8 @@ public class Repair extends JFrame {
     private Car myCar;
     private JScrollPane jsp;
     private JPanel panelEast2;
+    private BreakdownList bList;
+    private CheckboxGroup cbg;
     
 
     /**
@@ -121,11 +125,12 @@ public class Repair extends JFrame {
 
     
 
-    public Repair(Client cli){
+    public Repair(Client cli, int id){
     	
     	this.c=cli;
     	this.jf = this;
     	getAllVehicle();
+    	cbg = new CheckboxGroup();
         // Add Menu
         MenuBar menu = new MenuBar();
         JPanel panelNord = new JPanel();
@@ -149,9 +154,9 @@ public class Repair extends JFrame {
         panelWest1.add(search);
        
         // Jpanel to check breakdowns on a specific vehicle
-        panelEast2 = new JPanel(new GridLayout(10,2));
+        panelEast2 = new JPanel(new BorderLayout());
         panelEast2.setBackground(Color.white);
-        panelEast2.setPreferredSize(new Dimension(300, 200));
+       
         panelEast2.setPreferredSize(new Dimension(500,500));
         panelWest.add(panelWest1,BorderLayout.WEST);
         panelWest.add(panelEast2,BorderLayout.CENTER);
@@ -350,7 +355,7 @@ public class Repair extends JFrame {
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 		param.put(Parameter.ID, identif);
-		requestToServer rts=new requestToServer(AllClasses.BREAKDOWN,TypeRequest.SELECT,"",param);
+		requestToServer rts=new requestToServer(AllClasses.BREAKDOWN,TypeRequest.SELECTID,"",param);
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();
@@ -361,7 +366,7 @@ public class Repair extends JFrame {
 	}
 
 	public void displayAllBreakDowns(){
-    	getAllVehicle();
+    	
     	Thread a = new Thread();
     	a.start();
     	try {
@@ -377,48 +382,21 @@ public class Repair extends JFrame {
 			e.printStackTrace();
 		}
     		sizeOfPrioList =0;
-    	for(priorizedListObject pList : prioList.getPriorizedList()){
+    	for(Breakdown pList : bList.getListBreakdown()){
             sizeOfPrioList+=1;
         }  
     	System.out.println(sizeOfPrioList);
         // JPanel to show priorizedList of vehicle
-        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
-        list.setBackground(Color.WHITE);
-    	list.add(new JLabel("Priorité"));
-    	list.add(new JLabel("Identifiant du véhicule"));
-    	list.add(new JLabel("Date d'entrée"));
+        JPanel panelEast23 = new JPanel(new GridLayout(sizeOfPrioList,1));
+        
     	int i =0;
-    	for(priorizedListObject pList : prioList.getPriorizedList()){
-    		int id;
-    		if(pList.getId_car() == 0){
-    			id=pList.getId_bike();
-    		}
-    		else{
-    			id=pList.getId_car();
-    		}
-    		if(i==0){
-    			JLabel j1 = new JLabel(""+pList.getId_prio());
-    			JLabel j2 = new JLabel(""+id);
-    			JLabel j3 = new JLabel(""+pList.getDate_occured());
-    			j1.setBackground(Color.RED);
-    			j1.setOpaque(true);
-    			j2.setBackground(Color.RED);
-    			j2.setOpaque(true);
-    			j3.setBackground(Color.RED);
-    			j3.setOpaque(true);
-    			list.add(j1);
-    			list.add(j2);
-    			list.add(j3);
-    			this.prioListObject = pList;
-    		} 
-    		else{
-            list.add(new JLabel(""+pList.getId_prio()));
-            list.add(new JLabel(""+id));
-            list.add(new JLabel(""+pList.getDate_occured()));
-    		}
-    		i++;
+    	for(Breakdown bd : bList.getListBreakdown()){
+    		String name = bd.getName_breakdown();
+            panelEast23.add(new Checkbox(""+name, cbg, false));
         }  
-    	southRight.add(list);
+    	panelEast23.setBackground(Color.WHITE);
+    	panelEast23.setVisible(true);
+    	panelEast2.add(panelEast23,BorderLayout.CENTER);
     	setVisible(true);
     	
     }
@@ -761,7 +739,23 @@ public class Repair extends JFrame {
 						 } 
 						 else present.setSelected(false);
 						fin =true;
+						getAllBreakDowns();
 					}
+					else if(part1.equals("selectAllBreakDownId")){
+						Json <BreakdownList> myJSon= new Json<BreakdownList>(BreakdownList.class);
+						 
+						try {
+							bList = myJSon.deSerialize(part2);
+							System.out.println("AllBreakdowns :"+bList);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						fin =true;
+						displayAllBreakDowns();
+					}
+					
 					else {
 						
 						System.out.println("erreur");

@@ -8,9 +8,10 @@ public class Breakdown {
 	private int type_breakdown;
 	private int priority;
 	private int duration;
+	private String justification;
 
 	public Breakdown(int id_breakdown, int id_piece, String name_breakdown, int type_breakdown, int priority,
-			int duration) {
+			int duration, String justication) {
 		super();
 		this.id_breakdown = id_breakdown;
 		this.id_piece = id_piece;
@@ -18,6 +19,7 @@ public class Breakdown {
 		this.type_breakdown = type_breakdown;
 		this.priority = priority;
 		this.duration = duration;
+		this.justification = justication;
 	}
 
 	public String toString(){
@@ -26,6 +28,14 @@ public class Breakdown {
 
 	public int getId_breakdown() {
 		return id_breakdown;
+	}
+	
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
 	}
 
 	public void setId_breakdown(int id_breakdown) {

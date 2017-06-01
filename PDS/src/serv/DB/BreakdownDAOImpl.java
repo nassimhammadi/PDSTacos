@@ -19,7 +19,7 @@ import serv.model.BreakdownList;
 
 import static javax.management.Query.and;
 
-public class BreakdownDAOImpl {
+public class BreakdownDAOImpl implements BreakdownDAO {
 
 	private Connection connection;
 	private Statement ordre;
@@ -56,7 +56,8 @@ public class BreakdownDAOImpl {
 				int type_breakdown = rs.getInt(4);
 				int priority = rs.getInt(5);
 				int duration = rs.getInt(6);
-				b = new Breakdown(id_breakdown, id_piece, name_breakdown, type_breakdown, priority, duration);
+				String justification = rs.getString(7);
+				b = new Breakdown(id_breakdown, id_piece, name_breakdown, type_breakdown, priority, duration,justification);
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,7 +95,8 @@ public class BreakdownDAOImpl {
 				int type_breakdown = rs.getInt(4);
 				int priority = rs.getInt(5);
 				int duration = rs.getInt(6);
-				b = new Breakdown(id_breakdown, id_piece, name_breakdown, type_breakdown, priority, duration);
+				String justification = rs.getString(7);
+				b = new Breakdown(id_breakdown, id_piece, name_breakdown, type_breakdown, priority, duration, justification);
 				a_b.add(b);
 			}
 		} catch (SQLException ex) {
@@ -147,6 +149,46 @@ public class BreakdownDAOImpl {
 			Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
+	}
+	
+	public BreakdownList findAll(int id){
+		BreakdownList list = null;
+        ArrayList<Breakdown> bd = new ArrayList<Breakdown>();
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from BREAKDOWNS bd join LOGS_BREAKDOWNS lb on bd.ID_BREAKDOWN=lb.ID_BREAKDOWN where lb.ID_CAR="+id+"";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+            int identifiant = rs.getInt(1);
+            int id_piece = rs.getInt(2);
+            String name_bd = rs.getString(3);
+            int type = rs.getInt(4);
+            int prio = rs.getInt(5);
+            int duration = rs.getInt(6);
+            String justification = rs.getString(7);
+            
+            Breakdown p = new Breakdown(identifiant,id_piece,name_bd,type,prio,duration,justification);
+            bd.add(p);
+            System.out.println("P : "+ p);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        list = new BreakdownList(bd);
+        System.out.println("Liste :"+list);
+        return list;
 	}
 
 

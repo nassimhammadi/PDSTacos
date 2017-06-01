@@ -19,4 +19,10 @@ public class BreakdownList {
 		this.listBreakdown = listBreakdown;
 	}
 
+	@Override
+	public String toString() {
+		return "BreakdownList [listBreakdown=" + listBreakdown + "]";
+	}
+	
+
 }

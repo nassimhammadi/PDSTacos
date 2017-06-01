@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class ListBreakdowns {
 
-		private ArrayList<Breakdowns> listBd;
+		private ArrayList<Breakdown> listBd;
 
-		public ListBreakdowns(ArrayList<Breakdowns> listBd) {
+		public ListBreakdowns(ArrayList<Breakdown> listBd) {
 			super();
 			this.listBd = listBd;
 		}
 
-		public ArrayList<Breakdowns> getListBd() {
+		public ArrayList<Breakdown> getListBd() {
 			return listBd;
 		}
 
-		public void setListBd(ArrayList<Breakdowns> listBd) {
+		public void setListBd(ArrayList<Breakdown> listBd) {
 			this.listBd = listBd;
 		}
 		
