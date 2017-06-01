@@ -49,8 +49,15 @@ public class CarDAOImpl implements CarDAO {
     
     public int calculDuration(String license){
     	Car c=findByLicense(license);
-         String sql ="SELECT SUM(DURATION) FROM LOGS_BREAKDOWNS, BREAKDOWNS WHERE LICENSE_NUMBER="+license+" AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN";
-    	int sum=0;
+        try {
+            ordre = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+         String sql ="SELECT SUM(DURATION) FROM LOGS_BREAKDOWNS, BREAKDOWNS, CAR "
+         		+ "WHERE LICENSE_NUMBER='"+license+"' AND CAR.ID_CAR=LOGS_BREAKDOWNS.ID_CAR "
+         		+ "AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN";
+         int sum=0;
          try {
              ResultSet rs = ordre.executeQuery(sql);
              while(rs.next()){
@@ -59,8 +66,11 @@ public class CarDAOImpl implements CarDAO {
           } catch (SQLException ex) {
               Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
           }
-      
-         
+         try {
+             ordre.close();
+         } catch (SQLException ex) {
+             Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+         }
 		return sum;
     	
     }
@@ -275,8 +285,8 @@ public Car findByLicense( String license ) throws DAOException {
                String brand = rs.getString(6);
                String model = rs.getString(7);
                Date dateEntry = rs.getDate(8);
-               
-               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString());
+               int duration=calculDuration(license);
+               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
                a_c.add(c);
            }
         } catch (SQLException ex) {

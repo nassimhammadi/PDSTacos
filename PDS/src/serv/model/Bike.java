@@ -18,6 +18,7 @@ public class Bike {
     private String brand;
     private String model;
     private String dateEntry;
+    private int duration;
 
     /**
      * Blank constructor
@@ -44,7 +45,16 @@ public class Bike {
         this.model = modelV;
         this.dateEntry = dateE.toString();
     }
-    
+    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE, int duration){
+        this.id= identifiant;
+        this.year = yearV;
+        this.is_electric = electric;
+        this.is_present = present;
+        this.brand = brandV;
+        this.model = modelV;
+        this.dateEntry = dateE.toString();
+        this.duration=duration;
+    }
     /**
      * 
      * @param license
@@ -67,8 +77,9 @@ public class Bike {
         this.dateEntry = dateE.toString();
     }
     
-    
-    /**
+ 
+
+	/**
      * 
      * @return
      * Return id
@@ -190,6 +201,14 @@ public class Bike {
 
 	public void setDateEntry(String dateEntry) {
 		this.dateEntry = dateEntry;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
     /**

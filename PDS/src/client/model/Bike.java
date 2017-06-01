@@ -18,6 +18,7 @@ public class Bike {
     private String brand;
     private String model;
     private String dateEntry;
+    private int duration;
 
     /**
      * Blank constructor
@@ -35,7 +36,7 @@ public class Bike {
      * @param modelV
      * Constructor
      */
-    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, Timestamp dateE){
+    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE){
         this.id= identifiant;
         this.year = yearV;
         this.is_electric = electric;
@@ -44,7 +45,16 @@ public class Bike {
         this.model = modelV;
         this.dateEntry = dateE.toString();
     }
-    
+    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE, int duration){
+        this.id= identifiant;
+        this.year = yearV;
+        this.is_electric = electric;
+        this.is_present = present;
+        this.brand = brandV;
+        this.model = modelV;
+        this.dateEntry = dateE.toString();
+        this.duration=duration;
+    }
     /**
      * 
      * @param license
@@ -67,8 +77,21 @@ public class Bike {
         this.dateEntry = dateE.toString();
     }
     
-    
-    /**
+ 
+
+	public Bike(int t_ins, String yearV, Boolean is_electric, Boolean is_present, String brand, String model, Timestamp dateE) {
+        this.id= t_ins;
+        this.year = yearV;
+        this.is_electric = is_present;
+        this.is_present = is_present;
+        this.brand = brand;
+        this.model = model;
+        this.dateEntry = dateE.toString();
+        this.duration=duration;
+		
+	}
+
+	/**
      * 
      * @return
      * Return id
@@ -190,6 +213,14 @@ public class Bike {
 
 	public void setDateEntry(String dateEntry) {
 		this.dateEntry = dateEntry;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
     /**

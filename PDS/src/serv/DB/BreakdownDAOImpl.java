@@ -46,7 +46,7 @@ public class BreakdownDAOImpl implements BreakdownDAO {
 			Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		String sql = "select * from BREAKDOWNS where ID_Breakdown = "+id;
-
+		
 		try {
 			ResultSet rs = ordre.executeQuery(sql);
 			while(rs.next()){

@@ -23,6 +23,7 @@ public class Car {
     private String brand;
     private String model;
     private String dateEntry;
+    private int duration;
 
     /**
      * Blank constructor
@@ -41,7 +42,7 @@ public class Car {
      * Constructor
      */
     
-    public Car(int identifiant, String license , String yearV, Boolean electric, Boolean present, String brandV, String modelV, Timestamp dateE){
+    public Car(int identifiant, String license , String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE){
         this.id= identifiant;
         this.license_number = license;
         this.year = yearV;
@@ -49,9 +50,19 @@ public class Car {
         this.is_present = present;
         this.brand = brandV;
         this.model = modelV;
-        this.dateEntry = dateE.toString();
+        this.dateEntry = dateE;
     }
-    
+    public Car(int identifiant, String license , String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE, int duration){
+        this.id= identifiant;
+        this.license_number = license;
+        this.year = yearV;
+        this.is_electric = electric;
+        this.is_present = present;
+        this.brand = brandV;
+        this.model = modelV;
+        this.dateEntry = dateE;
+        this.duration=duration;
+    }
     /**
      * 
      * @param license
@@ -86,7 +97,8 @@ public Car(  String yearV, Boolean electric, Boolean present, String brandV, Str
     }
     
     
-    /**
+    
+	/**
      * 
      * @return
      * Return id
@@ -224,6 +236,14 @@ public Car(  String yearV, Boolean electric, Boolean present, String brandV, Str
 
 	public void setDateEntry(Timestamp dateEntry) {
 		this.dateEntry = dateEntry.toString();
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
     /**

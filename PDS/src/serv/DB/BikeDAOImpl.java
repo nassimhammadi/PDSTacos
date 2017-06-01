@@ -30,6 +30,36 @@ public class BikeDAOImpl {
        this.connection = c;
    }
    
+   
+   public int calculDuration(int id){
+	    try {
+            ordre = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        String sql ="SELECT SUM(DURATION) FROM LOGS_BREAKDOWNS, BREAKDOWNS, BIKE "
+        		+ "WHERE ID_BIKE="+id+" AND BIKE.ID_BIKE=LOGS_BREAKDOWNS.ID_BIKE "
+        		+ "AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN";
+        int sum=0;
+        try {
+            ResultSet rs = ordre.executeQuery(sql);
+            while(rs.next()){
+              sum = rs.getInt(1);
+            }
+         } catch (SQLException ex) {
+             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+		return sum;
+   	
+   }
+   
+   
+   
    /**
     * Find a BIKE into the database
     * @param id The BIKE's id
@@ -188,7 +218,7 @@ public class BikeDAOImpl {
            Logger.getLogger(BikeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
        }
        String sql = "select * from Bike";
-     
+       
        try {
           ResultSet rs = ordre.executeQuery(sql);
           while(rs.next()){
@@ -199,8 +229,8 @@ public class BikeDAOImpl {
               String brand = rs.getString(5);
               String model = rs.getString(6);
               Date dateEntry = rs.getDate(7);
-              
-              Bike b = new Bike(identifiant, year, is_electric, is_present, brand, model,dateEntry.toString());
+              int duration = calculDuration(identifiant);
+              Bike b = new Bike(identifiant, year, is_electric, is_present, brand, model,dateEntry.toString(),duration);
               a_c.add(b);
           }
        } catch (SQLException ex) {

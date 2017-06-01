@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+g * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -41,6 +41,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
@@ -138,7 +139,6 @@ public class HomeManager extends JFrame{
 		this.c=cli;
 		this.id_client=id_client;
 		this.jf = this;
-		getAllVehicle();
 		// Add Menu
 		MenuBar menu = new MenuBar();
 		JPanel panelNord = new JPanel();
@@ -522,9 +522,10 @@ public class HomeManager extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		southRight.add(new JLabel("ID    Immatriculation    Modèle"));
+		southRight.add(new JLabel("ID      Immatriculation      Modèle Durée"));
+
 		for(Car c : listC.getL_b()){
-			southRight.add(new JLabel(c.getId()+"    "+c.getLicense_number()+"              "+c.getModel()));
+			southRight.add(new JLabel(c.getId()+"               "+c.getLicense_number()+"                    "+c.getModel()+"           "+c.getDuration()));
 		}  
 		setVisible(true);
 
