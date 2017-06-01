@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
-
+import client.json.Json;
 import client.IHM.MenuBar;
 import client.IHM.Indicator.checkMessageChange;
 import client.IHM.Indicator.deleteListener;
@@ -33,8 +33,15 @@ import client.IHM.Indicator.insertListener;
 import client.IHM.Indicator.selectListener;
 import client.IHM.Indicator.updateListener;
 import client.json.Json;
+import client.model.Bike;
+import client.model.Breakdown;
+import client.model.BreakdownList;
+import client.model.Car;
+import client.model.ListCar;
+import client.model.ListVehicle;
 import client.model.Vehicule;
 import client.socketClient.AllClasses;
+import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
 import client.socketClient.requestToServer;
@@ -67,6 +74,11 @@ public class Indicator extends JFrame{
     private JTextField id_up;
     private Checkbox cp1_up;
     private JTextField id_del;
+    private JComboBox<String> operationtype;
+    private Thread t_all;
+    private Client c;
+    private BreakdownList listB;
+    
     
 	public Indicator() {
 		this.jf = this;
@@ -95,10 +107,6 @@ public class Indicator extends JFrame{
         panelWest1.add(vehicletype);
         panelWest1.add(new JLabel("Type d'opération :"));
         JComboBox<String> operationtype= new JComboBox<String>();
-        operationtype.addItem("Indifférent");
-        operationtype.addItem("Pneu");
-        operationtype.addItem("Moteur");
-        operationtype.addItem("Frein");
         panelWest1.add(operationtype);
         panelWest1.add(new JLabel("Employé :"));
         JComboBox<String> employe= new JComboBox<String>();
@@ -122,7 +130,7 @@ public class Indicator extends JFrame{
         panelWest1.add(dateBegin);
         panelWest1.add(new JLabel("Au:")); 
         panelWest1.add(dateEnd);
-        
+        displayAllBreakdown();
       
         JButton search = new JButton("Rechercher");
         
@@ -163,6 +171,43 @@ public class Indicator extends JFrame{
 
     }
 
+	public void getAllBreakdown(){
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.BREAKDOWN,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+	}
+	
+	public void displayAllBreakdown(){
+		getAllBreakdown();
+		Thread a = new Thread();
+		a.start();
+		try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(Breakdown b : listB.getListBreakdown()){
+			operationtype.addItem(b.toString());
+			setVisible(true);
+		}
+	}
+	
+	
+	
    /**
     * 
     * @return
