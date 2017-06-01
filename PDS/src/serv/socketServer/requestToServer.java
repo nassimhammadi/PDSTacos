@@ -14,6 +14,7 @@ import serv.model.ListBike;
 import serv.model.ListCar;
 import serv.model.Bike;
 import serv.model.ListVehicle;
+import serv.model.UserList;
 import serv.model.Breakdown;
 import serv.model.BreakdownList;
 import serv.DB.ConnectionPool;
@@ -44,6 +45,7 @@ public class requestToServer {
 	private ListVehicle listV;
 	private priorizedList pList;
 	private BreakdownList bList;
+	private UserList uList;
 	private Car car;
 	private Breakdown breakdown;
 	private Bike Bike;
@@ -394,6 +396,15 @@ public class requestToServer {
 					break;
 
 				}
+			
+			case SELECT:
+				this.uList = udao.getAllUser();
+				Json<UserList> jV = new Json<UserList>(UserList.class);
+				String jsonListUser = jV.serialize(uList);
+				return reponse = "selectAllUser/"+jsonListUser;
+			
+			
+				
 			}
 
 			break;

@@ -39,12 +39,15 @@ import client.model.BreakdownList;
 import client.model.Car;
 import client.model.ListCar;
 import client.model.ListVehicle;
+import client.model.User;
 import client.model.Vehicule;
 import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
 import client.socketClient.requestToServer;
+import client.model.UserList;
+
 import org.jdatepicker.impl.*;
 import org.jdatepicker.util.*;
 import org.jdatepicker.*;
@@ -78,6 +81,7 @@ public class Indicator extends JFrame{
     private Thread t_all;
     private Client c;
     private BreakdownList listB;
+    private UserList listU;
     
     
 	public Indicator() {
@@ -109,13 +113,8 @@ public class Indicator extends JFrame{
         JComboBox<String> operationtype= new JComboBox<String>();
         panelWest1.add(operationtype);
         panelWest1.add(new JLabel("Employé :"));
-        JComboBox<String> employe= new JComboBox<String>();
-        employe.addItem("Indifférent");
-        employe.addItem("Franky");
-        employe.addItem("Cid");
-        employe.addItem("Bulma");
-        employe.addItem("Johnny");
-        panelWest1.add(employe);
+        JComboBox<String> employee= new JComboBox<String>();
+        panelWest1.add(employee);
         Properties p = new Properties();
         p.put("text.today", "Today");
         p.put("text.month", "Month");
@@ -131,6 +130,7 @@ public class Indicator extends JFrame{
         panelWest1.add(new JLabel("Au:")); 
         panelWest1.add(dateEnd);
         displayAllBreakdown();
+        displayAllEmployee();
       
         JButton search = new JButton("Rechercher");
         
@@ -171,6 +171,41 @@ public class Indicator extends JFrame{
 
     }
 
+	public void getAllEmployee(){
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.EMPLOYEE,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+	}
+	
+	public void displayAllEmployee(){
+		getAllBreakdown();
+		Thread a = new Thread();
+		a.start();
+		try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(User u : listU.getListUser()){
+			operationtype.addItem(u.toString());
+			setVisible(true);
+		}
+	}
+	
 	public void getAllBreakdown(){
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();

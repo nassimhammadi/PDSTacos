@@ -11,6 +11,7 @@
 package serv.DB;
 
 import serv.model.User;
+import serv.model.UserList;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -231,7 +232,9 @@ public class UserDAOImpl implements UserDAO {
  * 
  * @return userList a list of all employees
  */
-    public ArrayList<User> getAllUser(){
+	public UserList getAllUser(){
+    	
+    	UserList ul = null;
     	ArrayList<User> userList= new ArrayList<User>();
     	User u = null;
     	try {
@@ -263,7 +266,9 @@ public class UserDAOImpl implements UserDAO {
     	} catch (SQLException ex) {
     		Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
     	}
-    	return userList;
+    	
+    	ul= new UserList(userList);
+    	return ul;
 
     }
 }
