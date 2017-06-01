@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -410,7 +411,7 @@ public class Repair extends JFrame {
     }
 	
 	public void displayLog(){
-		
+		System.out.println("coucou");
 	}
     /**
      * 
@@ -573,15 +574,22 @@ public class Repair extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String id_bd="";
+			Checkbox chk = cbg.getSelectedCheckbox();
+			String label = chk.getLabel();
+			System.out.println(label);
 			for(Breakdown bd : bList.getListBreakdown()){
 	    		String name = bd.getName_breakdown();
-	            if(cbg.getSelectedCheckbox().getLabel() == name){
+	    		System.out.println(name);
+	            if(label.equals(name)){
+	            	System.out.println("if");
 	            	id_bd = String.valueOf(bd.getId_breakdown());
 	            }
 	        }  
+		
 			if(prioListObject.getId_car()!=0){
 				String identif=String.valueOf(prioListObject.getId_car());
 	 			String rep="";
+	 			System.out.println("l'id: "+id_bd);
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
 	 			param.put(Parameter.ID_BREAKDOWN, id_bd);
