@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import serv.model.Car;
+import serv.model.ListBreakdowns;
 import serv.model.ListVehicle;
 import serv.DB.ConnectionPool;
 import serv.DB.VehiculeDAOImpl;
@@ -37,6 +38,7 @@ public class requestToServer {
 	private ListVehicle listV;
 	private priorizedList pList;
 	private Car car;
+	private ListBreakdowns bdList;
 /*
  * M�thode permettant de traduire et d'executer la requ�te du client
  */
@@ -44,6 +46,19 @@ public class requestToServer {
 		String reponse="";
 		
 		switch (classe){
+		case BREAKDOWNS : 
+			BreakdownsDAOImpl bdao = new BreakdownsDAOImpl(co);
+			switch(type){
+			case SELECTBDCAR:
+				switch(listParam.size()){
+				case 1 :
+					this.bdList =  bdao.findAllCar(1);
+					Json<ListBreakdowns> jV = new Json<ListBreakdowns>(ListBreakdowns.class);
+					String jsonListBd = jV.serialize(bdList);
+					return reponse = "selectBdCar/"+jsonListBd;
+				}
+			}
+		
 		case REPAIR :
 			priorizedListDAOimpl ldao = new priorizedListDAOimpl(co);
 			switch (type){

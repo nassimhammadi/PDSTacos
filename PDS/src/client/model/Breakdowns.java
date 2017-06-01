@@ -5,20 +5,22 @@ public class Breakdowns {
 	private int id_piece;
 	private String name_breakdown;
 	private int type;
+	private int priority;
 	private int duration;
 	private String justification;
 	
-	public Breakdowns(int id_breakdowns, int id_piece, String name_breakdown, int type, int duration,
+	public Breakdowns(int id_breakdowns, int id_piece, String name_breakdown, int type, int priority, int duration,
 			String justification) {
 		super();
 		this.id_breakdowns = id_breakdowns;
 		this.id_piece = id_piece;
 		this.name_breakdown = name_breakdown;
 		this.type = type;
+		this.priority = priority;
 		this.duration = duration;
 		this.justification = justification;
 	}
-
+	
 	public int getId_breakdowns() {
 		return id_breakdowns;
 	}

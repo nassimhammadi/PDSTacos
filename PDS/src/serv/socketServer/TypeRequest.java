@@ -5,6 +5,7 @@ public enum TypeRequest {
 	 INSERT,
 	 DELETE,
 	 SELECT,
-	 LOGIN	 
+	 LOGIN,
+	 SELECTBDCAR
 	
 }

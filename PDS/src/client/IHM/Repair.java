@@ -43,7 +43,9 @@ import client.IHM.HomeManager.insertListener;
 import client.IHM.HomeManager.selectListener;
 import client.IHM.HomeManager.updateListener;
 import client.json.Json;
+import client.model.Breakdowns;
 import client.model.Car;
+import client.model.ListBreakdowns;
 import client.model.ListVehicle;
 import client.model.Vehicule;
 import client.model.priorizedList;
@@ -106,11 +108,14 @@ public class Repair extends JFrame {
     private priorizedListObject prioListObject;
     private JPanel southRight;
     private JPanel list;
+    private JPanel listBrd;
     private Thread t_all;
+    private Thread t_allbd;
     private int sizeOfPrioList;
     private Car myCar;
     private JScrollPane jsp;
     private JPanel panelEast2;
+    private ListBreakdowns listBd;
     
 
     /**
@@ -149,9 +154,9 @@ public class Repair extends JFrame {
         panelWest1.add(search);
        
         // Jpanel to check breakdowns on a specific vehicle
-        panelEast2 = new JPanel(new GridLayout(10,2));
+        panelEast2 = new JPanel();
         panelEast2.setBackground(Color.white);
-        panelEast2.setPreferredSize(new Dimension(300, 200));
+       
         panelEast2.setPreferredSize(new Dimension(500,500));
         panelWest.add(panelWest1,BorderLayout.WEST);
         panelWest.add(panelEast2,BorderLayout.CENTER);
@@ -276,6 +281,7 @@ public class Repair extends JFrame {
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();
+		System.out.println(rep);
 		c.getCcs().setLastMessageToServer(jsonAuth);
 		checkMessageChange cmc= new checkMessageChange(rep);
 		t_all=new Thread(cmc);
@@ -350,75 +356,51 @@ public class Repair extends JFrame {
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 		param.put(Parameter.ID, identif);
-		requestToServer rts=new requestToServer(AllClasses.BREAKDOWNS,TypeRequest.SELECT,"",param);
+		requestToServer rts=new requestToServer(AllClasses.BREAKDOWNS,TypeRequest.SELECTBDCAR,"",param);
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();
+		System.out.println(rep);
 		c.getCcs().setLastMessageToServer(jsonAuth);
 		checkMessageChange cmc= new checkMessageChange(rep);
-		t_all=new Thread(cmc);
-		t_all.start();
+		t_allbd=new Thread(cmc);
+		t_allbd.start();
 	}
 
 	public void displayAllBreakDowns(){
-    	getAllVehicle();
-    	Thread a = new Thread();
-    	a.start();
+		
+		getAllBreakDowns();
+    	Thread b = new Thread();
+    	b.start();
     	try {
-			a.sleep(1000);
+			b.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	try {
-			a.join();
+			b.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     		sizeOfPrioList =0;
-    	for(priorizedListObject pList : prioList.getPriorizedList()){
+    	for(Breakdowns bdList : listBd.getListBd()){
             sizeOfPrioList+=1;
         }  
     	System.out.println(sizeOfPrioList);
         // JPanel to show priorizedList of vehicle
-        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
-        list.setBackground(Color.WHITE);
-    	list.add(new JLabel("Priorité"));
-    	list.add(new JLabel("Identifiant du véhicule"));
-    	list.add(new JLabel("Date d'entrée"));
-    	int i =0;
-    	for(priorizedListObject pList : prioList.getPriorizedList()){
+        JPanel panelEast3 = new JPanel(new GridLayout(sizeOfPrioList,1));
+        panelEast3.setBackground(Color.WHITE);
+    	
+    	for(Breakdowns bdList : listBd.getListBd()){
     		int id;
-    		if(pList.getId_car() == 0){
-    			id=pList.getId_bike();
-    		}
-    		else{
-    			id=pList.getId_car();
-    		}
-    		if(i==0){
-    			JLabel j1 = new JLabel(""+pList.getId_prio());
-    			JLabel j2 = new JLabel(""+id);
-    			JLabel j3 = new JLabel(""+pList.getDate_occured());
-    			j1.setBackground(Color.RED);
-    			j1.setOpaque(true);
-    			j2.setBackground(Color.RED);
-    			j2.setOpaque(true);
-    			j3.setBackground(Color.RED);
-    			j3.setOpaque(true);
-    			list.add(j1);
-    			list.add(j2);
-    			list.add(j3);
-    			this.prioListObject = pList;
-    		} 
-    		else{
-            list.add(new JLabel(""+pList.getId_prio()));
-            list.add(new JLabel(""+id));
-            list.add(new JLabel(""+pList.getDate_occured()));
-    		}
-    		i++;
+    			JLabel j1 = new JLabel(""+bdList.getName_breakdown());
+    			panelEast3.add(j1);
+    		
         }  
-    	southRight.add(list);
+    	panelEast2.add(panelEast3);
+    	
     	setVisible(true);
     	
     }
@@ -733,14 +715,27 @@ public class Repair extends JFrame {
 						}
 						fin =true;
 					}
+					else if(part1.equals("selectBdCar")){
+						Json<ListBreakdowns> myJSon = new Json<ListBreakdowns>(ListBreakdowns.class);
+						try{
+							listBd= myJSon.deSerialize(part2);
+							System.out.println("Allbd :"+listBd);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fin =true;
+						
+					}
 					else if(part1.equals("selectCar")){
 						jsp.setVisible(false);
 						panelEast2.setBorder(new TitledBorder("Liste de(s) réparation(s): "));
+						
 						Json <Car> myJSon= new Json<Car>(Car.class);
 						 
 						try {
 							myCar = myJSon.deSerialize(part2);
-							System.out.println("All :"+prioList);
+							
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -761,6 +756,7 @@ public class Repair extends JFrame {
 						 } 
 						 else present.setSelected(false);
 						fin =true;
+						displayAllBreakDowns();
 					}
 					else {
 						

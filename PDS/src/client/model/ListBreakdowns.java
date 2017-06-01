@@ -18,6 +18,11 @@ public class ListBreakdowns {
 		public void setListBd(ArrayList<Breakdowns> listBd) {
 			this.listBd = listBd;
 		}
+
+		@Override
+		public String toString() {
+			return "ListBreakdowns [listBd=" + listBd + "]";
+		}
 		
 		
 }
