@@ -120,6 +120,8 @@ public class Repair extends JFrame {
     private CheckboxGroup cbg;
     private JButton buttonGo;
     private LogsBreakdown logBget;
+    private JPanel panelSouth;
+    private JPanel southLeft;
     
 
     /**
@@ -168,14 +170,14 @@ public class Repair extends JFrame {
         panelWest.add(panelEast2,BorderLayout.CENTER);
        
         
-        JPanel panelSouth =  new JPanel(new GridLayout(1,1));
+        panelSouth =  new JPanel(new BorderLayout());
         panelSouth.setBackground(Color.white);
         panelSouth.setPreferredSize(new Dimension(300,350));
         panelSouth.setBorder(new TitledBorder("Informations sur le véhicule : "));
      //   panelSouth.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
 		 
-        JPanel southLeft =  new JPanel(new GridLayout(9,1));
+        southLeft =  new JPanel(new GridLayout(9,1));
         southLeft.setBackground(Color.white);
         BoxLayout layoutSouthLeft = new BoxLayout(southLeft, BoxLayout.Y_AXIS);
         southLeft.setLayout(layoutSouthLeft);
@@ -223,8 +225,8 @@ public class Repair extends JFrame {
         southLeft.add(model);
         
         southLeft.add(Box.createGlue());
-        panelSouth.add(southLeft);
-        panelSouth.add(southRight);
+        
+        panelSouth.add(southRight,BorderLayout.CENTER);
         
        
 
@@ -411,7 +413,16 @@ public class Repair extends JFrame {
     }
 	
 	public void displayLog(){
-		System.out.println("coucou");
+		Date date = logBget.getDate_e();
+		JPanel repa = new JPanel(new FlowLayout());
+		repa.add(new JLabel("Date d'entrée du Véhicule : "+date));
+		repa.setPreferredSize(new Dimension(1000,500));
+		repa.setBorder(new TitledBorder("Réparation : "));
+		repa.setBackground(Color.WHITE);
+		repa.setVisible(true);
+		panelSouth.add(repa,BorderLayout.CENTER);
+		panelSouth.add(southLeft,BorderLayout.WEST);
+		setVisible(true);
 	}
     /**
      * 
