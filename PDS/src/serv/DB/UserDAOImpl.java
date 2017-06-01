@@ -242,7 +242,7 @@ public class UserDAOImpl implements UserDAO {
     	} catch (SQLException ex) {
     		Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
     	}
-    	String sql = "select * from employees ";
+    	String sql = "select * from employees where is_manager=False";
 
     	try {
     		ResultSet rs = ordre.executeQuery(sql);
