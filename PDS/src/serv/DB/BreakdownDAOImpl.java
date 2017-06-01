@@ -159,7 +159,7 @@ public class BreakdownDAOImpl implements BreakdownDAO {
         } catch (SQLException ex) {
             Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select * from BREAKDOWNS bd join LOGS_BREAKDOWNS lb on bd.ID_BREAKDOWN=lb.ID_BREAKDOWN where lb.ID_CAR="+id+"";
+        String sql = "select * from BREAKDOWNS bd join LOGS_BREAKDOWNS lb on bd.ID_BREAKDOWN=lb.ID_BREAKDOWN where lb.ID_CAR="+id+" and lb.DATE_OCCURED IS NULL";
       
         try {
            ResultSet rs = ordre.executeQuery(sql);
