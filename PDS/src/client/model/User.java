@@ -150,4 +150,13 @@ public class User {
         this.is_manager = is_manager;
     }
     
+    /**
+     * 
+     * @return the right format for a label
+     */
+    public String toStringLabel(){
+    	return id_employee+last_name+first_name;
+    	
+    }
+    
 }

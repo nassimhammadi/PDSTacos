@@ -201,7 +201,7 @@ public class Indicator extends JFrame{
 			e.printStackTrace();
 		}
 		for(User u : listU.getListUser()){
-			operationtype.addItem(u.toString());
+			operationtype.addItem(u.toStringLabel());
 			setVisible(true);
 		}
 	}

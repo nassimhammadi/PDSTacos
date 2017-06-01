@@ -24,6 +24,10 @@ public class User {
     private String email;
     private Boolean is_manager;
     
+    public String toStringLabel(){
+    	return id_employee+last_name+first_name;
+    	
+    }
     public User() {
     }
     
