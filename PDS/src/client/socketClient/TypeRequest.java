@@ -6,6 +6,7 @@ public enum TypeRequest {
 	 DELETE,
 	 SELECT,
 	 LOGIN,
-	 SELECTID
+	 SELECTID,
+	 SELECTB;
 	
 }

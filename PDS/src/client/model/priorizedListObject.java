@@ -58,6 +58,11 @@ public class priorizedListObject {
 	public void setDate_occured(Date date_occured) {
 		this.date_occured = date_occured;
 	}
+	@Override
+	public String toString() {
+		return "priorizedListObject [id_prio=" + id_prio + ", id_car=" + id_car + ", id_bike=" + id_bike + ", model="
+				+ model + ", prio=" + prio + ", date_occured=" + date_occured + "]";
+	}
 	
 	
 	

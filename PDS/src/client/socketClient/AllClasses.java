@@ -7,5 +7,6 @@ public enum AllClasses {
 	REPAIR,
 	BIKE,
 	CAR,
-	BREAKDOWN
+	BREAKDOWN,
+	LOGS_BREAKDOWN
 }

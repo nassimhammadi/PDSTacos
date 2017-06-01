@@ -14,6 +14,7 @@ import serv.model.ListBike;
 import serv.model.ListCar;
 import serv.model.Bike;
 import serv.model.ListVehicle;
+import serv.model.LogsBreakdown;
 import serv.model.UserList;
 import serv.model.Breakdown;
 import serv.model.BreakdownList;
@@ -51,6 +52,7 @@ public class requestToServer {
 	private Bike Bike;
 	private ListCar listC;
 	private ListBike listB;
+	private LogsBreakdown logB;
 	/*
 	 * M?thode permettant de traduire et d'executer la requ?te du client
 	 */
@@ -58,6 +60,21 @@ public class requestToServer {
 		String reponse="";
 
 		switch (classe){
+		case LOGS_BREAKDOWN:
+			LogsBreakdownDAOImpl ldimpl = new LogsBreakdownDAOImpl(co);
+			switch(type){
+			case SELECT:
+				this.logB = ldimpl.findCar(Integer.parseInt(listParam.get(Parameter.ID)),Integer.parseInt(listParam.get(Parameter.ID_BREAKDOWN)));
+				Json<LogsBreakdown> jV = new Json<LogsBreakdown>(LogsBreakdown.class);
+				String jsonLogCar = jV.serialize(logB);
+				return reponse = "selectLog/"+jsonLogCar;
+			case SELECTB:
+				this.logB = ldimpl.findBike(Integer.parseInt(listParam.get(Parameter.ID)),Integer.parseInt(listParam.get(Parameter.ID_BREAKDOWN)));
+				Json<LogsBreakdown> jV2 = new Json<LogsBreakdown>(LogsBreakdown.class);
+				String jsonLogBike = jV2.serialize(logB);
+				return reponse = "selectLog/"+jsonLogBike;
+			}
+		
 		case BREAKDOWN :
 			BreakdownDAOImpl bdao = new BreakdownDAOImpl(co);
 			switch (type){

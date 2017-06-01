@@ -1,6 +1,7 @@
 package client.IHM;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Color;
@@ -47,6 +48,7 @@ import client.model.Breakdown;
 import client.model.BreakdownList;
 import client.model.Car;
 import client.model.ListVehicle;
+import client.model.LogsBreakdown;
 import client.model.Vehicule;
 import client.model.priorizedList;
 import client.model.priorizedListObject;
@@ -115,6 +117,8 @@ public class Repair extends JFrame {
     private JPanel panelEast2;
     private BreakdownList bList;
     private CheckboxGroup cbg;
+    private JButton buttonGo;
+    private LogsBreakdown logBget;
     
 
     /**
@@ -131,6 +135,7 @@ public class Repair extends JFrame {
     	this.jf = this;
     	getAllVehicle();
     	cbg = new CheckboxGroup();
+    	buttonGo = new JButton("Go");
         // Add Menu
         MenuBar menu = new MenuBar();
         JPanel panelNord = new JPanel();
@@ -397,9 +402,16 @@ public class Repair extends JFrame {
     	panelEast23.setBackground(Color.WHITE);
     	panelEast23.setVisible(true);
     	panelEast2.add(panelEast23,BorderLayout.CENTER);
+    	panelEast2.add(buttonGo,BorderLayout.SOUTH);
+    	selectInformationListener bg = new selectInformationListener(this);
+        buttonGo.addActionListener(bg);
     	setVisible(true);
     	
     }
+	
+	public void displayLog(){
+		
+	}
     /**
      * 
      * @author nassimhammadi laurahollard
@@ -512,7 +524,7 @@ public class Repair extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(prioListObject.getId_car()==1){
+			if(prioListObject.getId_car()!=0){
 	         	String identif=String.valueOf(prioListObject.getId_car());
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
@@ -550,54 +562,54 @@ public class Repair extends JFrame {
      * Uses when the user click on find
 	 *
 	 */
-	class insertListener implements ActionListener{
+	class selectInformationListener implements ActionListener{
 
 		private Repair rp;
 
-		public insertListener(Repair r) {
+		public selectInformationListener(Repair r) {
 			this.rp = r;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String identif=id_search.getText();
-			String rep="";
-			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			int t_ins;
-		    Boolean m_ins = true;
-		    Boolean p_ins = false;
-		    Vehicule v_ins=null;
-		    if(ct1_ins.getState()){
-		    	t_ins = 1;
-		    } else t_ins = 0;
-		    
-		    if(cm1_ins.getState()){
-		    	m_ins = false;
-		    }
-		    
-		    if(cp1_ins.getState()){
-		    	p_ins = true;
-		    }
-		    if(!ct2_ins.getState()){
-		    	v_ins = new Vehicule(im_ins.getText(),t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
-		    }
-		    else if(ct2_ins.getState()){
-		    	v_ins = new Vehicule(t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
-		    }
-		   
+			String id_bd="";
+			for(Breakdown bd : bList.getListBreakdown()){
+	    		String name = bd.getName_breakdown();
+	            if(cbg.getSelectedCheckbox().getLabel() == name){
+	            	id_bd = String.valueOf(bd.getId_breakdown());
+	            }
+	        }  
+			if(prioListObject.getId_car()!=0){
+				String identif=String.valueOf(prioListObject.getId_car());
+	 			String rep="";
+	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+	 			param.put(Parameter.ID, identif);
+	 			param.put(Parameter.ID_BREAKDOWN, id_bd);
+	 			requestToServer rts=new requestToServer(AllClasses.LOGS_BREAKDOWN,TypeRequest.SELECT,"",param);
+	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+	 			String jsonAuth = jsonRTS.serialize(rts);
+	 			rep=c.getCcs().getLastMessageFromServeur();
+	 			c.getCcs().setLastMessageToServer(jsonAuth);
+	 			checkMessageChange cmc= new checkMessageChange(rep);
+	 			Thread t=new Thread(cmc);
+	 			t.start();
+			}
+			else{
+				String identif=String.valueOf(prioListObject.getId_bike());
+	 			String rep="";
+	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+	 			param.put(Parameter.ID, identif);
+	 			param.put(Parameter.ID_BREAKDOWN, id_bd);
+	 			requestToServer rts=new requestToServer(AllClasses.LOGS_BREAKDOWN,TypeRequest.SELECTB,"",param);
+	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+	 			String jsonAuth = jsonRTS.serialize(rts);
+	 			rep=c.getCcs().getLastMessageFromServeur();
+	 			c.getCcs().setLastMessageToServer(jsonAuth);
+	 			checkMessageChange cmc= new checkMessageChange(rep);
+	 			Thread t=new Thread(cmc);
+	 			t.start();
+			}
 			
-			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-			Json myJSon_ins= new Json(Vehicule.class);
-			String v_i= myJSon_ins.serialize(v_ins);
-			param.put(Parameter.ID, v_i);
-			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.INSERT,v_i,param);
-			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rts);
-			rep=c.getCcs().getLastMessageFromServeur();
-			c.getCcs().setLastMessageToServer(jsonAuth);
-			checkMessageChange cmc= new checkMessageChange(rep);
-			Thread t=new Thread(cmc);
-			t.start();
 		}
 	}
 	
@@ -754,6 +766,19 @@ public class Repair extends JFrame {
 						
 						fin =true;
 						displayAllBreakDowns();
+					}
+					else if(part1.equals("selectLog")){
+						Json<LogsBreakdown> myJSon = new Json<LogsBreakdown>(LogsBreakdown.class);
+						try {
+							logBget = myJSon.deSerialize(part2);
+							System.out.println("LogBreakdowns :"+logBget);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						fin =true;
+						displayLog();
 					}
 					
 					else {
