@@ -131,6 +131,7 @@ public class Repair extends JFrame {
     private int duration;
     private int id_employee;
     private JTextField jt_c;
+    
 
     /**
      * 
@@ -534,6 +535,8 @@ public class Repair extends JFrame {
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
 			t.start();
+			dispose();
+			Finish f = new Finish(c,logBget.getId_bd_log(),id_employee);
 		}
 	}
     
@@ -603,7 +606,7 @@ public class Repair extends JFrame {
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
-	 			//param.put(Parameter.ID_PRIO, priorized_id); A remettre
+	 			//param.put(Parameter.ID_PRIO, priorized_id);
 	 			requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
 	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 	 			String jsonAuth = jsonRTS.serialize(rts);

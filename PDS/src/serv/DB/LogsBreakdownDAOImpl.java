@@ -201,7 +201,27 @@ public LogsBreakdown findBike( int id, int id_bd ) throws DAOException {
 	}
 
 
-
+	public void updateFinish(int id){
+		 try {
+	            ordre = connection.createStatement();
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	       String sql = "UPDATE LOGS_BREAKDOWNS SET DATE_REPARED =CURDATE() WHERE ID_BREAKDOWN_LOG="+id;
+	     
+	       try {
+	          ordre.executeUpdate(sql);
+	          
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	       
+	       try {
+	           ordre.close();
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	}
 
 
 	@Override

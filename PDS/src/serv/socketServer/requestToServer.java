@@ -129,6 +129,11 @@ public class requestToServer {
 				System.out.println("Listppppp"+lp);
 				lbimpl.update(id,id_bd_log, comment,lp);
 				return reponse="ok";
+			case FINISH:
+				LogsBreakdownDAOImpl lbimplf = new LogsBreakdownDAOImpl(co);
+				int idf = Integer.parseInt(listParam.get(Parameter.ID));
+				lbimplf.updateFinish(idf);
+				return reponse="ok";
 			}
 		case VEHICULE : 
 			VehiculeDAOImpl vdao= new VehiculeDAOImpl(co);
