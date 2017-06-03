@@ -71,6 +71,8 @@ public class Indicator extends JFrame{
 	private Client c;
 	private BreakdownList listB;
 	private UserList listU;
+	private JDatePickerImpl dateBegin;
+	private JDatePickerImpl dateEnd;
 
 
 	public Indicator(Client client) {
@@ -114,8 +116,8 @@ public class Indicator extends JFrame{
 		UtilDateModel modeleEnd = new UtilDateModel();
 		JDatePanelImpl datePanelBegin = new JDatePanelImpl(modeleBegin,p);
 		JDatePanelImpl datePanelEnd = new JDatePanelImpl(modeleEnd,p);
-		JDatePickerImpl dateBegin = new JDatePickerImpl(datePanelBegin,new DateLabelFormatter());
-		JDatePickerImpl dateEnd = new JDatePickerImpl(datePanelEnd,new DateLabelFormatter());
+		this.dateBegin = new JDatePickerImpl(datePanelBegin,new DateLabelFormatter());
+		this.dateEnd = new JDatePickerImpl(datePanelEnd,new DateLabelFormatter());
 		panelWest1.add(new JLabel("Du:")); 
 		panelWest1.add(dateBegin);
 		panelWest1.add(new JLabel("Au:")); 
@@ -273,9 +275,13 @@ public class Indicator extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String identif=id_search.getText();
+		//	String identif=id_search.getText();
 			String rep="";
+			java.sql.Date selectedDate = (java.sql.Date) dateBegin.getModel().getValue();
+			
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+			
+		/*	
 			int t_up;
 			Boolean m_up = false;
 			Boolean p_up = false;
@@ -304,7 +310,7 @@ public class Indicator extends JFrame{
 			System.out.println("Last Message :"+rep);
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
-			t.start();
+			t.start();*/
 		}
 	}
 
