@@ -28,10 +28,7 @@ import javax.swing.border.TitledBorder;
 import client.json.Json;
 import client.IHM.MenuBar;
 import client.IHM.Indicator.checkMessageChange;
-import client.IHM.Indicator.deleteListener;
-import client.IHM.Indicator.insertListener;
 import client.IHM.Indicator.selectListener;
-import client.IHM.Indicator.updateListener;
 import client.json.Json;
 import client.model.Bike;
 import client.model.Breakdown;
@@ -58,16 +55,7 @@ public class Indicator extends JFrame{
 
 
 	private JTextField id_search;
-	private JFrame jf;
 	private JTextField id_update;
-	private JTextField im_ins;
-	private Checkbox ct1_ins;
-	private Checkbox ct2_ins;
-	private JTextField year_ins;
-	private Checkbox cm1_ins;
-	private JTextField brand_ins;
-	private JTextField model_ins;
-	private Checkbox cp1_ins;
 	private JTextField im_up;
 	private Checkbox ct1_up;
 	private JTextField year_up;
@@ -86,7 +74,6 @@ public class Indicator extends JFrame{
 
 
 	public Indicator(Client client) {
-		this.jf = this;
 		this.c = client;
 		// Add Menu
 		MenuBar menu = new MenuBar();
@@ -104,18 +91,18 @@ public class Indicator extends JFrame{
 		JPanel panelWest1 = new JPanel(new GridLayout(6,1));
 		panelWest1.setBackground(Color.white);
 		panelWest1.setPreferredSize(new Dimension(300, 200));
-		panelWest1.setBorder(new TitledBorder("Listes des informations sur le v�hicule : "));
-		panelWest1.add(new JLabel("Type de V�hicule :"));
+		panelWest1.setBorder(new TitledBorder("Filtres de recherche : "));
+		panelWest1.add(new JLabel("Type de Vehicule :"));
 		JComboBox<String> vehicletype= new JComboBox<String>();
-		vehicletype.addItem("Indiff�rent");
+		vehicletype.addItem("Indifferent");
 		vehicletype.addItem("Voiture");
 		vehicletype.addItem("Velo");
 		panelWest1.add(vehicletype);
-		panelWest1.add(new JLabel("Type d'op�ration :"));
+		panelWest1.add(new JLabel("Type d'operation :"));
 		this.operationtype= new JComboBox<String>();
 		this.operationtype.addItem("Indifferent");
 		panelWest1.add(operationtype);
-		panelWest1.add(new JLabel("Employ� :"));
+		panelWest1.add(new JLabel("Employe :"));
 		this.employeelist= new JComboBox<String>();
 		this.employeelist.addItem("Indifferent");
 		panelWest1.add(employeelist);
@@ -137,8 +124,8 @@ public class Indicator extends JFrame{
 
 
 		JButton search = new JButton("Rechercher");
-
 		panelWest1.add(search);
+		
 		selectListener sl = new selectListener(this);
 		search.addActionListener(sl);
 		panelWest.add(panelWest1);
@@ -276,11 +263,11 @@ public class Indicator extends JFrame{
 	 * Uses when the user click on update
 	 *
 	 */
-	class updateListener implements ActionListener{
+	class selectListener implements ActionListener{
 
 		private Indicator hm;
 
-		public updateListener(Indicator h) {
+		public selectListener(Indicator h) {
 			this.hm = h;
 		}
 
@@ -321,121 +308,7 @@ public class Indicator extends JFrame{
 		}
 	}
 
-	/**
-	 * 
-	 * @author nassimhammadi laurahollard
-	 * Inner class which implements ActionListener.
-	 * Uses when the user click on delete
-	 *
-	 */
-	class deleteListener implements ActionListener{
-
-		private Indicator hm;
-
-		public deleteListener(Indicator h) {
-			this.hm = h;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String rep="";
-			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			param.put(Parameter.ID, id_del.getText());
-			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.DELETE,"",param);
-			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rts);
-			checkMessageChange cmc= new checkMessageChange(rep);
-			Thread t=new Thread(cmc);
-			t.start();
-		}
-	}
-
-
-	/**
-	 * 
-	 * @author nassimhammadi laurahollard
-	 * Inner class which implements ActionListener.
-	 * Uses when the user click on find
-	 *
-	 */
-	class selectListener implements ActionListener{
-
-		private Indicator hm;
-
-		public selectListener(Indicator h) {
-			this.hm = h;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String identif=id_search.getText();
-			String rep="";
-			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			param.put(Parameter.ID, identif);
-			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.SELECT,"",param);
-			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rts);
-			checkMessageChange cmc= new checkMessageChange(rep);
-			Thread t=new Thread(cmc);
-			t.start();
-		}
-	}
-
-	/**
-	 * 
-	 * @author nassimhammadi laurahollard
-	 * Inner class which implements ActionListener.
-	 * Uses when the user click on find
-	 *
-	 */
-	class insertListener implements ActionListener{
-
-		private Indicator hm;
-
-		public insertListener(Indicator h) {
-			this.hm = h;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String identif=id_search.getText();
-			String rep="";
-			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			int t_ins;
-			Boolean m_ins = true;
-			Boolean p_ins = false;
-			Vehicule v_ins=null;
-			if(ct1_ins.getState()){
-				t_ins = 1;
-			} else t_ins = 0;
-
-			if(cm1_ins.getState()){
-				m_ins = false;
-			}
-
-			if(cp1_ins.getState()){
-				p_ins = true;
-			}
-			if(!ct2_ins.getState()){
-				v_ins = new Vehicule(im_ins.getText(),t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
-			}
-			else if(ct2_ins.getState()){
-				v_ins = new Vehicule(t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText());
-			}
-
-
-			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-			Json myJSon_ins= new Json(Vehicule.class);
-			String v_i= myJSon_ins.serialize(v_ins);
-			param.put(Parameter.ID, v_i);
-			requestToServer rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.INSERT,v_i,param);
-			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rts);
-			checkMessageChange cmc= new checkMessageChange(rep);
-			Thread t=new Thread(cmc);
-			t.start();
-		}
-	}
+	
 
 
 
