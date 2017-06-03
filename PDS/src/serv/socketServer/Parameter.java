@@ -10,5 +10,7 @@ public enum Parameter {
 	VEHICULE,
 	ALL,
 	ID_BREAKDOWN,
-	MOTIF_BREAKDOWN
+	MOTIF_BREAKDOWN,
+	ID_PRIO,
+	LIST
 }

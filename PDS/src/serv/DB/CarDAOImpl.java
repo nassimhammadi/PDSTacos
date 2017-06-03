@@ -28,7 +28,7 @@ import static javax.management.Query.and;
  * @author hammadin hollardl
  */
 public class CarDAOImpl implements CarDAO {
-    /* Implémentation de la méthode trouver() définie dans l'interface UtilisateurDao */
+    /* Implï¿½mentation de la mï¿½thode trouver() dï¿½finie dans l'interface UtilisateurDao */
 	/**
 	 * Instance of DAOFactory
 	 */
@@ -301,6 +301,64 @@ public Car findByLicense( String license ) throws DAOException {
         }
         list = new ListCar(a_c);
         return list;
+        
+    }
+	
+public Car findAndDeletePrio( int id, int id_prio ) throws DAOException {
+        
+        Car c = null;
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from Car where ID_CAR = "+id;
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+            int identifiant = rs.getInt(1);
+            String license = rs.getString(2) ;
+            String year = rs.getString(3);
+            Boolean is_electric = rs.getBoolean(4);
+            Boolean is_present = rs.getBoolean(5);
+            String brand = rs.getString(6);
+            String model = rs.getString(7);
+            Date dateEntry = rs.getDate(8);
+            
+            c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString());
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       String sql2 = "DELETE from priorizedlist where ID_PL = "+id_prio;
+     
+       try {
+         ordre.executeUpdate(sql2);
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       try {
+           ordre.close();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        return c;
         
     }
     

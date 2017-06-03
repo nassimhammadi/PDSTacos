@@ -28,7 +28,7 @@ public interface CarDAO {
      */
     Car find( int id ) throws DAOException;
     
-    
+    Car findAndDeletePrio( int id,int id_prio ) throws DAOException;
     
     /**
      * Update a vehicle into the database

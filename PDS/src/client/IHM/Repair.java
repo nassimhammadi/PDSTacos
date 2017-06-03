@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
@@ -48,8 +49,10 @@ import client.json.Json;
 import client.model.Breakdown;
 import client.model.BreakdownList;
 import client.model.Car;
+import client.model.ListPieces;
 import client.model.ListVehicle;
 import client.model.LogsBreakdown;
+import client.model.Pieces;
 import client.model.Vehicule;
 import client.model.priorizedList;
 import client.model.priorizedListObject;
@@ -122,7 +125,10 @@ public class Repair extends JFrame {
     private LogsBreakdown logBget;
     private JPanel panelSouth;
     private JPanel southLeft;
-    
+    private ListPieces listP;
+    private JButton buttonRep;
+    private JButton search;
+    private int duration;
 
     /**
      * 
@@ -156,7 +162,7 @@ public class Repair extends JFrame {
         panelWest1.setBackground(Color.white);
         panelWest1.setPreferredSize(new Dimension(300, 200));
         panelWest1.add(new JLabel("Vous avez une réparation urgente"));
-        JButton search = new JButton("Prendre en charge");
+        search = new JButton("Prendre en charge");
         selectListener sl = new selectListener(this);
         search.addActionListener(sl);
         panelWest1.add(search);
@@ -412,17 +418,75 @@ public class Repair extends JFrame {
     	
     }
 	
+	public void getAllPieces(){
+		String identif =String.valueOf(logBget.getId_bd());
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		param.put(Parameter.ID, identif);
+		requestToServer rts=new requestToServer(AllClasses.PIECES,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+	}
 	public void displayLog(){
+		getAllPieces();
+		Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Date date = logBget.getDate_e();
-		JPanel repa = new JPanel(new FlowLayout());
+		JPanel repa = new JPanel();
+		BoxLayout layout = new BoxLayout(repa, BoxLayout.Y_AXIS);
+		repa.setLayout(layout);	
 		repa.add(new JLabel("Date d'entrée du Véhicule : "+date));
+		
+		repa.add(new JLabel("Liste des pieces nécessaires à la réparation :"));
+		for(Pieces p : listP.getListP()){
+			JLabel j;
+    		String name = p.getName();
+    		int stock = p.getStock();
+            if(stock <=10){
+            	j = new JLabel("- "+name+" "+stock+"/40");
+            	j.setForeground(Color.RED);
+            }
+            else{
+            	j = new JLabel("- "+name+" "+stock+"/40");
+            	
+            }
+            repa.add(j);
+        }  
+		repa.add(new JLabel("Main d'oeuvre prévue : "+duration+" heure(s)"));
+		repa.add(new JLabel("Commentaires : "));
+		JTextField t = new JTextField();
+		t.setSize(200,30);
+		repa.add(t);
+		buttonRep = new JButton("Réparer");
+		updateListener ul = new updateListener(this);
+        buttonRep.addActionListener(ul);
+		repa.add(buttonRep);
 		repa.setPreferredSize(new Dimension(1000,500));
 		repa.setBorder(new TitledBorder("Réparation : "));
 		repa.setBackground(Color.WHITE);
 		repa.setVisible(true);
+		
 		panelSouth.add(repa,BorderLayout.CENTER);
 		panelSouth.add(southLeft,BorderLayout.WEST);
 		setVisible(true);
+		
 	}
     /**
      * 
@@ -441,36 +505,17 @@ public class Repair extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String identif=id_search.getText();
+			
+			Json<ListPieces> jV = new Json<ListPieces>(ListPieces.class);
+			String jsonPieces = jV.serialize(listP);
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			int t_up;
-		    Boolean m_up = false;
-		    Boolean p_up = false;
-		    if(ct1_up.getState()){
-		    	t_up = 1;
-		    } else t_up = 0;
-		    
-		    if(cm1_up.getState()){
-		    	m_up = true;
-		    }
-		    
-		    if(cp1_up.getState()){
-		    	p_up = true;
-		    }
-			Vehicule v_up = new Vehicule(Integer.parseInt(id_up.getText()),im_up.getText(),t_up,year_up.getText(),m_up,p_up,brand_up.getText(),model_up.getText());
-			
-			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-			Json myJSon_up= new Json(Vehicule.class);
-			String v_i= myJSon_up.serialize(v_up);
-			param.put(Parameter.ID, id_up.getText());
-			
-			System.out.println("Param"+Parameter.ID);
-			requestToServer rtsu=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,v_i,param);
+			param.put(Parameter.ID, id_del.getText());
+			param.put(Parameter.LIST,jsonPieces);
+			requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.UPDATE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rtsu);
+			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
-			System.out.println("Last Message :"+rep);
 			c.getCcs().setLastMessageToServer(jsonAuth);
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
@@ -536,11 +581,15 @@ public class Repair extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			search.setEnabled(false);
+			
 			if(prioListObject.getId_car()!=0){
 	         	String identif=String.valueOf(prioListObject.getId_car());
+	         	String priorized_id = String.valueOf(prioListObject.getId_prio());
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
+	 			//param.put(Parameter.ID_PRIO, priorized_id); A remettre
 	 			requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
 	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 	 			String jsonAuth = jsonRTS.serialize(rts);
@@ -552,9 +601,11 @@ public class Repair extends JFrame {
 	         }
 			else{
 				String identif=String.valueOf(prioListObject.getId_bike());
+				String priorized_id = String.valueOf(prioListObject.getId_prio());
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
+	 			//param.put(Parameter.ID_PRIO, priorized_id);
 	 			requestToServer rts=new requestToServer(AllClasses.BIKE,TypeRequest.SELECT,"",param);
 	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 	 			String jsonAuth = jsonRTS.serialize(rts);
@@ -577,13 +628,14 @@ public class Repair extends JFrame {
 	class selectInformationListener implements ActionListener{
 
 		private Repair rp;
-
+		
 		public selectInformationListener(Repair r) {
 			this.rp = r;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			buttonGo.setEnabled(false);
 			String id_bd="";
 			Checkbox chk = cbg.getSelectedCheckbox();
 			String label = chk.getLabel();
@@ -594,6 +646,7 @@ public class Repair extends JFrame {
 	            if(label.equals(name)){
 	            	System.out.println("if");
 	            	id_bd = String.valueOf(bd.getId_breakdown());
+	            	duration = bd.getDuration();
 	            }
 	        }  
 		
@@ -799,6 +852,18 @@ public class Repair extends JFrame {
 						fin =true;
 						displayLog();
 					}
+					else if(part1.equals("selectAllPieces")){
+						Json<ListPieces> myJSon = new Json<ListPieces>(ListPieces.class);
+						try {
+							listP = myJSon.deSerialize(part2);
+							System.out.println("ListP :"+listP);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						fin =true;
+					}
 					
 					else {
 						
@@ -810,8 +875,6 @@ public class Repair extends JFrame {
 			}
 
 		}
-
-
 	}
 
 }
