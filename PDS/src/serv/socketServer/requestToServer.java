@@ -12,6 +12,7 @@ import client.socketClient.Parameter;
 import serv.model.Car;
 import serv.model.ListBike;
 import serv.model.ListCar;
+import serv.model.ListPieces;
 import serv.model.Bike;
 import serv.model.ListVehicle;
 import serv.model.LogsBreakdown;
@@ -53,6 +54,7 @@ public class requestToServer {
 	private ListCar listC;
 	private ListBike listB;
 	private LogsBreakdown logB;
+	private ListPieces listP;
 	/*
 	 * M?thode permettant de traduire et d'executer la requ?te du client
 	 */
@@ -188,6 +190,15 @@ public class requestToServer {
 
 
 
+			}
+		case PIECES:
+			PiecesDAOImpl pdao = new PiecesDAOImpl(co);
+			switch(type){
+			case SELECT:
+				this.listP= pdao.findList(Integer.parseInt(listParam.get(Parameter.ID)));
+				Json<ListPieces> jV = new Json<ListPieces>(ListPieces.class);
+				String jsonPieces = jV.serialize(listP);
+				return reponse = "selectAllPieces/"+jsonPieces;
 			}
 		case CAR : 
 			CarDAOImpl cdao= new CarDAOImpl(co);

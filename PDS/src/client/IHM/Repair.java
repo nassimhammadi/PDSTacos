@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
@@ -48,8 +49,10 @@ import client.json.Json;
 import client.model.Breakdown;
 import client.model.BreakdownList;
 import client.model.Car;
+import client.model.ListPieces;
 import client.model.ListVehicle;
 import client.model.LogsBreakdown;
+import client.model.Pieces;
 import client.model.Vehicule;
 import client.model.priorizedList;
 import client.model.priorizedListObject;
@@ -122,7 +125,10 @@ public class Repair extends JFrame {
     private LogsBreakdown logBget;
     private JPanel panelSouth;
     private JPanel southLeft;
-    
+    private ListPieces listP;
+    private JButton buttonRep;
+    private JButton search;
+    private int duration;
 
     /**
      * 
@@ -156,7 +162,7 @@ public class Repair extends JFrame {
         panelWest1.setBackground(Color.white);
         panelWest1.setPreferredSize(new Dimension(300, 200));
         panelWest1.add(new JLabel("Vous avez une réparation urgente"));
-        JButton search = new JButton("Prendre en charge");
+        search = new JButton("Prendre en charge");
         selectListener sl = new selectListener(this);
         search.addActionListener(sl);
         panelWest1.add(search);
@@ -428,6 +434,20 @@ public class Repair extends JFrame {
 	}
 	public void displayLog(){
 		getAllPieces();
+		Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Date date = logBget.getDate_e();
 		JPanel repa = new JPanel();
 		BoxLayout layout = new BoxLayout(repa, BoxLayout.Y_AXIS);
@@ -435,9 +455,27 @@ public class Repair extends JFrame {
 		repa.add(new JLabel("Date d'entrée du Véhicule : "+date));
 		
 		repa.add(new JLabel("Liste des pieces nécessaires à la réparation :"));
-		repa.add(new JLabel("- Rustines 3"));
-		repa.add(new JLabel("- Pneus 3"));
-		repa.add(new JLabel("- Joins 7"));
+		for(Pieces p : listP.getListP()){
+			JLabel j;
+    		String name = p.getName();
+    		int stock = p.getStock();
+            if(stock <=10){
+            	j = new JLabel("- "+name+" "+stock+"/40");
+            	j.setForeground(Color.RED);
+            }
+            else{
+            	j = new JLabel("- "+name+" "+stock+"/40");
+            	j.setForeground(Color.GREEN);
+            }
+            repa.add(j);
+        }  
+		repa.add(new JLabel("Main d'oeuvre prévue : "+duration+" heure(s)"));
+		repa.add(new JLabel("Commentaires : "));
+		JTextField t = new JTextField();
+		t.setSize(200,30);
+		repa.add(t);
+		buttonRep = new JButton("Réparer");
+		repa.add(buttonRep);
 		repa.setPreferredSize(new Dimension(1000,500));
 		repa.setBorder(new TitledBorder("Réparation : "));
 		repa.setBackground(Color.WHITE);
@@ -559,6 +597,8 @@ public class Repair extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			search.setEnabled(false);
+			
 			if(prioListObject.getId_car()!=0){
 	         	String identif=String.valueOf(prioListObject.getId_car());
 	         	String priorized_id = String.valueOf(prioListObject.getId_prio());
@@ -622,6 +662,7 @@ public class Repair extends JFrame {
 	            if(label.equals(name)){
 	            	System.out.println("if");
 	            	id_bd = String.valueOf(bd.getId_breakdown());
+	            	duration = bd.getDuration();
 	            }
 	        }  
 		
@@ -826,6 +867,18 @@ public class Repair extends JFrame {
 						
 						fin =true;
 						displayLog();
+					}
+					else if(part1.equals("selectAllPieces")){
+						Json<ListPieces> myJSon = new Json<ListPieces>(ListPieces.class);
+						try {
+							listP = myJSon.deSerialize(part2);
+							System.out.println("ListP :"+listP);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						fin =true;
 					}
 					
 					else {
