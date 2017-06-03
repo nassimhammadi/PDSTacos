@@ -155,7 +155,7 @@ public class User {
      * @return the right format for a label
      */
     public String toStringLabel(){
-    	return id_employee+" "+last_name+" "+first_name;
+    	return id_employee+". "+last_name+" "+first_name;
     	
     }
     

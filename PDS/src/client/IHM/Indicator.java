@@ -73,6 +73,8 @@ public class Indicator extends JFrame{
 	private UserList listU;
 	private JDatePickerImpl dateBegin;
 	private JDatePickerImpl dateEnd;
+	private JComboBox<String> vehicletype;
+	private int nbRep;
 
 
 	public Indicator(Client client) {
@@ -95,7 +97,7 @@ public class Indicator extends JFrame{
 		panelWest1.setPreferredSize(new Dimension(300, 200));
 		panelWest1.setBorder(new TitledBorder("Filtres de recherche : "));
 		panelWest1.add(new JLabel("Type de Vehicule :"));
-		JComboBox<String> vehicletype= new JComboBox<String>();
+		this.vehicletype= new JComboBox<String>();
 		vehicletype.addItem("Indifferent");
 		vehicletype.addItem("Voiture");
 		vehicletype.addItem("Velo");
@@ -112,8 +114,8 @@ public class Indicator extends JFrame{
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
-		UtilDateModel modeleBegin = new UtilDateModel();
-		UtilDateModel modeleEnd = new UtilDateModel();
+		SqlDateModel modeleBegin = new SqlDateModel();
+		SqlDateModel modeleEnd = new SqlDateModel();
 		JDatePanelImpl datePanelBegin = new JDatePanelImpl(modeleBegin,p);
 		JDatePanelImpl datePanelEnd = new JDatePanelImpl(modeleEnd,p);
 		this.dateBegin = new JDatePickerImpl(datePanelBegin,new DateLabelFormatter());
@@ -122,8 +124,6 @@ public class Indicator extends JFrame{
 		panelWest1.add(dateBegin);
 		panelWest1.add(new JLabel("Au:")); 
 		panelWest1.add(dateEnd);
-
-
 
 		JButton search = new JButton("Rechercher");
 		panelWest1.add(search);
@@ -162,6 +162,7 @@ public class Indicator extends JFrame{
 		this.setBackground(Color.white);
 		setVisible(true);
 		displayAllEmployee();      displayAllBreakdown();
+		
 
 	}
 
@@ -277,40 +278,29 @@ public class Indicator extends JFrame{
 		public void actionPerformed(ActionEvent arg0) {
 		//	String identif=id_search.getText();
 			String rep="";
-			java.sql.Date selectedDate = (java.sql.Date) dateBegin.getModel().getValue();
+			java.sql.Date dateBegin_r = (java.sql.Date) dateBegin.getModel().getValue();
+			java.sql.Date dateEnd_r = (java.sql.Date) dateEnd.getModel().getValue();
+			String vehicletype_r= vehicletype.getSelectedItem().toString();
+			String [] strings= operationtype.getSelectedItem().toString().split(". ");
+			String operationtype_r= strings[0];
+			strings= employeelist.getSelectedItem().toString().split(". ");
+			String employee_r= strings[0];
 			
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			
-		/*	
-			int t_up;
-			Boolean m_up = false;
-			Boolean p_up = false;
-			if(ct1_up.getState()){
-				t_up = 1;
-			} else t_up = 0;
-
-			if(cm1_up.getState()){
-				m_up = true;
-			}
-
-			if(cp1_up.getState()){
-				p_up = true;
-			}
-			Vehicule v_up = new Vehicule(Integer.parseInt(id_up.getText()),im_up.getText(),t_up,year_up.getText(),m_up,p_up,brand_up.getText(),model_up.getText());
-
-			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-			Json myJSon_up= new Json(Vehicule.class);
-			String v_i= myJSon_up.serialize(v_up);
-			param.put(Parameter.ID, id_up.getText());
-
-			System.out.println("Param"+Parameter.ID);
-			requestToServer rtsu=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,v_i,param);
+			param.put(Parameter.IND_VEHICLETYPE,vehicletype_r);
+			param.put(Parameter.IND_IdOPE,operationtype_r);
+			param.put(Parameter.IND_IdEMP,employee_r);
+			param.put(Parameter.IND_DATEBEGIN,dateBegin_r.toString());
+			param.put(Parameter.IND_DATEEND,dateEnd_r.toString());
+			requestToServer rts=new requestToServer(AllClasses.LOGS_BREAKDOWN,TypeRequest.IND_SELECTNBREP,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rtsu);
-			System.out.println("Last Message :"+rep);
+			String jsonAuth = jsonRTS.serialize(rts);
+			rep=c.getCcs().getLastMessageFromServeur();
+			c.getCcs().setLastMessageToServer(jsonAuth);
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
-			t.start();*/
+			t.start();
+		
 		}
 	}
 
@@ -368,6 +358,19 @@ public class Indicator extends JFrame{
 
 							System.out.println("All :"+listB);
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fin =true;
+						
+					}
+					else if (part1.equals("selectNbRep")){
+						Json<Integer> jsonNbRep= new Json<Integer>(int.class);
+						
+						try{
+							nbRep=jsonNbRep.deSerialize(part2);
+							System.out.println(nbRep);
+						}catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}

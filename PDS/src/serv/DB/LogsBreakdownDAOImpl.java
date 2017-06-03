@@ -131,6 +131,56 @@ public LogsBreakdown findBike( int id, int id_bd ) throws DAOException {
         
     }
 
+public int countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, Date dateEnd) throws DAOException {
+    
+	int rep=0;
+    try {
+         ordre = connection.createStatement();
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    String sql = null;
+    
+    switch(vehicletype){
+    	case "Indifferent":
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between"+dateBegin+" and "+dateEnd+
+    		"and ID_BREAKDOWN="+id_ope+"and ID_EMPLOYEE"+id_emp;
+    		break;
+    	case "Voiture":
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between"+dateBegin+" and "+dateEnd+
+    		"and ID_BREAKDOWN="+id_ope+"and ID_EMPLOYEE"+id_emp+"and ID_CAR is not null";
+    		 break;
+    	case "Velo":
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between"+dateBegin+" and "+dateEnd+
+    		"and ID_BREAKDOWN="+id_ope+"and ID_EMPLOYEE"+id_emp+"and ID_BIKE is not null";
+    		 break;
+    }
+    
+    
+    
+    
+    
+    try {
+       ResultSet rs = ordre.executeQuery(sql);
+       while(rs.next()){
+    	   rep = rs.getInt(1);
+        
+        
+       }
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    
+    try {
+        ordre.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return rep;
+    
+}
 
 
 
