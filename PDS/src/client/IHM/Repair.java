@@ -465,7 +465,7 @@ public class Repair extends JFrame {
             }
             else{
             	j = new JLabel("- "+name+" "+stock+"/40");
-            	j.setForeground(Color.GREEN);
+            	
             }
             repa.add(j);
         }  
@@ -475,6 +475,8 @@ public class Repair extends JFrame {
 		t.setSize(200,30);
 		repa.add(t);
 		buttonRep = new JButton("Réparer");
+		updateListener ul = new updateListener(this);
+        buttonRep.addActionListener(ul);
 		repa.add(buttonRep);
 		repa.setPreferredSize(new Dimension(1000,500));
 		repa.setBorder(new TitledBorder("Réparation : "));
@@ -484,6 +486,7 @@ public class Repair extends JFrame {
 		panelSouth.add(repa,BorderLayout.CENTER);
 		panelSouth.add(southLeft,BorderLayout.WEST);
 		setVisible(true);
+		
 	}
     /**
      * 
@@ -502,36 +505,17 @@ public class Repair extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String identif=id_search.getText();
+			
+			Json<ListPieces> jV = new Json<ListPieces>(ListPieces.class);
+			String jsonPieces = jV.serialize(listP);
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			int t_up;
-		    Boolean m_up = false;
-		    Boolean p_up = false;
-		    if(ct1_up.getState()){
-		    	t_up = 1;
-		    } else t_up = 0;
-		    
-		    if(cm1_up.getState()){
-		    	m_up = true;
-		    }
-		    
-		    if(cp1_up.getState()){
-		    	p_up = true;
-		    }
-			Vehicule v_up = new Vehicule(Integer.parseInt(id_up.getText()),im_up.getText(),t_up,year_up.getText(),m_up,p_up,brand_up.getText(),model_up.getText());
-			
-			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-			Json myJSon_up= new Json(Vehicule.class);
-			String v_i= myJSon_up.serialize(v_up);
-			param.put(Parameter.ID, id_up.getText());
-			
-			System.out.println("Param"+Parameter.ID);
-			requestToServer rtsu=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,v_i,param);
+			param.put(Parameter.ID, id_del.getText());
+			param.put(Parameter.LIST,jsonPieces);
+			requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.UPDATE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rtsu);
+			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
-			System.out.println("Last Message :"+rep);
 			c.getCcs().setLastMessageToServer(jsonAuth);
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
