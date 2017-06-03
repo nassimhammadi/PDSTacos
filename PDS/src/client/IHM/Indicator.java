@@ -78,6 +78,7 @@ public class Indicator extends JFrame{
 	private Checkbox cp1_up;
 	private JTextField id_del;
 	private JComboBox<String> operationtype;
+	private JComboBox<String> employeelist;
 	private Thread t_all;
 	private Client c;
 	private BreakdownList listB;
@@ -112,10 +113,12 @@ public class Indicator extends JFrame{
 		panelWest1.add(vehicletype);
 		panelWest1.add(new JLabel("Type d'op�ration :"));
 		this.operationtype= new JComboBox<String>();
+		this.operationtype.addItem("Indifferent");
 		panelWest1.add(operationtype);
 		panelWest1.add(new JLabel("Employ� :"));
-		JComboBox<String> employee= new JComboBox<String>();
-		panelWest1.add(employee);
+		this.employeelist= new JComboBox<String>();
+		this.employeelist.addItem("Indifferent");
+		panelWest1.add(employeelist);
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
@@ -169,7 +172,7 @@ public class Indicator extends JFrame{
 		this.setTitle("CSC App - Nassim Hammadi (M)");
 		this.setBackground(Color.white);
 		setVisible(true);
-		displayAllEmployee();        displayAllBreakdown();
+		displayAllEmployee();      displayAllBreakdown();
 
 	}
 
@@ -203,7 +206,7 @@ public class Indicator extends JFrame{
 			e.printStackTrace();
 		}
 		for(User u : listU.getListUser()){
-			operationtype.addItem(u.toStringLabel());
+			employeelist.addItem(u.toStringLabel());
 			setVisible(true);
 		}
 	}
@@ -226,7 +229,7 @@ public class Indicator extends JFrame{
 		Thread a = new Thread();
 		a.start();
 		try {
-			a.sleep(10000);
+			a.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -477,6 +480,20 @@ public class Indicator extends JFrame{
 						}
 						fin=true;
 
+					}
+					else if(part1.equals("selectAllBreakDown")){
+						Json <BreakdownList> myJSon= new Json<BreakdownList>(BreakdownList.class);
+
+						try {
+							listB = myJSon.deSerialize(part2);
+
+							System.out.println("All :"+listB);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fin =true;
+						
 					}
 
 
