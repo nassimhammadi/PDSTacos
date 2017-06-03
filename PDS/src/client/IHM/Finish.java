@@ -1,9 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.IHM;
+
+
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -25,12 +23,14 @@ import serv.socketServer.Serveur;
  *
  * @author Laura nassim
  */
-public class Authentification extends JPanel {
+public class Finish extends JFrame {
 	private JFrame myJFrame;
 	private JCheckBox c1, c2;
 	private JTextField enterID;
 	private JTextField enterPWD;
-	private Client c= new Client();
+	private Client c;
+	private int idb;
+	private int ide;
 	
 
 	/**
@@ -38,42 +38,27 @@ public class Authentification extends JPanel {
 	 * @param myJFrame
 	 * Constructor of the Authentification class
 	 */
-	public Authentification(JFrame myJFrame){
+	public Finish(Client cli, int id_b, int id_e){
 		/*
 		 * Lancement du serveur
 		 */
-		c.connect();
+		this.c = cli;
 
 
-		this.myJFrame=myJFrame;
+		this.idb = id_b;
+		this.ide = id_e;
 		JPanel pannel = new JPanel();
-
 		pannel.setBackground(Color.WHITE);
-
-		pannel.setLayout(new GridLayout(3,3));
 		pannel.setPreferredSize(new Dimension(450,150));
 		add(pannel);
-		pannel.setBorder(new TitledBorder("Authentifiez-vous")); 
-		pannel.setLayout(new BoxLayout(pannel, BoxLayout.Y_AXIS)); 
-
-		JLabel id = new JLabel();
-		id.setText("Identifiant :");
-		this.enterID = new JTextField("", 20);
-		pannel.add(id);
-		pannel.add(enterID);
-		JLabel mdp = new JLabel();
-		mdp.setText("Mot de passe :");
-		this.enterPWD = new JTextField("", 20);
-		JButton bouton1=new JButton("Se connecter");
-		pannel.add(mdp);
-		pannel.add(enterPWD);
-		pannel.add(bouton1);
-		
+		pannel.setLayout(new BorderLayout()); 
+		JButton bouton1=new JButton("Terminer la répararion numéro "+id_b);
+		pannel.add(bouton1,BorderLayout.CENTER);
 		enterListener listener=new enterListener(this);
 		bouton1.addActionListener(listener);
-		
+		this.setLocationRelativeTo(null);
 		setVisible(true);
-		this.myJFrame.pack();
+		this.pack();
 
 	}
 /**
@@ -84,14 +69,14 @@ public class Authentification extends JPanel {
  */
 	class enterListener implements ActionListener{
 
-		Authentification A;
+		Finish A;
 
 		/**
 		 * 
 		 * @param authentification
 		 * Constructor
 		 */
-		public enterListener(Authentification authentification) {
+		public enterListener(Finish authentification) {
 			A=authentification;
 		}
 
@@ -100,13 +85,11 @@ public class Authentification extends JPanel {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String name=enterID.getText();
-			String pwd=enterPWD.getText();
+			String id= String.valueOf(idb);
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			param.put(Parameter.NAME, name);
-			param.put(Parameter.PWD,pwd);
-			requestToServer rts=new requestToServer(AllClasses.EMPLOYEE,TypeRequest.LOGIN,"",param);
+			param.put(Parameter.ID, id);
+			requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.FINISH,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
 			rep=c.getCcs().getLastMessageFromServeur();
@@ -114,6 +97,8 @@ public class Authentification extends JPanel {
 			checkMessageChange cmc= new checkMessageChange(A, rep);
 			Thread t=new Thread(cmc);
 			t.start();
+			dispose();
+			Repair r = new Repair(c,ide);
 		}
 	}
 	
@@ -122,9 +107,9 @@ public class Authentification extends JPanel {
 	 * Processus attendant une r?ponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
-		Authentification A;
+		Finish A;
 		String rep="";
-		checkMessageChange(Authentification A, String rep){
+		checkMessageChange(Finish A, String rep){
 			this.A=A;
 			this.rep=rep;
 		}
@@ -136,7 +121,7 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().startsWith("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						Indicator HM= new Indicator(c);
+						
 						
 						fin=true;
 					}

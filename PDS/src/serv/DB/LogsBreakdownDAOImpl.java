@@ -19,7 +19,9 @@ import java.util.logging.Logger;
 
 import serv.model.Car;
 import serv.model.ListCar;
+import serv.model.ListPieces;
 import serv.model.LogsBreakdown;
+import serv.model.Pieces;
 
 import static javax.management.Query.and;
 
@@ -201,14 +203,75 @@ public int countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, 
 
 
 
-	@Override
-	public void update() throws DAOException {
-		// TODO Auto-generated method stub
+	public void update(int id, int id_bd, String comment, ListPieces lp) throws DAOException {
+	   try {
+            ordre = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       String sql = "UPDATE LOGS_BREAKDOWNS SET ID_EMPLOYEE ="+id+", COMMENT = '"+comment+"', DATE_OCCURED= CURDATE() WHERE ID_BREAKDOWN_LOG="+id_bd;
+     
+       try {
+          ordre.executeUpdate(sql);
+          
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       try {
+           ordre.close();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       for(Pieces piece: lp.getListP()){
+    	   try {
+               ordre = connection.createStatement();
+          } catch (SQLException ex) {
+              Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          String sql2 = "UPDATE PIECES SET STOCK = STOCK-1 WHERE ID_PIECE="+piece.getId_piece();
+        
+          try {
+             ordre.executeUpdate(sql2);
+             
+          } catch (SQLException ex) {
+              Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          
+          try {
+              ordre.close();
+          } catch (SQLException ex) {
+              Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+          }
+       }
+      
+       
 		
 	}
 
 
-
+	public void updateFinish(int id){
+		 try {
+	            ordre = connection.createStatement();
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	       String sql = "UPDATE LOGS_BREAKDOWNS SET DATE_REPARED =CURDATE() WHERE ID_BREAKDOWN_LOG="+id;
+	     
+	       try {
+	          ordre.executeUpdate(sql);
+	          
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	       
+	       try {
+	           ordre.close();
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	}
 
 
 	@Override

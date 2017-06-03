@@ -1,5 +1,6 @@
 package serv.DB;
 
+import serv.model.ListPieces;
 import serv.model.LogsBreakdown;
 
 public interface LogsBreakdownDAO {
@@ -25,7 +26,9 @@ public interface LogsBreakdownDAO {
 	     * @param id The Bike id
 	     * @throws DAOException
 	     */
-	    void update (  ) throws DAOException;
+	    void update ( int id, int id_bd, String comment, ListPieces lp ) throws DAOException;
+	    
+	    void updateFinish ( int id) throws DAOException;
 	    
 	    /**
 	     * Delete a vehicle from the database

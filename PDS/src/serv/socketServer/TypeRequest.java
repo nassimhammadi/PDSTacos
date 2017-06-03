@@ -8,6 +8,7 @@ public enum TypeRequest {
 	 LOGIN,
 	 SELECTID,
 	 SELECTB,
-	 IND_SELECTNBREP
+	 IND_SELECTNBREP,
+	 FINISH
 	
 }

@@ -131,6 +131,7 @@ public class Repair extends JFrame {
     private int duration;
     private int id_employee;
     private JTextField jt_c;
+    
 
     /**
      * 
@@ -146,6 +147,7 @@ public class Repair extends JFrame {
     	this.jf = this;
     	this.id_employee = id;
     	getAllVehicle();
+    	
     	cbg = new CheckboxGroup();
     	buttonGo = new JButton("Go");
         // Add Menu
@@ -475,11 +477,11 @@ public class Repair extends JFrame {
 		repa.add(new JLabel("Main d'oeuvre prévue : "+duration+" heure(s)"));
 		repa.add(new JLabel("Commentaires : "));
 		jt_c = new JTextField();
-		jt_c.setSize(200,30);
-		repa.add(jt_c);
 		buttonRep = new JButton("Réparer");
 		updateListener ul = new updateListener(this);
         buttonRep.addActionListener(ul);
+		repa.add(jt_c);
+		repa.add(new JLabel(""));
 		repa.add(buttonRep);
 		repa.setPreferredSize(new Dimension(1000,500));
 		repa.setBorder(new TitledBorder("Réparation : "));
@@ -511,12 +513,20 @@ public class Repair extends JFrame {
 			
 			Json<ListPieces> jV = new Json<ListPieces>(ListPieces.class);
 			String jsonPieces = jV.serialize(listP);
+			String jtc;
+			if(jt_c.getText() == ""){
+				jtc = " ";
+			}
+			else{
+				jtc = jt_c.getText();
+			}
 			String id_e = String.valueOf(id_employee);
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, id_e);
 			param.put(Parameter.LIST,jsonPieces);
-			param.put(Parameter.COM, jt_c.getText());
+			param.put(Parameter.COM, jtc);
+			param.put(Parameter.ID_BREAKDOWN, String.valueOf(logBget.getId_bd_log()));
 			requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.UPDATE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
@@ -525,6 +535,8 @@ public class Repair extends JFrame {
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
 			t.start();
+			dispose();
+			Finish f = new Finish(c,logBget.getId_bd_log(),id_employee);
 		}
 	}
     
@@ -594,7 +606,7 @@ public class Repair extends JFrame {
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
-	 			//param.put(Parameter.ID_PRIO, priorized_id); A remettre
+	 			//param.put(Parameter.ID_PRIO, priorized_id);
 	 			requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
 	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 	 			String jsonAuth = jsonRTS.serialize(rts);
