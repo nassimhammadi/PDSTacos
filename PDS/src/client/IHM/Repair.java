@@ -129,6 +129,8 @@ public class Repair extends JFrame {
     private JButton buttonRep;
     private JButton search;
     private int duration;
+    private int id_employee;
+    private JTextField jt_c;
 
     /**
      * 
@@ -142,6 +144,7 @@ public class Repair extends JFrame {
     	
     	this.c=cli;
     	this.jf = this;
+    	this.id_employee = id;
     	getAllVehicle();
     	cbg = new CheckboxGroup();
     	buttonGo = new JButton("Go");
@@ -471,9 +474,9 @@ public class Repair extends JFrame {
         }  
 		repa.add(new JLabel("Main d'oeuvre prévue : "+duration+" heure(s)"));
 		repa.add(new JLabel("Commentaires : "));
-		JTextField t = new JTextField();
-		t.setSize(200,30);
-		repa.add(t);
+		jt_c = new JTextField();
+		jt_c.setSize(200,30);
+		repa.add(jt_c);
 		buttonRep = new JButton("Réparer");
 		updateListener ul = new updateListener(this);
         buttonRep.addActionListener(ul);
@@ -508,10 +511,12 @@ public class Repair extends JFrame {
 			
 			Json<ListPieces> jV = new Json<ListPieces>(ListPieces.class);
 			String jsonPieces = jV.serialize(listP);
+			String id_e = String.valueOf(id_employee);
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			param.put(Parameter.ID, id_del.getText());
+			param.put(Parameter.ID, id_e);
 			param.put(Parameter.LIST,jsonPieces);
+			param.put(Parameter.COM, jt_c.getText());
 			requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.UPDATE,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
