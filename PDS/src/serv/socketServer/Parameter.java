@@ -12,5 +12,6 @@ public enum Parameter {
 	ID_BREAKDOWN,
 	MOTIF_BREAKDOWN,
 	ID_PRIO,
-	LIST
+	LIST,
+	COM
 }
