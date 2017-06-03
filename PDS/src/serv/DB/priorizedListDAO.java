@@ -15,6 +15,8 @@ public interface priorizedListDAO {
 	     */
 	    priorizedListObject find( int id ) throws DAOException;
 	    
+	    
+	    
 	    priorizedList findAll() throws DAOException;
 	    
 	    /**

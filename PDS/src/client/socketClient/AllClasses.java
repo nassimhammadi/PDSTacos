@@ -8,5 +8,6 @@ public enum AllClasses {
 	BIKE,
 	CAR,
 	BREAKDOWN,
-	LOGS_BREAKDOWN
+	LOGS_BREAKDOWN,
+	PIECES
 }

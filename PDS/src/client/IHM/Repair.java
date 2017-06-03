@@ -412,14 +412,37 @@ public class Repair extends JFrame {
     	
     }
 	
+	public void getAllPieces(){
+		String identif =String.valueOf(logBget.getId_bd());
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		param.put(Parameter.ID, identif);
+		requestToServer rts=new requestToServer(AllClasses.PIECES,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+	}
 	public void displayLog(){
+		getAllPieces();
 		Date date = logBget.getDate_e();
-		JPanel repa = new JPanel(new FlowLayout());
+		JPanel repa = new JPanel();
+		BoxLayout layout = new BoxLayout(repa, BoxLayout.Y_AXIS);
+		repa.setLayout(layout);	
 		repa.add(new JLabel("Date d'entrée du Véhicule : "+date));
+		
+		repa.add(new JLabel("Liste des pieces nécessaires à la réparation :"));
+		repa.add(new JLabel("- Rustines 3"));
+		repa.add(new JLabel("- Pneus 3"));
+		repa.add(new JLabel("- Joins 7"));
 		repa.setPreferredSize(new Dimension(1000,500));
 		repa.setBorder(new TitledBorder("Réparation : "));
 		repa.setBackground(Color.WHITE);
 		repa.setVisible(true);
+		
 		panelSouth.add(repa,BorderLayout.CENTER);
 		panelSouth.add(southLeft,BorderLayout.WEST);
 		setVisible(true);
@@ -538,9 +561,11 @@ public class Repair extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if(prioListObject.getId_car()!=0){
 	         	String identif=String.valueOf(prioListObject.getId_car());
+	         	String priorized_id = String.valueOf(prioListObject.getId_prio());
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
+	 			//param.put(Parameter.ID_PRIO, priorized_id); A remettre
 	 			requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
 	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 	 			String jsonAuth = jsonRTS.serialize(rts);
@@ -552,9 +577,11 @@ public class Repair extends JFrame {
 	         }
 			else{
 				String identif=String.valueOf(prioListObject.getId_bike());
+				String priorized_id = String.valueOf(prioListObject.getId_prio());
 	 			String rep="";
 	 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 	 			param.put(Parameter.ID, identif);
+	 			//param.put(Parameter.ID_PRIO, priorized_id);
 	 			requestToServer rts=new requestToServer(AllClasses.BIKE,TypeRequest.SELECT,"",param);
 	 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 	 			String jsonAuth = jsonRTS.serialize(rts);
@@ -577,13 +604,14 @@ public class Repair extends JFrame {
 	class selectInformationListener implements ActionListener{
 
 		private Repair rp;
-
+		
 		public selectInformationListener(Repair r) {
 			this.rp = r;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			buttonGo.setEnabled(false);
 			String id_bd="";
 			Checkbox chk = cbg.getSelectedCheckbox();
 			String label = chk.getLabel();
@@ -810,8 +838,6 @@ public class Repair extends JFrame {
 			}
 
 		}
-
-
 	}
 
 }

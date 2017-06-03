@@ -215,6 +215,12 @@ public class requestToServer {
 						//	 vdao.findByImmat(Integer.parseInt(listParam.get(Parameter.IMMAT)));
 					}
 					break;
+				case 2 :
+					this.car = cdao.findAndDeletePrio(Integer.parseInt(listParam.get(Parameter.ID)),Integer.parseInt(listParam.get(Parameter.ID_PRIO)));
+					Json<Car> jV2 = new Json<Car>(Car.class);
+					String jsonVehicle2 = jV2.serialize(this.car);
+					return reponse = "selectCar/"+jsonVehicle2;
+					
 				}
 
 			case DELETE : 
