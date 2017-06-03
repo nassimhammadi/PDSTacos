@@ -102,9 +102,10 @@ public class requestToServer {
 
 
 		case REPAIR :
-			priorizedListDAOimpl ldao = new priorizedListDAOimpl(co);
+			
 			switch (type){
 			case SELECT: 
+				priorizedListDAOimpl ldao = new priorizedListDAOimpl(co);
 				switch (listParam.size()){
 				case 0 : //return Vehicule.getAllVehicule();
 					this.pList = ldao.findAll();
@@ -112,6 +113,22 @@ public class requestToServer {
 					String jsonListPrio = jV.serialize(pList);
 					return reponse = "selectAllPrio/"+jsonListPrio;
 				}
+			case UPDATE: 
+				LogsBreakdownDAOImpl lbimpl = new LogsBreakdownDAOImpl(co);
+				int id = Integer.parseInt(listParam.get(Parameter.ID));
+				int id_bd_log = Integer.parseInt(listParam.get(Parameter.ID_BREAKDOWN));;
+				String comment = listParam.get(Parameter.COM) ;
+				ListPieces lp = null;
+				Json <ListPieces> myJSon= new Json<ListPieces>(ListPieces.class);
+				try {
+					lp = myJSon.deSerialize(listParam.get(Parameter.LIST));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Listppppp"+lp);
+				lbimpl.update(id,id_bd_log, comment,lp);
+				return reponse="ok";
 			}
 		case VEHICULE : 
 			VehiculeDAOImpl vdao= new VehiculeDAOImpl(co);
