@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -76,6 +77,10 @@ public class Indicator extends JFrame{
 	private JComboBox<String> vehicletype;
 	private int nbRep;
 	private JLabel nbRepI;
+	private ButtonGroup bg;
+	private JRadioButton semaine;
+	private JRadioButton mois;
+	private JRadioButton annee;
 
 
 	public Indicator(Client client) {
@@ -89,13 +94,13 @@ public class Indicator extends JFrame{
 		panelNord.add(menu.getMenu());
 
 
-		JPanel panelWest = new JPanel(new GridLayout(1,4));
-		panelWest.setBackground(Color.white);
+		JPanel panelButton = new JPanel(new GridLayout(1,2));
+		panelButton.setBackground(Color.white);
 
 		// JPanel to search vehicle thanks to ID
-		JPanel panelWest1 = new JPanel(new GridLayout(6,1));
+		JPanel panelWest1 = new JPanel(new GridLayout(7,1));
 		panelWest1.setBackground(Color.white);
-		panelWest1.setPreferredSize(new Dimension(300, 200));
+		panelWest1.setPreferredSize(new Dimension(350, 200));
 		panelWest1.setBorder(new TitledBorder("Filtres de recherche : "));
 		panelWest1.add(new JLabel("Type de Vehicule :"));
 		this.vehicletype= new JComboBox<String>();
@@ -125,13 +130,24 @@ public class Indicator extends JFrame{
 		panelWest1.add(dateBegin);
 		panelWest1.add(new JLabel("Au:")); 
 		panelWest1.add(dateEnd);
+		this.bg= new ButtonGroup();
+		this.semaine= new JRadioButton("Semaine");
+		this.mois= new JRadioButton("Mois");
+		this.annee= new JRadioButton("Annee");
+		bg.add(semaine);
+		bg.add(mois);
+		bg.add(annee);
+		panelButton.add(semaine);
+		panelButton.add(mois);
+		panelButton.add(annee);
+		panelWest1.add(new JLabel("Periode :"));
+		panelWest1.add(panelButton);
 
 		JButton search = new JButton("Rechercher");
 		panelWest1.add(search);
 		
 		selectListener sl = new selectListener(this);
 		search.addActionListener(sl);
-		panelWest.add(panelWest1);
 
 
 
@@ -153,7 +169,7 @@ public class Indicator extends JFrame{
 		panelPrincipal.setBackground(Color.white);
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(panelNord, BorderLayout.NORTH);
-		panelPrincipal.add(panelWest, BorderLayout.CENTER);
+		panelPrincipal.add(panelWest1, BorderLayout.CENTER);
 		panelPrincipal.add(panelSouth, BorderLayout.SOUTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
