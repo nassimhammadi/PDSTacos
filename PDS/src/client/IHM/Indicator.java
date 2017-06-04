@@ -75,6 +75,7 @@ public class Indicator extends JFrame{
 	private JDatePickerImpl dateEnd;
 	private JComboBox<String> vehicletype;
 	private int nbRep;
+	private JLabel nbRepI;
 
 
 	public Indicator(Client client) {
@@ -138,6 +139,9 @@ public class Indicator extends JFrame{
 		panelSouth.setBackground(Color.white);
 		panelSouth.setPreferredSize(new Dimension(300,350));
 		panelSouth.setBorder(new TitledBorder("Resultat : "));
+		panelSouth.add(new JLabel("Nombre Reparation"));
+		nbRepI= new JLabel();
+		panelSouth.add(nbRepI);
 		//   panelSouth.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
 
@@ -369,7 +373,7 @@ public class Indicator extends JFrame{
 						
 						try{
 							nbRep=jsonNbRep.deSerialize(part2);
-							System.out.println(nbRep);
+							nbRepI.setText(String.valueOf(nbRep));
 						}catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -79,8 +79,16 @@ public class requestToServer {
 				return reponse = "selectLog/"+jsonLogBike;
 			case IND_SELECTNBREP:
 				String vehicletype = listParam.get(Parameter.IND_VEHICLETYPE);
-				int id_ope= Integer.parseInt(listParam.get(Parameter.IND_IdOPE));
-				int id_emp= Integer.parseInt(listParam.get(Parameter.IND_IdEMP));
+				
+				int id_ope=0;
+				if (!listParam.get(Parameter.IND_IdOPE).contains("Indifferent"))
+				 id_ope= Integer.parseInt(listParam.get(Parameter.IND_IdOPE));
+				
+				
+				int id_emp=0;
+				if (!listParam.get(Parameter.IND_IdEMP).contains("Indifferent"))
+					 id_emp= Integer.parseInt(listParam.get(Parameter.IND_IdEMP));
+				
 				Date dateBegin= Date.valueOf(listParam.get(Parameter.IND_DATEBEGIN));
 				Date dateEnd= Date.valueOf(listParam.get(Parameter.IND_DATEEND));
 				
