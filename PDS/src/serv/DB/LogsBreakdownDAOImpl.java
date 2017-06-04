@@ -146,16 +146,16 @@ public int countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, 
     
     switch(vehicletype){
     	case "Indifferent":
-    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between"+dateBegin+" and "+dateEnd+
-    		"and ID_BREAKDOWN="+id_ope+"and ID_EMPLOYEE"+id_emp;
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
+    		" and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp;
     		break;
     	case "Voiture":
-    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between"+dateBegin+" and "+dateEnd+
-    		"and ID_BREAKDOWN="+id_ope+"and ID_EMPLOYEE"+id_emp+"and ID_CAR is not null";
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
+    		" and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
     		 break;
     	case "Velo":
-    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between"+dateBegin+" and "+dateEnd+
-    		"and ID_BREAKDOWN="+id_ope+"and ID_EMPLOYEE"+id_emp+"and ID_BIKE is not null";
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
+    		" and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
     		 break;
     }
     
