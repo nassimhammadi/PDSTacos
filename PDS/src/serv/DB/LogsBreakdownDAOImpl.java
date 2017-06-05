@@ -153,22 +153,22 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
     	case "Indifferent":
     		if (id_ope==0 && id_emp==0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd;
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+"'";
     		}
     		else if (id_ope==0 && id_emp!=0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    					" and ID_EMPLOYEE="+id_emp;
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    					"' and ID_EMPLOYEE="+id_emp;
     		}
     		else if (id_ope!=0 && id_emp==0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		    		" and ID_BREAKDOWN="+id_ope;
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    		"' and ID_BREAKDOWN="+id_ope;
     		}
     		else
     		{
-    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		" and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp;
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		"' and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp;
     		}
     		
     		 break;
@@ -176,24 +176,24 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
     	case "Voiture":
     		if (id_ope==0 && id_emp==0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		    	" and ID_CAR is not null";
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    	"' and ID_CAR is not null";
     		}
     		else if (id_ope==0 && id_emp!=0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    					" and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    					"' and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
     		}
     		else if (id_ope!=0 && id_emp==0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		    		" and ID_BREAKDOWN="+id_ope+" and ID_CAR is not null";
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    		"' and ID_BREAKDOWN="+id_ope+" and ID_CAR is not null";
     		}
     		
     		else
     		{
-    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		" and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		"' and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
     		}
     		
     		break;
@@ -203,35 +203,36 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
     		
     		if (id_ope==0 && id_emp==0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		    	" and ID_BIKE is not null";
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    	"' and ID_BIKE is not null";
     		}
     		else if (id_ope==0 && id_emp!=0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    					" and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    					"' and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
     		}
     		else if (id_ope!=0 && id_emp==0)
     		{
-    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		    		" and ID_BREAKDOWN="+id_ope+" and ID_BIKE is not null";
+    			sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    		"' and ID_BREAKDOWN="+id_ope+" and ID_BIKE is not null";
     		}
     		
     		else
     		{
-    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between "+dateBegin+" and "+dateEnd+
-    		" and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
+    		 sql = "select count(*) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		"' and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
     		}
     		
     		break;
     }
     
-    /*
+   
     switch(periode){
     
     	case "Semaine":
     		sql = sql+" group by WEEKOFYEAR(DATE_REPARED) order by WEEKOFYEAR(DATE_REPARED)";
     		break;
+    		
     	case "Mois":
     		sql = sql+" group by MONTH(DATE_REPARED) order by MONTH(DATE_REPARED)";
     		break;
@@ -239,7 +240,8 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
     		sql = sql+" group by YEAR(DATE_REPARED) order by YEAR(DATE_REPARED)";
     		break;
     }
-    */
+    
+    
     
     try {
        ResultSet rs = ordre.executeQuery(sql);
