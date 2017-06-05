@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
@@ -39,6 +40,7 @@ import client.model.BreakdownList;
 import client.model.Car;
 import client.model.ListCar;
 import client.model.ListVehicle;
+import client.model.Performance;
 import client.model.PerformanceList;
 import client.model.User;
 import client.model.Vehicule;
@@ -84,6 +86,7 @@ public class Indicator extends JFrame{
 	private JRadioButton semaine;
 	private JRadioButton mois;
 	private JRadioButton annee;
+	private JPanel panelSouth;
 
 
 	public Indicator(Client client) {
@@ -157,11 +160,13 @@ public class Indicator extends JFrame{
 
 
 
-		JPanel panelSouth =  new JPanel(new GridLayout(9,1));
+		panelSouth =  new JPanel(new GridLayout(2,1));
 		panelSouth.setBackground(Color.white);
 		panelSouth.setPreferredSize(new Dimension(300,350));
 		panelSouth.setBorder(new TitledBorder("Resultat : "));
-		panelSouth.add(new JLabel("Nombre Reparation"));
+		
+		
+		
 		//   panelSouth.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
 
@@ -271,6 +276,7 @@ public class Indicator extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		for(Breakdown b : listB.getListBreakdown()){
 			operationtype.addItem(b.toString());
 			setVisible(true);
@@ -343,7 +349,14 @@ public class Indicator extends JFrame{
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
 			t.start();
-		
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dispose();
+			IndicatorResultat ir= new IndicatorResultat(c,nbRep);
 		}
 	}
 
@@ -412,7 +425,6 @@ public class Indicator extends JFrame{
 						
 						try{
 							nbRep=jsonNbRep.deSerialize(part2);
-							System.out.println(nbRep.getListPerf().isEmpty());
 						}catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
