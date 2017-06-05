@@ -39,6 +39,7 @@ import client.model.BreakdownList;
 import client.model.Car;
 import client.model.ListCar;
 import client.model.ListVehicle;
+import client.model.PerformanceList;
 import client.model.User;
 import client.model.Vehicule;
 import client.socketClient.AllClasses;
@@ -78,8 +79,7 @@ public class Indicator extends JFrame{
 	private JDatePickerImpl dateBegin;
 	private JDatePickerImpl dateEnd;
 	private JComboBox<String> vehicletype;
-	private int nbRep;
-	private JLabel nbRepI;
+	private PerformanceList nbRep;
 	private ButtonGroup bg;
 	private JRadioButton semaine;
 	private JRadioButton mois;
@@ -162,8 +162,6 @@ public class Indicator extends JFrame{
 		panelSouth.setPreferredSize(new Dimension(300,350));
 		panelSouth.setBorder(new TitledBorder("Resultat : "));
 		panelSouth.add(new JLabel("Nombre Reparation"));
-		nbRepI= new JLabel();
-		panelSouth.add(nbRepI);
 		//   panelSouth.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
 
@@ -410,11 +408,11 @@ public class Indicator extends JFrame{
 						
 					}
 					else if (part1.equals("selectNbRep")){
-						Json<Integer> jsonNbRep= new Json<Integer>(int.class);
+						Json<PerformanceList> jsonNbRep= new Json<PerformanceList>(PerformanceList.class);
 						
 						try{
 							nbRep=jsonNbRep.deSerialize(part2);
-							nbRepI.setText(String.valueOf(nbRep));
+							System.out.println(nbRep.getListPerf().isEmpty());
 						}catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -21,6 +21,8 @@ import serv.model.Car;
 import serv.model.ListCar;
 import serv.model.ListPieces;
 import serv.model.LogsBreakdown;
+import serv.model.Performance;
+import serv.model.PerformanceList;
 import serv.model.Pieces;
 
 import static javax.management.Query.and;
@@ -133,9 +135,12 @@ public LogsBreakdown findBike( int id, int id_bd ) throws DAOException {
         
     }
 
-public int countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, Date dateEnd) throws DAOException {
+public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, Date dateEnd, String periode) throws DAOException {
     
-	int rep=0;
+	PerformanceList list= null;
+	ArrayList<Performance> nbrep= new ArrayList<Performance>();
+	Performance p= null;
+	
     try {
          ordre = connection.createStatement();
     } catch (SQLException ex) {
@@ -221,13 +226,27 @@ public int countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, 
     		break;
     }
     
+    /*
+    switch(periode){
     
+    	case "Semaine":
+    		sql = sql+" group by WEEKOFYEAR(DATE_REPARED) order by WEEKOFYEAR(DATE_REPARED)";
+    		break;
+    	case "Mois":
+    		sql = sql+" group by MONTH(DATE_REPARED) order by MONTH(DATE_REPARED)";
+    		break;
+    	case "Annee":
+    		sql = sql+" group by YEAR(DATE_REPARED) order by YEAR(DATE_REPARED)";
+    		break;
+    }
+    */
     
     try {
        ResultSet rs = ordre.executeQuery(sql);
        while(rs.next()){
-    	   rep = rs.getInt(1);
-        
+    	   int rep = rs.getInt(1);
+    	   p = new Performance(rep,1,1);
+    	   nbrep.add(p);
         
        }
     } catch (SQLException ex) {
@@ -240,7 +259,9 @@ public int countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, 
     } catch (SQLException ex) {
         Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
     }
-    return rep;
+    
+    list= new PerformanceList(nbrep);
+    return list;
     
 }
 

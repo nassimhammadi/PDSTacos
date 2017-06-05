@@ -17,6 +17,7 @@ import serv.model.ListPieces;
 import serv.model.Bike;
 import serv.model.ListVehicle;
 import serv.model.LogsBreakdown;
+import serv.model.PerformanceList;
 import serv.model.UserList;
 import serv.model.Breakdown;
 import serv.model.BreakdownList;
@@ -56,7 +57,7 @@ public class requestToServer {
 	private ListBike listB;
 	private LogsBreakdown logB;
 	private ListPieces listP;
-	private int nbRep;
+	private PerformanceList nbRep;
 	/*
 	 * M?thode permettant de traduire et d'executer la requ?te du client
 	 */
@@ -91,9 +92,10 @@ public class requestToServer {
 				
 				Date dateBegin= Date.valueOf(listParam.get(Parameter.IND_DATEBEGIN));
 				Date dateEnd= Date.valueOf(listParam.get(Parameter.IND_DATEEND));
+				String periode= listParam.get(Parameter.IND_Periode);
 				
-				nbRep= ldimpl.countRep(vehicletype, id_ope, id_emp, dateBegin, dateEnd);
-				Json<Integer> jV3 = new Json<Integer>(int.class);
+				this.nbRep= ldimpl.countRep(vehicletype, id_ope, id_emp, dateBegin, dateEnd, periode);
+				Json<PerformanceList> jV3 = new Json<PerformanceList>(PerformanceList.class);
 				String jsonNbRep = jV3.serialize(nbRep);
 				return reponse ="selectNbRep/"+jsonNbRep;
 				
