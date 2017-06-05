@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Properties;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -51,6 +53,7 @@ import org.jdatepicker.util.*;
 import org.jdatepicker.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 
 public class Indicator extends JFrame{
 
@@ -134,12 +137,15 @@ public class Indicator extends JFrame{
 		this.semaine= new JRadioButton("Semaine");
 		this.mois= new JRadioButton("Mois");
 		this.annee= new JRadioButton("Annee");
-		bg.add(semaine);
-		bg.add(mois);
-		bg.add(annee);
+		this.bg.add(semaine);
+		this.bg.add(mois);
+		this.bg.add(annee);
 		panelButton.add(semaine);
 		panelButton.add(mois);
 		panelButton.add(annee);
+		semaine.setSelected(true);
+		
+		
 		panelWest1.add(new JLabel("Periode :"));
 		panelWest1.add(panelButton);
 
@@ -185,6 +191,23 @@ public class Indicator extends JFrame{
 		
 
 	}
+	
+	
+	
+	
+	public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+	
+	
 
 	public void getAllEmployee(){
 		String rep = "";
@@ -305,6 +328,7 @@ public class Indicator extends JFrame{
 			String operationtype_r= strings[0];
 			strings= employeelist.getSelectedItem().toString().split(". ");
 			String employee_r= strings[0];
+			String periode_r= hm.getSelectedButtonText(bg);
 			
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.IND_VEHICLETYPE,vehicletype_r);
@@ -312,6 +336,7 @@ public class Indicator extends JFrame{
 			param.put(Parameter.IND_IdEMP,employee_r);
 			param.put(Parameter.IND_DATEBEGIN,dateBegin_r.toString());
 			param.put(Parameter.IND_DATEEND,dateEnd_r.toString());
+			param.put(Parameter.IND_Periode,periode_r);
 			requestToServer rts=new requestToServer(AllClasses.LOGS_BREAKDOWN,TypeRequest.IND_SELECTNBREP,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);

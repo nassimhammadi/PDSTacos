@@ -18,5 +18,6 @@ public enum Parameter {
 	IND_DATEEND,
 	IND_IdOPE,
 	IND_IdEMP,
-	IND_VEHICLETYPE	
+	IND_VEHICLETYPE,
+	IND_Periode,
 }
