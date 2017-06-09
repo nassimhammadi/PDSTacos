@@ -3,7 +3,10 @@ package client.IHM;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,14 +19,16 @@ import client.socketClient.Client;
 public class IndicatorResultat extends JFrame{
 	
 	private Client c;
+	private int id_client;
 	private PerformanceList Res;
 	
 	
 	
 	
 	
-	public IndicatorResultat(Client c, PerformanceList res) {
+	public IndicatorResultat(Client c, int id_client,PerformanceList res) {
 		this.c = c;
+		this.id_client= id_client;
 		this.Res = res;
 		
 		
@@ -45,6 +50,11 @@ public class IndicatorResultat extends JFrame{
 		
 		this.getContentPane().setLayout(new BorderLayout());
 		this.getContentPane().add(new JScrollPane(resultat));
+		
+		JButton retour = new JButton("Retour");
+		retour.addActionListener(new Retour());
+		
+		this.getContentPane().add(retour,BorderLayout.SOUTH);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -54,7 +64,13 @@ public class IndicatorResultat extends JFrame{
 		this.pack();
 	}
 	
-	
+	class Retour implements ActionListener{
+		
+		 public void actionPerformed(ActionEvent arg0) {
+		      dispose();
+		      Indicator HM= new Indicator(c,id_client);
+		    }
+	}
 	
 
 	

@@ -87,10 +87,13 @@ public class Indicator extends JFrame{
 	private JRadioButton mois;
 	private JRadioButton annee;
 	private JPanel panelSouth;
+	private int id_client;
 
 
-	public Indicator(Client client) {
+	public Indicator(Client client,int id_client) {
 		this.c = client;
+		this.id_client = id_client;
+		
 		// Add Menu
 		MenuBar menu = new MenuBar();
 		JPanel panelNord = new JPanel();
@@ -104,9 +107,13 @@ public class Indicator extends JFrame{
 		panelButton.setBackground(Color.white);
 
 		// JPanel to search vehicle thanks to ID
-		JPanel panelWest1 = new JPanel(new GridLayout(7,1));
+		GridLayout gl= new GridLayout(7,1);
+		gl.setVgap(5);
+		gl.setHgap(5);
+		
+		JPanel panelWest1 = new JPanel(gl);
 		panelWest1.setBackground(Color.white);
-		panelWest1.setPreferredSize(new Dimension(350, 200));
+		panelWest1.setPreferredSize(new Dimension(350, 300));
 		panelWest1.setBorder(new TitledBorder("Filtres de recherche : "));
 		panelWest1.add(new JLabel("Type de Vehicule :"));
 		this.vehicletype= new JComboBox<String>();
@@ -158,12 +165,16 @@ public class Indicator extends JFrame{
 		selectListener sl = new selectListener(this);
 		search.addActionListener(sl);
 
+		JButton retour = new JButton("Retour");
+		retour.addActionListener(new Retour());
+		panelWest1.add(retour);
+		
+		
 
-
-		panelSouth =  new JPanel(new GridLayout(2,1));
+	/*	panelSouth =  new JPanel(new GridLayout(2,1));
 		panelSouth.setBackground(Color.white);
 		panelSouth.setPreferredSize(new Dimension(300,350));
-		panelSouth.setBorder(new TitledBorder("Resultat : "));
+		panelSouth.setBorder(new TitledBorder("Resultat : "));*/
 		
 		
 		
@@ -179,7 +190,7 @@ public class Indicator extends JFrame{
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(panelNord, BorderLayout.NORTH);
 		panelPrincipal.add(panelWest1, BorderLayout.CENTER);
-		panelPrincipal.add(panelSouth, BorderLayout.SOUTH);
+		/*panelPrincipal.add(panelSouth, BorderLayout.SOUTH);*/
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
 
@@ -223,13 +234,20 @@ public class Indicator extends JFrame{
 		checkMessageChange cmc= new checkMessageChange(rep);
 		t_all=new Thread(cmc);
 		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void displayAllEmployee(){
 		getAllEmployee();
-		Thread a = new Thread();
+	/*	Thread a = new Thread();
 		a.start();
 		try {
+			t_all.join();
 			a.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -240,7 +258,7 @@ public class Indicator extends JFrame{
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		for(User u : listU.getListUser()){
 			employeelist.addItem(u.toStringLabel());
 			setVisible(true);
@@ -258,11 +276,17 @@ public class Indicator extends JFrame{
 		checkMessageChange cmc= new checkMessageChange(rep);
 		t_all=new Thread(cmc);
 		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void displayAllBreakdown(){
 		getAllBreakdown();
-		Thread a = new Thread();
+	/*	Thread a = new Thread();
 		a.start();
 		try {
 			a.sleep(1000);
@@ -275,7 +299,7 @@ public class Indicator extends JFrame{
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		for(Breakdown b : listB.getListBreakdown()){
 			operationtype.addItem(b.toString());
@@ -304,7 +328,13 @@ public class Indicator extends JFrame{
 	}
 
 
-
+	class Retour implements ActionListener{
+		
+		 public void actionPerformed(ActionEvent arg0) {
+		      dispose();
+		      MenuPrincipal HM= new MenuPrincipal(c,id_client);
+		    }
+	}
 
 	/**
 	 * 
@@ -324,9 +354,14 @@ public class Indicator extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 		//	String identif=id_search.getText();
+			
 			String rep="";
 			java.sql.Date dateBegin_r = (java.sql.Date) dateBegin.getModel().getValue();
 			java.sql.Date dateEnd_r = (java.sql.Date) dateEnd.getModel().getValue();
+			if (dateBegin_r.compareTo(dateEnd_r) > 0){
+				JOptionPane.showMessageDialog(null, "Date Begin must be before Date End !","Warning",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			String vehicletype_r= vehicletype.getSelectedItem().toString();
 			String [] strings= operationtype.getSelectedItem().toString().split(". ");
 			String operationtype_r= strings[0];
@@ -356,7 +391,7 @@ public class Indicator extends JFrame{
 				e.printStackTrace();
 			}
 			dispose();
-			IndicatorResultat ir= new IndicatorResultat(c,nbRep);
+			IndicatorResultat ir= new IndicatorResultat(c,id_client,nbRep);
 		}
 	}
 
