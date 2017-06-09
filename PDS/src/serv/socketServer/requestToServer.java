@@ -4,6 +4,7 @@ import serv.DB.*;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -16,6 +17,7 @@ import serv.model.ListPieces;
 import serv.model.Bike;
 import serv.model.ListVehicle;
 import serv.model.LogsBreakdown;
+import serv.model.PerformanceList;
 import serv.model.UserList;
 import serv.model.Breakdown;
 import serv.model.BreakdownList;
@@ -55,6 +57,7 @@ public class requestToServer {
 	private ListBike listB;
 	private LogsBreakdown logB;
 	private ListPieces listP;
+	private PerformanceList nbRep;
 	/*
 	 * M?thode permettant de traduire et d'executer la requ?te du client
 	 */
@@ -75,6 +78,27 @@ public class requestToServer {
 				Json<LogsBreakdown> jV2 = new Json<LogsBreakdown>(LogsBreakdown.class);
 				String jsonLogBike = jV2.serialize(logB);
 				return reponse = "selectLog/"+jsonLogBike;
+			case IND_SELECTNBREP:
+				String vehicletype = listParam.get(Parameter.IND_VEHICLETYPE);
+				
+				int id_ope=0;
+				if (!listParam.get(Parameter.IND_IdOPE).contains("Indifferent"))
+				 id_ope= Integer.parseInt(listParam.get(Parameter.IND_IdOPE));
+				
+				
+				int id_emp=0;
+				if (!listParam.get(Parameter.IND_IdEMP).contains("Indifferent"))
+					 id_emp= Integer.parseInt(listParam.get(Parameter.IND_IdEMP));
+				
+				Date dateBegin= Date.valueOf(listParam.get(Parameter.IND_DATEBEGIN));
+				Date dateEnd= Date.valueOf(listParam.get(Parameter.IND_DATEEND));
+				String periode= listParam.get(Parameter.IND_Periode);
+				
+				this.nbRep= ldimpl.countRep(vehicletype, id_ope, id_emp, dateBegin, dateEnd, periode);
+				Json<PerformanceList> jV3 = new Json<PerformanceList>(PerformanceList.class);
+				String jsonNbRep = jV3.serialize(nbRep);
+				return reponse ="selectNbRep/"+jsonNbRep;
+				
 			}
 		
 		case BREAKDOWN :

@@ -136,7 +136,7 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().startsWith("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
-						Repair HM= new Repair(c,Integer.parseInt(c.getCcs().getLastMessageFromServeur().split("\\+")[1]));
+						Indicator HM= new Indicator(c);
 						
 						fin=true;
 					}

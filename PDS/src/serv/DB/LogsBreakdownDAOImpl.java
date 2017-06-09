@@ -21,6 +21,8 @@ import serv.model.Car;
 import serv.model.ListCar;
 import serv.model.ListPieces;
 import serv.model.LogsBreakdown;
+import serv.model.Performance;
+import serv.model.PerformanceList;
 import serv.model.Pieces;
 
 import static javax.management.Query.and;
@@ -133,6 +135,138 @@ public LogsBreakdown findBike( int id, int id_bd ) throws DAOException {
         
     }
 
+public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date dateBegin, Date dateEnd, String periode) throws DAOException {
+    
+	PerformanceList list= null;
+	ArrayList<Performance> nbrep= new ArrayList<Performance>();
+	Performance p= null;
+	
+    try {
+         ordre = connection.createStatement();
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    String sql = null;
+    
+    switch(vehicletype){
+    	case "Indifferent":
+    		if (id_ope==0 && id_emp==0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+"'";
+    		}
+    		else if (id_ope==0 && id_emp!=0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    					"' and ID_EMPLOYEE="+id_emp;
+    		}
+    		else if (id_ope!=0 && id_emp==0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    		"' and ID_BREAKDOWN="+id_ope;
+    		}
+    		else
+    		{
+    		 sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		"' and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp;
+    		}
+    		
+    		 break;
+    		 
+    	case "Voiture":
+    		if (id_ope==0 && id_emp==0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    	"' and ID_CAR is not null";
+    		}
+    		else if (id_ope==0 && id_emp!=0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    					"' and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
+    		}
+    		else if (id_ope!=0 && id_emp==0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    		"' and ID_BREAKDOWN="+id_ope+" and ID_CAR is not null";
+    		}
+    		
+    		else
+    		{
+    		 sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		"' and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_CAR is not null";
+    		}
+    		
+    		break;
+    		 
+    		 
+    	case "Velo":
+    		
+    		if (id_ope==0 && id_emp==0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    	"' and ID_BIKE is not null";
+    		}
+    		else if (id_ope==0 && id_emp!=0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    					"' and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
+    		}
+    		else if (id_ope!=0 && id_emp==0)
+    		{
+    			sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		    		"' and ID_BREAKDOWN="+id_ope+" and ID_BIKE is not null";
+    		}
+    		
+    		else
+    		{
+    		 sql = "select count(*),AVG(timestampdiff(second,DATE_OCCURED,Date_REPARED)) from LOGS_BREAKDOWNS where DATE_REPARED is not null and DATE_REPARED between '"+dateBegin+"' and '"+dateEnd+
+    		"' and ID_BREAKDOWN="+id_ope+" and ID_EMPLOYEE="+id_emp+" and ID_BIKE is not null";
+    		}
+    		
+    		break;
+    }
+    
+   
+    switch(periode){
+    
+    	case "Semaine":
+    		sql = sql+" group by WEEKOFYEAR(DATE_REPARED) order by WEEKOFYEAR(DATE_REPARED)";
+    		break;
+    		
+    	case "Mois":
+    		sql = sql+" group by MONTH(DATE_REPARED) order by MONTH(DATE_REPARED)";
+    		break;
+    	case "Annee":
+    		sql = sql+" group by YEAR(DATE_REPARED) order by YEAR(DATE_REPARED)";
+    		break;
+    }
+    
+    
+    
+    try {
+       ResultSet rs = ordre.executeQuery(sql);
+       while(rs.next()){
+    	   int rep = rs.getInt(1);
+    	   int duree = rs.getInt(2);
+    	   p = new Performance(rep,duree,0);
+    	   nbrep.add(p);
+        
+       }
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    
+    try {
+        ordre.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    list= new PerformanceList(nbrep);
+    return list;
+    
+}
 
 
 

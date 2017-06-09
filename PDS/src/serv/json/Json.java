@@ -12,7 +12,8 @@ public class Json<T> {
           this.type = type;
      }
 
-     public Class<T> getMyType() {
+
+	public Class<T> getMyType() {
          return this.type;
      }
      

@@ -13,5 +13,11 @@ public enum Parameter {
 	MOTIF_BREAKDOWN,
 	ID_PRIO,
 	LIST,
-	COM
+	COM,
+	IND_DATEBEGIN,
+	IND_DATEEND,
+	IND_IdOPE,
+	IND_IdEMP,
+	IND_VEHICLETYPE,
+	IND_Periode,
 }

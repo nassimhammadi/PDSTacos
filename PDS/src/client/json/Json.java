@@ -13,6 +13,7 @@ public class Json<T> {
      public Json(Class<T> type) {
           this.type = type;
      }
+     
 
      public Class<T> getMyType() {
          return this.type;

@@ -11,8 +11,11 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Properties;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -22,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
@@ -36,6 +40,8 @@ import client.model.BreakdownList;
 import client.model.Car;
 import client.model.ListCar;
 import client.model.ListVehicle;
+import client.model.Performance;
+import client.model.PerformanceList;
 import client.model.User;
 import client.model.Vehicule;
 import client.socketClient.AllClasses;
@@ -50,6 +56,7 @@ import org.jdatepicker.util.*;
 import org.jdatepicker.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 
 public class Indicator extends JFrame{
 
@@ -73,6 +80,13 @@ public class Indicator extends JFrame{
 	private UserList listU;
 	private JDatePickerImpl dateBegin;
 	private JDatePickerImpl dateEnd;
+	private JComboBox<String> vehicletype;
+	private PerformanceList nbRep;
+	private ButtonGroup bg;
+	private JRadioButton semaine;
+	private JRadioButton mois;
+	private JRadioButton annee;
+	private JPanel panelSouth;
 
 
 	public Indicator(Client client) {
@@ -86,16 +100,16 @@ public class Indicator extends JFrame{
 		panelNord.add(menu.getMenu());
 
 
-		JPanel panelWest = new JPanel(new GridLayout(1,4));
-		panelWest.setBackground(Color.white);
+		JPanel panelButton = new JPanel(new GridLayout(1,2));
+		panelButton.setBackground(Color.white);
 
 		// JPanel to search vehicle thanks to ID
-		JPanel panelWest1 = new JPanel(new GridLayout(6,1));
+		JPanel panelWest1 = new JPanel(new GridLayout(7,1));
 		panelWest1.setBackground(Color.white);
-		panelWest1.setPreferredSize(new Dimension(300, 200));
+		panelWest1.setPreferredSize(new Dimension(350, 200));
 		panelWest1.setBorder(new TitledBorder("Filtres de recherche : "));
 		panelWest1.add(new JLabel("Type de Vehicule :"));
-		JComboBox<String> vehicletype= new JComboBox<String>();
+		this.vehicletype= new JComboBox<String>();
 		vehicletype.addItem("Indifferent");
 		vehicletype.addItem("Voiture");
 		vehicletype.addItem("Velo");
@@ -112,8 +126,8 @@ public class Indicator extends JFrame{
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
-		UtilDateModel modeleBegin = new UtilDateModel();
-		UtilDateModel modeleEnd = new UtilDateModel();
+		SqlDateModel modeleBegin = new SqlDateModel();
+		SqlDateModel modeleEnd = new SqlDateModel();
 		JDatePanelImpl datePanelBegin = new JDatePanelImpl(modeleBegin,p);
 		JDatePanelImpl datePanelEnd = new JDatePanelImpl(modeleEnd,p);
 		this.dateBegin = new JDatePickerImpl(datePanelBegin,new DateLabelFormatter());
@@ -122,22 +136,37 @@ public class Indicator extends JFrame{
 		panelWest1.add(dateBegin);
 		panelWest1.add(new JLabel("Au:")); 
 		panelWest1.add(dateEnd);
-
-
+		this.bg= new ButtonGroup();
+		this.semaine= new JRadioButton("Semaine");
+		this.mois= new JRadioButton("Mois");
+		this.annee= new JRadioButton("Annee");
+		this.bg.add(semaine);
+		this.bg.add(mois);
+		this.bg.add(annee);
+		panelButton.add(semaine);
+		panelButton.add(mois);
+		panelButton.add(annee);
+		semaine.setSelected(true);
+		
+		
+		panelWest1.add(new JLabel("Periode :"));
+		panelWest1.add(panelButton);
 
 		JButton search = new JButton("Rechercher");
 		panelWest1.add(search);
 		
 		selectListener sl = new selectListener(this);
 		search.addActionListener(sl);
-		panelWest.add(panelWest1);
 
 
 
-		JPanel panelSouth =  new JPanel(new GridLayout(9,1));
+		panelSouth =  new JPanel(new GridLayout(2,1));
 		panelSouth.setBackground(Color.white);
 		panelSouth.setPreferredSize(new Dimension(300,350));
 		panelSouth.setBorder(new TitledBorder("Resultat : "));
+		
+		
+		
 		//   panelSouth.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
 
@@ -149,7 +178,7 @@ public class Indicator extends JFrame{
 		panelPrincipal.setBackground(Color.white);
 		panelPrincipal.setLayout(new BorderLayout());
 		panelPrincipal.add(panelNord, BorderLayout.NORTH);
-		panelPrincipal.add(panelWest, BorderLayout.CENTER);
+		panelPrincipal.add(panelWest1, BorderLayout.CENTER);
 		panelPrincipal.add(panelSouth, BorderLayout.SOUTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 
@@ -162,8 +191,26 @@ public class Indicator extends JFrame{
 		this.setBackground(Color.white);
 		setVisible(true);
 		displayAllEmployee();      displayAllBreakdown();
+		
 
 	}
+	
+	
+	
+	
+	public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+	
+	
 
 	public void getAllEmployee(){
 		String rep = "";
@@ -229,6 +276,7 @@ public class Indicator extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		for(Breakdown b : listB.getListBreakdown()){
 			operationtype.addItem(b.toString());
 			setVisible(true);
@@ -277,40 +325,38 @@ public class Indicator extends JFrame{
 		public void actionPerformed(ActionEvent arg0) {
 		//	String identif=id_search.getText();
 			String rep="";
-			java.sql.Date selectedDate = (java.sql.Date) dateBegin.getModel().getValue();
+			java.sql.Date dateBegin_r = (java.sql.Date) dateBegin.getModel().getValue();
+			java.sql.Date dateEnd_r = (java.sql.Date) dateEnd.getModel().getValue();
+			String vehicletype_r= vehicletype.getSelectedItem().toString();
+			String [] strings= operationtype.getSelectedItem().toString().split(". ");
+			String operationtype_r= strings[0];
+			strings= employeelist.getSelectedItem().toString().split(". ");
+			String employee_r= strings[0];
+			String periode_r= hm.getSelectedButtonText(bg);
 			
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-			
-		/*	
-			int t_up;
-			Boolean m_up = false;
-			Boolean p_up = false;
-			if(ct1_up.getState()){
-				t_up = 1;
-			} else t_up = 0;
-
-			if(cm1_up.getState()){
-				m_up = true;
-			}
-
-			if(cp1_up.getState()){
-				p_up = true;
-			}
-			Vehicule v_up = new Vehicule(Integer.parseInt(id_up.getText()),im_up.getText(),t_up,year_up.getText(),m_up,p_up,brand_up.getText(),model_up.getText());
-
-			Json<Vehicule> myJSon= new Json<Vehicule>(Vehicule.class);
-			Json myJSon_up= new Json(Vehicule.class);
-			String v_i= myJSon_up.serialize(v_up);
-			param.put(Parameter.ID, id_up.getText());
-
-			System.out.println("Param"+Parameter.ID);
-			requestToServer rtsu=new requestToServer(AllClasses.VEHICULE,TypeRequest.UPDATE,v_i,param);
+			param.put(Parameter.IND_VEHICLETYPE,vehicletype_r);
+			param.put(Parameter.IND_IdOPE,operationtype_r);
+			param.put(Parameter.IND_IdEMP,employee_r);
+			param.put(Parameter.IND_DATEBEGIN,dateBegin_r.toString());
+			param.put(Parameter.IND_DATEEND,dateEnd_r.toString());
+			param.put(Parameter.IND_Periode,periode_r);
+			requestToServer rts=new requestToServer(AllClasses.LOGS_BREAKDOWN,TypeRequest.IND_SELECTNBREP,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
-			String jsonAuth = jsonRTS.serialize(rtsu);
-			System.out.println("Last Message :"+rep);
+			String jsonAuth = jsonRTS.serialize(rts);
+			rep=c.getCcs().getLastMessageFromServeur();
+			c.getCcs().setLastMessageToServer(jsonAuth);
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
-			t.start();*/
+			t.start();
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dispose();
+			IndicatorResultat ir= new IndicatorResultat(c,nbRep);
 		}
 	}
 
@@ -368,6 +414,18 @@ public class Indicator extends JFrame{
 
 							System.out.println("All :"+listB);
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						fin =true;
+						
+					}
+					else if (part1.equals("selectNbRep")){
+						Json<PerformanceList> jsonNbRep= new Json<PerformanceList>(PerformanceList.class);
+						
+						try{
+							nbRep=jsonNbRep.deSerialize(part2);
+						}catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
