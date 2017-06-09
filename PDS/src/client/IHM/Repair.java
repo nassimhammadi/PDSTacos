@@ -486,6 +486,7 @@ public class Repair extends JFrame {
 		repa.add(new JLabel("Main d'oeuvre prévue : "+duration+" heure(s)"));
 		repa.add(new JLabel("Commentaires : "));
 		jt_c = new JTextField();
+		jt_c.setSize(new Dimension(200,200));
 		buttonRep = new JButton("Réparer");
 		updateListener ul = new updateListener(this);
         buttonRep.addActionListener(ul);

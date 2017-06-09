@@ -314,7 +314,7 @@ public Car findByLicense( String license ) throws DAOException {
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select * from Car where id_car = ( select id_car from logs_breakdowns where isnull(date_occured))";
+        String sql = "select * from Car c join LOGS_BREAKDOWNS lb on c.id_car=lb.id_car where lb.DATE_OCCURED IS NOT NULL and isnull(lb.date_repared) group by c.ID_CAR";
       
         try {
            ResultSet rs = ordre.executeQuery(sql);
@@ -348,36 +348,74 @@ public Car findByLicense( String license ) throws DAOException {
 	
 	public ListCar findAllFinished(  ) throws DAOException {
         
-	       
+	    ArrayList<Integer> a_i = new ArrayList<Integer>();
         ListCar list = null;
         ArrayList<Car> a_c = new ArrayList<Car>();
+        int count1 = 0;
         try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select * from Car c join logs_breakdowns lb on c.id_car = lb.id_car where lb.DATE_REPARED IS NOT NULL GROUP BY c.id_car";
-      
+        
+        String sql1 = "select Distinct id_car from logs_breakdowns   ";
         try {
-           ResultSet rs = ordre.executeQuery(sql);
-           while(rs.next()){
-               int identifiant = rs.getInt(1);
-               String license = rs.getString(2) ;
-               String year = rs.getString(3);
-               Boolean is_electric = rs.getBoolean(4);
-               Boolean is_present = rs.getBoolean(5);
-               String brand = rs.getString(6);
-               String model = rs.getString(7);
-               Date dateEntry = rs.getDate(8);
-               int duration=calculDuration(license);
-               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
-               a_c.add(c);
-           }
-        } catch (SQLException ex) {
-            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            ResultSet rs = ordre.executeQuery(sql1);
+            while(rs.next()){
+                
+                int d=rs.getInt(1);
+                a_i.add(d);
+            }
+         } catch (SQLException ex) {
+             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        
+        for(Integer i: a_i){
+        	int inte = i;
+        	String sql2 = "select COUNT(*) from logs_breakdowns  where id_car="+inte;
+        	 try {
+                 ResultSet rs4 = ordre.executeQuery(sql2);
+                 while(rs4.next()){
+                     int count2 = rs4.getInt(1);
+                     String sql3 = "select COUNT(*) from logs_breakdowns where date_repared is not null and id_car="+inte;
+                     try {
+                         ResultSet rs3 = ordre.executeQuery(sql3);
+                         while(rs3.next()){
+                             
+                             count1=rs3.getInt(1);
+                             
+                         }
+                      } catch (SQLException ex) {
+                          Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                     if(count2==count1){
+                    	 String sql = "select * from Car c where id_car ="+inte;
+                    	 try {
+                             ResultSet rs2 = ordre.executeQuery(sql);
+                             while(rs2.next()){
+                                 int identifiant = rs2.getInt(1);
+                                 String license = rs2.getString(2) ;
+                                 String year = rs2.getString(3);
+                                 Boolean is_electric = rs2.getBoolean(4);
+                                 Boolean is_present = rs2.getBoolean(5);
+                                 String brand = rs2.getString(6);
+                                 String model = rs2.getString(7);
+                                 Date dateEntry = rs2.getDate(8);
+                                 int duration=calculDuration(license);
+                                 Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
+                                 a_c.add(c);
+                             }
+                          } catch (SQLException ex) {
+                              Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                          }
+                     }
+                 }
+              } catch (SQLException ex) {
+                  Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+              }
         }
-        
-        
+       
+      
         try {
             ordre.close();
         } catch (SQLException ex) {
