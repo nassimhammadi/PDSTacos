@@ -38,8 +38,8 @@ public class BikeDAOImpl {
            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
        }
         String sql ="SELECT SUM(DURATION) FROM LOGS_BREAKDOWNS, BREAKDOWNS, BIKE "
-        		+ "WHERE ID_BIKE="+id+" AND BIKE.ID_BIKE=LOGS_BREAKDOWNS.ID_BIKE "
-        		+ "AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN";
+        		+ "WHERE BIKE.ID_BIKE="+id+" AND BIKE.ID_BIKE=LOGS_BREAKDOWNS.ID_BIKE "
+        		+ "AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN  AND DATE_REPARED IS NULL";
         int sum=0;
         try {
             ResultSet rs = ordre.executeQuery(sql);
@@ -118,6 +118,7 @@ public class BikeDAOImpl {
        String brand = b.getBrand();
        String model = b.getModel();
        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+       int id=b.getId();;
        
        try {
             ordre = connection.createStatement();
@@ -125,7 +126,7 @@ public class BikeDAOImpl {
        } catch (SQLException ex) {
            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
        }
-       String sql = "INSERT INTO Bike (YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL,DATE_ENTRY) VALUES("+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"','"+date+"')";
+       String sql = "INSERT INTO Bike (ID_BIKE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL,DATE_ENTRY) VALUES("+id+","+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"','"+date+"')";
       
        try {
            ordre.executeUpdate(sql);

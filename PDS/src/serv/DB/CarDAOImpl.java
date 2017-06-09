@@ -56,7 +56,7 @@ public class CarDAOImpl implements CarDAO {
        }
          String sql ="SELECT SUM(DURATION) FROM LOGS_BREAKDOWNS, BREAKDOWNS, CAR "
          		+ "WHERE LICENSE_NUMBER='"+license+"' AND CAR.ID_CAR=LOGS_BREAKDOWNS.ID_CAR "
-         		+ "AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN";
+         		+ "AND LOGS_BREAKDOWNS.ID_BREAKDOWN=BREAKDOWNS.ID_BREAKDOWN AND DATE_REPARED IS NULL";
          int sum=0;
          try {
              ResultSet rs = ordre.executeQuery(sql);
@@ -361,6 +361,38 @@ public Car findAndDeletePrio( int id, int id_prio ) throws DAOException {
         return c;
         
     }
+
+
+public void updateByLicense(Car c)  {
+    String license = c.getLicense_number() ;
+    String year = c.getYear();
+   
+    Boolean is_electric = c.getIs_electric();
+    Boolean is_present = c.getIs_present();
+    String brand = c.getBrand();
+    String model = c.getModel();
+    
+    try {
+         ordre = connection.createStatement();
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    String sql = "UPDATE CAR SET YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"' where LICENSE_NUMBER = "+license; 
+  
+    try {
+        ordre.executeUpdate(sql);
+      
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    try {
+        ordre.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+   
+}
     
     
     
