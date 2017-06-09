@@ -244,21 +244,7 @@ public class Indicator extends JFrame{
 
 	public void displayAllEmployee(){
 		getAllEmployee();
-	/*	Thread a = new Thread();
-		a.start();
-		try {
-			t_all.join();
-			a.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			a.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
 		for(User u : listU.getListUser()){
 			employeelist.addItem(u.toStringLabel());
 			setVisible(true);
@@ -286,20 +272,6 @@ public class Indicator extends JFrame{
 
 	public void displayAllBreakdown(){
 		getAllBreakdown();
-	/*	Thread a = new Thread();
-		a.start();
-		try {
-			a.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			a.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
 		for(Breakdown b : listB.getListBreakdown()){
 			operationtype.addItem(b.toString());
