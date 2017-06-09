@@ -28,7 +28,9 @@ public interface LogsBreakdownDAO {
 	     */
 	    void update ( int id, int id_bd, String comment, ListPieces lp ) throws DAOException;
 	    
-	    void updateFinish ( int id) throws DAOException;
+	    void updateFinish ( int id, int id_v) throws DAOException;
+	    
+	    void updateFinishB ( int id, int id_v) throws DAOException;
 	    
 	    /**
 	     * Delete a vehicle from the database

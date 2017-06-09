@@ -40,7 +40,7 @@ public class PiecesDAOImpl implements PiecesDAO{
 	}
 
 	@Override
-	public ListPieces findList(int id) throws DAOException {
+	public synchronized ListPieces findList(int id) throws DAOException {
 		Pieces b;
 		ListPieces list = null;
 		ArrayList<Pieces> a_p = new ArrayList<Pieces>();

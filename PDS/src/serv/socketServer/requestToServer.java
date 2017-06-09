@@ -130,10 +130,20 @@ public class requestToServer {
 				lbimpl.update(id,id_bd_log, comment,lp);
 				return reponse="ok";
 			case FINISH:
-				LogsBreakdownDAOImpl lbimplf = new LogsBreakdownDAOImpl(co);
-				int idf = Integer.parseInt(listParam.get(Parameter.ID));
-				lbimplf.updateFinish(idf);
+				
+					LogsBreakdownDAOImpl lbimplf = new LogsBreakdownDAOImpl(co);
+					int idf = Integer.parseInt(listParam.get(Parameter.ID));
+					int id_v = Integer.parseInt(listParam.get(Parameter.VEHICULE));
+					lbimplf.updateFinish(idf, id_v);
+					return reponse="ok";
+				
+			case FINISHB :
+				LogsBreakdownDAOImpl lbimplf2 = new LogsBreakdownDAOImpl(co);
+				int idf2 = Integer.parseInt(listParam.get(Parameter.ID));
+				int id_v2 = Integer.parseInt(listParam.get(Parameter.VEHICULE));
+				lbimplf2.updateFinishB(idf2, id_v2);
 				return reponse="ok";
+			
 			}
 		case VEHICULE : 
 			VehiculeDAOImpl vdao= new VehiculeDAOImpl(co);

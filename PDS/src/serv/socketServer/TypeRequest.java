@@ -8,6 +8,7 @@ public enum TypeRequest {
 	 LOGIN,
 	 SELECTID,
 	 SELECTB,
-	 FINISH
+	 FINISH,
+	 FINISHB
 	
 }

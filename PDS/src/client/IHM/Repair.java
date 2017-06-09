@@ -131,7 +131,8 @@ public class Repair extends JFrame {
     private int duration;
     private int id_employee;
     private JTextField jt_c;
-    
+    private int id_carF;
+	private int id_bikeF;
 
     /**
      * 
@@ -337,10 +338,18 @@ public class Repair extends JFrame {
     	for(priorizedListObject pList : prioList.getPriorizedList()){
     		int id;
     		if(pList.getId_car() == 0){
-    			id=pList.getId_bike();
+    			if(i == 0){
+    				id_bikeF=pList.getId_bike();
+    			}
+    			
+    			id = id_bikeF;
     		}
     		else{
-    			id=pList.getId_car();
+    			if(i == 0){
+    				id_carF=pList.getId_car();
+    			}
+    			
+    			id = id_carF;
     		}
     		if(i==0){
     			JLabel j1 = new JLabel(""+pList.getId_prio());
@@ -536,7 +545,11 @@ public class Repair extends JFrame {
 			Thread t=new Thread(cmc);
 			t.start();
 			dispose();
-			Finish f = new Finish(c,logBget.getId_bd_log(),id_employee);
+			
+			
+			
+			System.out.println("idc : "+id_carF+" idb : "+id_bikeF);
+			Finish f = new Finish(c,logBget.getId_bd_log(),id_employee,prioListObject,id_carF,id_bikeF);
 		}
 	}
     
