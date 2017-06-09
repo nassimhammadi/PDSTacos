@@ -70,10 +70,10 @@ public class Monitorer extends JFrame{
 		        		displayAllVehicle();
 		        	}
 		        	else if(choice.getSelectedItem() == "En cours"){
-		        		
+		        		displayOccuredVehicle();
 		        	}
 		        	else if(choice.getSelectedItem() == "Termine"){
-		        		
+		        		displayFinishedVehicle();
 		        	}
 		        	else if(choice.getSelectedItem() == "En attente"){
 		        		displayAllPLVehicle();
@@ -223,11 +223,11 @@ public class Monitorer extends JFrame{
       
         //list.setBackground(Color.WHITE);
     	list.add(new JLabel("Identifiant du véhicule"));
-    	list.add(new JLabel("Modèle"));
+    	list.add(new JLabel("    Modèle"));
     	list.add(new JLabel("    Date d'entrée"));
     	for(Car c : listC.getL_b()){
             list.add(new JLabel(""+c.getId()));
-            list.add(new JLabel(""+c.getModel()));
+            list.add(new JLabel("    "+c.getModel()));
             list.add(new JLabel("    "+c.getDateEntry()));
         }  
     	west.add(list);
@@ -260,7 +260,7 @@ public class Monitorer extends JFrame{
 		String identif ="";
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.OCCURED,"",param);
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();
@@ -278,7 +278,67 @@ public class Monitorer extends JFrame{
 	
 	public void displayOccuredVehicle(){
 		west.removeAll();
-		getAllVehicle();
+		getOccuredVehicle();
+    	Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		sizeOfPrioList =0;
+    	for(Car c : listC.getL_b()){
+            sizeOfPrioList+=1;
+        }  
+    	System.out.println(sizeOfPrioList);
+        // JPanel to show priorizedList of vehicle
+        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
+      
+        //list.setBackground(Color.WHITE);
+    	list.add(new JLabel("Identifiant du véhicule"));
+    	list.add(new JLabel("    Modèle"));
+    	list.add(new JLabel("    Date d'entrée"));
+    	for(Car c : listC.getL_b()){
+            list.add(new JLabel(""+c.getId()));
+            list.add(new JLabel("    "+c.getModel()));
+            list.add(new JLabel("    "+c.getDateEntry()));
+        }  
+    	west.add(list);
+    	west.updateUI();
+    	setVisible(true);
+    	
+	}
+	
+	public void getFinishedVehicle(){
+		String identif ="";
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.FINISHED,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void displayFinishedVehicle(){
+		west.removeAll();
+		getFinishedVehicle();
     	Thread a = new Thread();
     	a.start();
     	try {
@@ -315,6 +375,7 @@ public class Monitorer extends JFrame{
     	setVisible(true);
     	
 	}
+	
 	
 class checkMessageChange implements Runnable{
 		
@@ -362,7 +423,30 @@ class checkMessageChange implements Runnable{
 					}
 					fin =true;
 				}
-			
+				else if(part1.equals("selectAllCarOccured")){
+						Json <ListCar> myJSon3= new Json<ListCar>(ListCar.class);
+
+					try {
+							listC= myJSon3.deSerialize(part2);
+						System.out.println("All :"+listC);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					fin =true;
+				}
+				else if(part1.equals("selectAllCarRepared")){
+					Json <ListCar> myJSon3= new Json<ListCar>(ListCar.class);
+
+				try {
+						listC= myJSon3.deSerialize(part2);
+					System.out.println("All :"+listC);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fin =true;
+			}
 				}
 			}
 

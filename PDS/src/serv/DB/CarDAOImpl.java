@@ -304,6 +304,89 @@ public Car findByLicense( String license ) throws DAOException {
         
     }
 	
+	public ListCar findAllOccured(  ) throws DAOException {
+        
+	       
+        ListCar list = null;
+        ArrayList<Car> a_c = new ArrayList<Car>();
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from Car where id_car = ( select id_car from logs_breakdowns where isnull(date_occured))";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+               int identifiant = rs.getInt(1);
+               String license = rs.getString(2) ;
+               String year = rs.getString(3);
+               Boolean is_electric = rs.getBoolean(4);
+               Boolean is_present = rs.getBoolean(5);
+               String brand = rs.getString(6);
+               String model = rs.getString(7);
+               Date dateEntry = rs.getDate(8);
+               int duration=calculDuration(license);
+               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
+               a_c.add(c);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        list = new ListCar(a_c);
+        return list;
+        
+    }
+	
+	public ListCar findAllFinished(  ) throws DAOException {
+        
+	       
+        ListCar list = null;
+        ArrayList<Car> a_c = new ArrayList<Car>();
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from Car c join logs_breakdowns lb on c.id_car = lb.id_car where lb.DATE_REPARED IS NOT NULL GROUP BY c.id_car";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+               int identifiant = rs.getInt(1);
+               String license = rs.getString(2) ;
+               String year = rs.getString(3);
+               Boolean is_electric = rs.getBoolean(4);
+               Boolean is_present = rs.getBoolean(5);
+               String brand = rs.getString(6);
+               String model = rs.getString(7);
+               Date dateEntry = rs.getDate(8);
+               int duration=calculDuration(license);
+               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
+               a_c.add(c);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        list = new ListCar(a_c);
+        return list;
+        
+    }
 public Car findAndDeletePrio( int id, int id_prio ) throws DAOException {
         
         Car c = null;

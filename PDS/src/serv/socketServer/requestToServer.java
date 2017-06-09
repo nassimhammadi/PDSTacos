@@ -325,6 +325,16 @@ public class requestToServer {
 				/*
 				 * UPDATE PREND 1 param :  le nouveau vehicule
 				 */
+			case OCCURED: 
+				this.listC = cdao.findAllOccured();
+				Json<ListCar> jV = new Json<ListCar>(ListCar.class);
+				String jsonCar = jV.serialize(listC);
+				return reponse = "selectAllCarOccured/"+jsonCar;
+			case FINISHED:
+				this.listC = cdao.findAllFinished();
+				Json<ListCar> jV2 = new Json<ListCar>(ListCar.class);
+				String jsonCar2 = jV2.serialize(listC);
+				return reponse = "selectAllCarRepared/"+jsonCar2;
 			case INSERT:
 				switch (listParam.size()){
 				case 0 : //RIEN
