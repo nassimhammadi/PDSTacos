@@ -1,6 +1,8 @@
 package client.IHM;
 
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
@@ -9,6 +11,8 @@ import javax.swing.border.TitledBorder;
 
 import client.IHM.Repair.checkMessageChange;
 import client.json.Json;
+import client.model.Car;
+import client.model.ListCar;
 import client.model.ListVehicle;
 import client.model.Vehicule;
 import client.model.priorizedList;
@@ -28,17 +32,22 @@ public class Monitorer extends JFrame{
 	private JPanel list;
 	private int sizeOfPrioList;
 	private JPanel west;
+	private ListCar listC;
+	private Choice choice;
 	  
 	public Monitorer(Client cli){
-		
+		this.c = cli;
 	    this.setTitle("Activity of Deposit - Workflow");
-	    this.setSize(700, 700);
+	    this.setSize(900, 900);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setLocationRelativeTo(null);
 	    //On définit le layout à utiliser sur le content pane
 	    this.setLayout(new BorderLayout());
 	    
 	    
+	    centrewest = new JPanel(new FlowLayout());
+	    
+        centrewest.setBackground(Color.white);
 	    JPanel nord = new JPanel(new GridLayout(1,2));
 	    nord.setBackground(Color.white);
 	    nord.setPreferredSize(new Dimension(50,50));
@@ -47,31 +56,47 @@ public class Monitorer extends JFrame{
         
 	    
 	    JLabel statut = new JLabel("Statut :");
-	    Choice c = new Choice();  
-	       c.addItem("All");  
-	       c.addItem("En cours");  
-	       c.addItem("Terminé");  
-	       c.addItem("En attente");
+	    choice = new Choice();  
+	       choice.addItem("All");  
+	       choice.addItem("En cours");  
+	       choice.addItem("Termine");  
+	       choice.addItem("En attente");
 	      
-	       c.select("All");  
-	    
+	       choice.select("All");  
+	       choice.addItemListener(new ItemListener(){
+		        public void itemStateChanged(ItemEvent ie)
+		        {
+		        	if(choice.getSelectedItem() == "All"){
+		        		displayAllVehicle();
+		        	}
+		        	else if(choice.getSelectedItem() == "En cours"){
+		        		
+		        	}
+		        	else if(choice.getSelectedItem() == "Termine"){
+		        		
+		        	}
+		        	else if(choice.getSelectedItem() == "En attente"){
+		        		displayAllPLVehicle();
+		        	}
+		        }
+		    });
 	       nord.add(statut);
-	       nord.add(c);
+	       nord.add(choice);
 	      
 	       JPanel centre = new JPanel(new GridLayout(1,2));
 		   centre.setBackground(Color.white);
-		   centre.setPreferredSize(new Dimension(50,50));
+		   
 		
 		   
-		 JPanel west = new JPanel();
-		 west.setPreferredSize(new Dimension(50,50));
+		 west = new JPanel();
+		 
 		 west.setBorder(new TitledBorder("Liste des véhicules"));
 		 displayAllVehicle();
 		 centre.add(west);
 		 
 		 JPanel east = new JPanel();
 		 
-		 east.setPreferredSize(new Dimension(50,50));
+		 
 		 east.setBorder(new TitledBorder("Workflow"));
 		 centre.add(east);
 		 
@@ -109,14 +134,14 @@ public class Monitorer extends JFrame{
 	    setContentPane(panelPrincipal);
 	    
 	    this.setVisible(true);
-	  
+	   
 	    
 	    
 	}
 	
 
 	
-	public void getAllVehicle(){
+	public void getPLVehicle(){
 		String identif ="";
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
@@ -130,8 +155,9 @@ public class Monitorer extends JFrame{
 		t_all.start();
 	}
 
-	public void displayAllVehicle(){
-    	getAllVehicle();
+	public void displayAllPLVehicle(){
+		west.removeAll();
+    	getPLVehicle();
     	Thread a = new Thread();
     	a.start();
     	try {
@@ -152,22 +178,143 @@ public class Monitorer extends JFrame{
         }  
     	System.out.println(sizeOfPrioList);
         // JPanel to show priorizedList of vehicle
-        list = new JPanel(new GridLayout(sizeOfPrioList+1,1));
-        list.setBackground(Color.WHITE);
-    	list.add(new JLabel("Priorité"));
-    	list.add(new JLabel("Identifiant du véhicule"));
-    	list.add(new JLabel("Date d'entrée"));
-    	for(priorizedListObject pList : prioList.getPriorizedList()){
-            list.add(new JLabel(""+pList.getId_prio()));
-            list.add(new JLabel(""+pList.getId_car()));
-            list.add(new JLabel(""+pList.getDate_occured()));
-        }  
-    	centrewest.add(list);
+        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
+      
+        //list.setBackground(Color.WHITE);
     	
+    	list.add(new JLabel("Identifiant du véhicule"));
+    	list.add(new JLabel("   Modèle"));
+    	list.add(new JLabel("   Date d'entrée"));
+    	for(priorizedListObject pList : prioList.getPriorizedList()){
+    		list.add(new JLabel(""+pList.getId_car()));
+            list.add(new JLabel("   "+pList.getModel()));
+            list.add(new JLabel("   "+pList.getDate_occured()));
+        }  
+    	west.add(list);
+    	west.updateUI();
     	setVisible(true);
     	
     }
 	
+	public void displayAllVehicle(){
+		west.removeAll();
+		getAllVehicle();
+    	Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		sizeOfPrioList =0;
+    	for(Car c : listC.getL_b()){
+            sizeOfPrioList+=1;
+        }  
+    	System.out.println(sizeOfPrioList);
+        // JPanel to show priorizedList of vehicle
+        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
+      
+        //list.setBackground(Color.WHITE);
+    	list.add(new JLabel("Identifiant du véhicule"));
+    	list.add(new JLabel("Modèle"));
+    	list.add(new JLabel("    Date d'entrée"));
+    	for(Car c : listC.getL_b()){
+            list.add(new JLabel(""+c.getId()));
+            list.add(new JLabel(""+c.getModel()));
+            list.add(new JLabel("    "+c.getDateEntry()));
+        }  
+    	west.add(list);
+    	west.updateUI();
+    	setVisible(true);
+    	
+	}
+	
+	public void getAllVehicle(){
+		String identif ="";
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void getOccuredVehicle(){
+		String identif ="";
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void displayOccuredVehicle(){
+		west.removeAll();
+		getAllVehicle();
+    	Thread a = new Thread();
+    	a.start();
+    	try {
+			a.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			a.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		sizeOfPrioList =0;
+    	for(Car c : listC.getL_b()){
+            sizeOfPrioList+=1;
+        }  
+    	System.out.println(sizeOfPrioList);
+        // JPanel to show priorizedList of vehicle
+        list = new JPanel(new GridLayout(sizeOfPrioList+1,3));
+      
+        //list.setBackground(Color.WHITE);
+    	list.add(new JLabel("Identifiant du véhicule"));
+    	list.add(new JLabel("Modèle"));
+    	list.add(new JLabel("    Date d'entrée"));
+    	for(Car c : listC.getL_b()){
+            list.add(new JLabel(""+c.getId()));
+            list.add(new JLabel(""+c.getModel()));
+            list.add(new JLabel("    "+c.getDateEntry()));
+        }  
+    	west.add(list);
+    	west.updateUI();
+    	setVisible(true);
+    	
+	}
 	
 class checkMessageChange implements Runnable{
 		
@@ -197,6 +344,18 @@ class checkMessageChange implements Runnable{
 						prioList = myJSon.deSerialize(part2);
 						
 						System.out.println("All :"+prioList);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					fin =true;
+				}
+				 else if(part1.equals("selectAllCar")){
+						Json <ListCar> myJSon2= new Json<ListCar>(ListCar.class);
+
+					try {
+							listC= myJSon2.deSerialize(part2);
+						System.out.println("All :"+listC);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
