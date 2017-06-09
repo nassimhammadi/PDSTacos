@@ -21,6 +21,7 @@ import serv.model.Car;
 import serv.model.ListCar;
 import serv.model.ListPieces;
 import serv.model.LogsBreakdown;
+import serv.model.LogsBreakdownList;
 import serv.model.Performance;
 import serv.model.PerformanceList;
 import serv.model.Pieces;
@@ -280,7 +281,47 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
 
 
 
-
+	 public LogsBreakdownList findCar( int id_car ) throws DAOException {
+	        LogsBreakdownList bd_l = null;
+	        ArrayList<LogsBreakdown> a_bd = new ArrayList<LogsBreakdown>();
+	    	LogsBreakdown c = null;
+	        try {
+	             ordre = connection.createStatement();
+	        } catch (SQLException ex) {
+	            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	        String sql = "select * from LOGS_BREAKDOWNS where ID_CAR = "+id_car;
+	      
+	        try {
+	           ResultSet rs = ordre.executeQuery(sql);
+	           while(rs.next()){
+	        	int id_bd_log = rs.getInt(1);
+	        	int id_c = rs.getInt(2);
+	            int id_bike = 0;
+	            int id_employee = rs.getInt(4);
+	            int id_b = rs.getInt(5);
+	            Date date_e = rs.getDate(6);
+	        	Date date_o = rs.getDate(7);
+	            Date date_r = rs.getDate(8);
+	            String comment = rs.getString(9);
+	            
+	            c = new LogsBreakdown(id_bd_log, id_c, id_bike, id_employee, id_b, date_e, date_o, date_r, comment);
+	            a_bd.add(c);
+	           }
+	        } catch (SQLException ex) {
+	            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	        
+	        
+	        try {
+	            ordre.close();
+	        } catch (SQLException ex) {
+	            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	        bd_l = new LogsBreakdownList(a_bd);
+	        return bd_l;
+	        
+	    }
 	
 
 

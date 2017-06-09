@@ -12,5 +12,6 @@ public enum TypeRequest {
 	 FINISH,
 	 FINISHB,
 	 OCCURED,
-	 FINISHED
+	 FINISHED,
+	 SELECT_MONITORER
 }
