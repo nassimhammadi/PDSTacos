@@ -11,7 +11,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:\Users\Marouane\Downloads\mysql-connector-java-5.1.42\mysql-connector-java-5.1.42\mysql-connector-java-5.1.42-bin.jar"/>
-<!---	<classpathentry kind="lib" path="/Users/nassimhammadi/Downloads/gson-1.7.1-sources.jar"/> -->
+	<classpathentry kind="lib" path="C:\Users\nassimhammadi\Downloads\mysql-connector-java-5.1.42\mysql-connector-java-5.1.42\mysql-connector-java-5.1.42-bin.jar"/> 
+	<classpathentry kind="lib" path="/Users/nassimhammadi/Downloads/gson-1.7.1-sources.jar"/> 
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
