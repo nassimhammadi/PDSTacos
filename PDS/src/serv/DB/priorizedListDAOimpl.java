@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -123,6 +125,84 @@ public class priorizedListDAOimpl implements priorizedListDAO {
 	public void delete(int id) throws DAOException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/** 
+	 *
+	 * @author Hatim
+	 */
+	
+public void  sort_List(ArrayList<priorizedListObject> priorizedList) { // PRIORIZED LIST SORT
+		
+	
+    // SORT BY PRIORITY
+	
+	int longueur=0;
+	for (priorizedListObject o : priorizedList){
+		longueur++;
+	}
+		
+	
+       boolean inversion=true;    
+       do
+           {
+           inversion=false;
+
+           for(int i=0;i<longueur-1;i++)
+               {
+               if( priorizedList.get(i).getId_prio() > priorizedList.get(i+1).getId_prio())
+                   {
+               	Collections.swap(priorizedList, i, i+1);
+                   inversion=true;
+                   }
+               }
+           longueur--;
+            }
+       while(inversion);
+       
+       // SORT BY DATE IF PRIORITY IS THE SAME
+       
+       longueur=0;
+   	for (priorizedListObject o : priorizedList){
+   		longueur++;
+   	}
+         
+       do
+           {
+           inversion=false;
+
+           for(int i=0;i<longueur-1;i++)
+               {
+               if( priorizedList.get(i).getId_prio() == priorizedList.get(i+1).getId_prio() && priorizedList.get(i).getDate_occured().compareTo(priorizedList.get(i+1).getDate_occured()) > 0  )
+                   {
+               	Collections.swap(priorizedList, i, i+1);
+                   inversion=true;
+                   }
+               }
+           longueur--;
+            }
+       while(inversion);
+       
+       
+       // PUT ELEMENT ON TOP IF DATE OLDER THAN 3 WEEKS
+       
+       longueur=0;
+   	for (priorizedListObject o : priorizedList){
+   		longueur++;
+   	}
+       
+       for(int i=0;i<longueur-1;i++){
+    	java.util.Date date = new java.util.Date();
+       	int noOfDays = 21; //i.e two weeks
+       	Calendar calendar = Calendar.getInstance();
+       	calendar.setTime(date);            
+       	calendar.add(Calendar.DAY_OF_YEAR, -noOfDays);
+       	Date dateSystem =  (Date) calendar.getTime();
+       	if( priorizedList.get(i).getDate_occured().compareTo(dateSystem) < 0  ){
+       		
+       	}
+       }
+       
 	}
 
 }
