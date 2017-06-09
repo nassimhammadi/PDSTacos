@@ -240,18 +240,15 @@ update restrict;
 INSERT INTO
 EMPLOYEES(PASSWORD,LAST_NAME,FIRST_NAME,
 PHONE,EMAIL,IS_MANAGER)
-VALUES('admin','admin','admin','0654852587','admin@cs
-c.fr',TRUE);
+VALUES('admin','admin','admin','0654852587','admin@csc.fr',TRUE);
 INSERT INTO
 EMPLOYEES(PASSWORD,LAST_NAME,FIRST_NAME,
 PHONE,EMAIL,IS_MANAGER)
-VALUES('chaton','HOLLARD','LAURA','0621852587','holl
-ard.laura@etu-upec.fr',FALSE);
+VALUES('chaton','HOLLARD','LAURA','0621852587','hollard.laura@etu-upec.fr',FALSE);
 INSERT INTO
 EMPLOYEES(PASSWORD,LAST_NAME,FIRST_NAME,
 PHONE,EMAIL,IS_MANAGER)
-VALUES('pizza','LAARABI','HATIM','0632852587','laarabi.
-hatim@etu-upec.fr',FALSE);
+VALUES('pizza','LAARABI','HATIM','0632852587','laarabi.hatim@etu-upec.fr',FALSE);
 
 
 
