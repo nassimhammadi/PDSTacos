@@ -20,7 +20,7 @@ import client.socketClient.TypeRequest;
 import client.socketClient.requestToServer;
 import serv.socketServer.Serveur;
 
-
+//test
 /**
  *
  * @author Laura nassim
