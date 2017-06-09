@@ -335,12 +335,28 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
 	}
 
 
-	public void updateFinish(int id){
+	public void updateFinish(int id, int id_v){
 		 try {
 	            ordre = connection.createStatement();
 	       } catch (SQLException ex) {
 	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 	       }
+		 	String sql1 = "select count(*) from logs_breakdowns where id_car ="+id_v+" and isnull(DATE_OCCURED)";
+		 	
+		 	int not_finished=1;
+		 	 
+	        try {
+	           ResultSet rs = ordre.executeQuery(sql1);
+	           while(rs.next()){
+	        	   not_finished = rs.getInt(1);
+	           }
+	        }
+	        catch(SQLException ex) {
+		           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		      }
+		 
+	       if(not_finished == 0){
+		 
 	       String sql = "UPDATE LOGS_BREAKDOWNS SET DATE_REPARED =CURDATE() WHERE ID_BREAKDOWN_LOG="+id;
 	     
 	       try {
@@ -350,12 +366,95 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
 	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 	       }
 	       
+	       
+	       String sql3 = "DELETE from priorizedlist where ID_CAR = "+id_v;
+	       try {
+		          ordre.executeUpdate(sql3);
+		          
+		       } catch (SQLException ex) {
+		           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		       }
+	       
+	       
+	       }
+	       else{
+	    	   String sql = "UPDATE LOGS_BREAKDOWNS SET DATE_REPARED =CURDATE() WHERE ID_BREAKDOWN_LOG="+id;
+	  	     
+		       try {
+		          ordre.executeUpdate(sql);
+		          
+		       } catch (SQLException ex) {
+		           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		       }
+		        
+	       }
 	       try {
 	           ordre.close();
 	       } catch (SQLException ex) {
 	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 	       }
 	}
+	
+	public void updateFinishB(int id, int id_v){
+		try {
+            ordre = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+	 	String sql1 = "select count(*) from log_breakdowns where id_car ="+id_v+" and isnull(DATE_OCCURED)";
+	 	
+	 	int not_finished=1;
+	 	 
+        try {
+           ResultSet rs = ordre.executeQuery(sql1);
+           while(rs.next()){
+        	   not_finished = rs.getInt(1);
+           }
+        }
+        catch(SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	      }
+	 
+       if(not_finished == 0){
+	 
+       String sql = "UPDATE LOGS_BREAKDOWNS SET DATE_REPARED =CURDATE() WHERE ID_BREAKDOWN_LOG="+id;
+     
+       try {
+          ordre.executeUpdate(sql);
+          
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       
+       String sql3 = "DELETE from priorizedlist where ID_BIKE = "+id_v;
+       try {
+	          ordre.executeUpdate(sql3);
+	          
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+       
+       
+       }
+       else{
+    	   String sql = "UPDATE LOGS_BREAKDOWNS SET DATE_REPARED =CURDATE() WHERE ID_BREAKDOWN_LOG="+id;
+  	     
+	       try {
+	          ordre.executeUpdate(sql);
+	          
+	       } catch (SQLException ex) {
+	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+	       }
+	        
+       }
+       try {
+           ordre.close();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+	}
+
 
 
 	@Override

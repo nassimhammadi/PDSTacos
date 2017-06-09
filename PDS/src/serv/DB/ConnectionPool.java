@@ -24,7 +24,7 @@ public class ConnectionPool {
 	/**
 	 * The database url
 	 */
-	private final String url = "jdbc:mysql://localhost:3306/CSC";
+	private final String url = "jdbc:mysql://localhost:8889/CSC";
 	
 	/**
 	 * JDBC driver

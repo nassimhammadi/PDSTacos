@@ -9,6 +9,6 @@ public enum TypeRequest {
 	 SELECTID,
 	 SELECTB,
 	 IND_SELECTNBREP,
-	 FINISH
-	
+	 FINISH,
+	 FINISHB
 }

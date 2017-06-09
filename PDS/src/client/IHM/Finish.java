@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import client.json.Json;
+import client.model.priorizedListObject;
 import client.socketClient.AllClasses;
 import client.socketClient.Client;
 import client.socketClient.Parameter;
@@ -31,20 +32,25 @@ public class Finish extends JFrame {
 	private Client c;
 	private int idb;
 	private int ide;
-	
+	private priorizedListObject ob;
+	private int idc;
+	private int id_b;
+	private int id_v;
 
 	/**
 	 * 
 	 * @param myJFrame
 	 * Constructor of the Authentification class
 	 */
-	public Finish(Client cli, int id_b, int id_e){
+	public Finish(Client cli, int id_b, int id_e, priorizedListObject o, int id_car, int id_bike){
 		/*
 		 * Lancement du serveur
 		 */
 		this.c = cli;
-
-
+		this.ob = o;
+		this.idc = id_car;
+		this.id_b= id_bike;
+		
 		this.idb = id_b;
 		this.ide = id_e;
 		JPanel pannel = new JPanel();
@@ -59,7 +65,13 @@ public class Finish extends JFrame {
 		this.setLocationRelativeTo(null);
 		setVisible(true);
 		this.pack();
-
+		if(this.idc != 0){
+			this.id_v = this.idc;
+		}
+		else{
+			this.id_v = this.id_b;
+		}
+		System.out.println("id_v"+this.id_v);
 	}
 /**
  * 
@@ -67,6 +79,10 @@ public class Finish extends JFrame {
  * Inner class which implements ActionListener
  * 
  */
+	
+	
+	
+	
 	class enterListener implements ActionListener{
 
 		Finish A;
@@ -85,10 +101,13 @@ public class Finish extends JFrame {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			if(idc != 0){
 			String id= String.valueOf(idb);
+			String id_vehicule =  String.valueOf(id_v);
 			String rep="";
 			LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
 			param.put(Parameter.ID, id);
+			param.put(Parameter.VEHICULE, id_vehicule);
 			requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.FINISH,"",param);
 			Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 			String jsonAuth = jsonRTS.serialize(rts);
@@ -99,6 +118,25 @@ public class Finish extends JFrame {
 			t.start();
 			dispose();
 			Repair r = new Repair(c,ide);
+			}
+			else{
+				String id= String.valueOf(idb);
+				String id_vehicule =  String.valueOf(id_v);
+				String rep="";
+				LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+				param.put(Parameter.ID, id);
+				param.put(Parameter.VEHICULE, id_vehicule);
+				requestToServer rts=new requestToServer(AllClasses.REPAIR,TypeRequest.FINISHB,"",param);
+				Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+				String jsonAuth = jsonRTS.serialize(rts);
+				rep=c.getCcs().getLastMessageFromServeur();
+				c.getCcs().setLastMessageToServer(jsonAuth);
+				checkMessageChange cmc= new checkMessageChange(A, rep);
+				Thread t=new Thread(cmc);
+				t.start();
+				dispose();
+				Repair r = new Repair(c,ide);
+			}
 		}
 	}
 	
