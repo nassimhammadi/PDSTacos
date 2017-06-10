@@ -128,6 +128,11 @@ public class BreakdownDAOImpl implements BreakdownDAO {
 			sql = "INSERT INTO LOGS_BREAKDOWNS (ID_CAR,ID_EMPLOYEE,ID_BREAKDOWN,DATE_ENTRY,COMMENT) VALUES("+id_car+","+id_employee+","+id_breakdown+",'"+date+"','"+comment+"')";
 
 		}
+		else {
+			sql = "INSERT INTO LOGS_BREAKDOWNS (ID_BIKE,ID_EMPLOYEE,ID_BREAKDOWN,DATE_ENTRY,COMMENT) VALUES("+id_bike+","+id_employee+","+id_breakdown+",'"+date+"','"+comment+"')";
+
+			
+		}
 
 		try {
 			ordre = connection.createStatement();

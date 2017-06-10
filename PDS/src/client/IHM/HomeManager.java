@@ -61,9 +61,7 @@ import client.socketClient.Client;
 import client.socketClient.Parameter;
 import client.socketClient.TypeRequest;
 import client.socketClient.requestToServer;
-import serv.model.ListBike;
-import serv.socketServer.Serveur;
-
+import client.model.ListBike;
 /*
  *
  * @author hollard hammadi
@@ -255,15 +253,15 @@ public class HomeManager extends JFrame{
 		ct2_ins.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {    
 
-				im_j_ins.setVisible(false);
-				im_ins.setVisible(false);
+				im_j_ins.setText("Identifiant vélo");
+				im_ins.setText("");
 			}
 		});
 		ct1_ins.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {    
 
-				im_j_ins.setVisible(true);
-				im_ins.setVisible(true);
+				im_j_ins.setText("Immatriculation");
+				im_ins.setText("");
 			}
 		});
 		panelEast22.add(ct1_ins);
@@ -289,13 +287,8 @@ public class HomeManager extends JFrame{
 		panelEast2.add(new JLabel("Modèle :"));
 		model_ins = new JTextField();
 		panelEast2.add(model_ins);
-		panelEast2.add(new JLabel("Présence dans le dépôt :"));
-		JPanel panelEast4 = new JPanel(new GridLayout(1,2));
 		cp1_ins = new Checkbox("Oui",cbg_insert_presence,true);
 		cp2_ins = new Checkbox("Non",cbg_insert_presence,false);
-		panelEast4.add(cp1_ins);
-		panelEast4.add(cp2_ins);
-		panelEast2.add(panelEast4);
 		panelEast2.add(new JLabel("Motif :"));
 		motif_ins = new JTextField();
 		panelEast2.add(motif_ins);
@@ -522,11 +515,31 @@ public class HomeManager extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		southRight.add(new JLabel("ID      Immatriculation      Modèle Durée"));
-
+        Object[][] donnees =new Object[listC.getL_b().size()+listBike.getA_b().size()][4];
+        int i=0;
 		for(Car c : listC.getL_b()){
-			southRight.add(new JLabel(c.getId()+"               "+c.getLicense_number()+"                    "+c.getModel()+"           "+c.getDuration()));
+		    donnees[i][0]=c.getId();
+		    donnees[i][1]=c.getLicense_number();
+		    donnees[i][2]=c.getModel();
+		    donnees[i][3]=c.getDuration();
+		    i++;
+		} 	
+		for(Bike b : listBike.getA_b()){
+		    donnees[i][0]=b.getId();
+		    donnees[i][1]="Vélo";
+		    donnees[i][2]=b.getModel();
+		    donnees[i][3]=b.getDuration();
+		    i++;
 		}  
+        String[] entetes = {"Identifiant", "Immatriculation", "Model", "Durée"};
+ 
+        JTable tableau = new JTable(donnees, entetes);
+ 
+        southRight.add(new JScrollPane(tableau), BorderLayout.CENTER);
+ 
+        pack();	
+	
+	
 		setVisible(true);
 
 	}
@@ -707,14 +720,14 @@ public class HomeManager extends JFrame{
 				 rts=new requestToServer(AllClasses.CAR,TypeRequest.INSERT,v_i,param);
 			}
 			else if(ct2_ins.getState()){
-				bike_ins = new Bike(t_ins,year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText(), timestamp);
+				bike_ins = new Bike(Integer.parseInt(im_ins.getText()),year_ins.getText(),m_ins,p_ins,brand_ins.getText(),model_ins.getText(), timestamp);
 				Json<Bike> myJSon= new Json<Bike>(Bike.class);
 				Json<Bike> myJSon_ins= new Json<Bike>(Bike.class);
 				String v_i= myJSon_ins.serialize(bike_ins);
 				param.put(Parameter.ID, this.hm.id_client.toString());
 				param.put(Parameter.ID_BREAKDOWN, id_breakdown);
 				param.put(Parameter.MOTIF_BREAKDOWN, motif);
-				 rts=new requestToServer(AllClasses.VEHICULE,TypeRequest.INSERT,v_i,param);
+				 rts=new requestToServer(AllClasses.BIKE,TypeRequest.INSERT,v_i,param);
 			}
 
 
@@ -762,6 +775,10 @@ public class HomeManager extends JFrame{
 						JOptionPane d2 = new JOptionPane();
 						d2.showMessageDialog(jf, "Véhicule mis à jour");
 						fin=true;
+						southRight.removeAll();
+
+						displayAllVehicle();
+
 
 
 					}
@@ -817,7 +834,7 @@ public class HomeManager extends JFrame{
 
 						displayAllVehicle();
 
-					}
+					}	
 					else if (part1.equals("delete")){
 						JOptionPane d3 = new JOptionPane();
 						d3.showMessageDialog(jf, "Véhicule supprimé");
