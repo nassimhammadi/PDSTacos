@@ -130,7 +130,7 @@ public class Monitorer extends JFrame{
 	        java.util.Date date = new java.util.Date(); 
 
 	       
-	        JLabel dateCJ = new JLabel("Aujourd'hui (" + formater.format( date ) + "), il y a eu 4 voitures réparés");
+	        JLabel dateCJ = new JLabel("Aujourd'hui (" + formater.format( date ) + "), il y a eu " + sizeOfPrioList +"voitures réparés");
 	        
 		    south.add(dateCJ);
 		    
