@@ -136,8 +136,14 @@ public class Authentification extends JPanel {
 					if (c.getCcs().getLastMessageFromServeur().startsWith("connection ok")){
 						System.out.println("bon");
 						myJFrame.dispose();
+
+						//Indicator HM= new Indicator(c);
+						//Repair HM= new Repair(c,Integer.parseInt(c.getCcs().getLastMessageFromServeur().split("\\+")[1]));
+						//Monitorer m = new Monitorer(c);
+
+
 						MenuPrincipal HM= new MenuPrincipal(c,Integer.parseInt(c.getCcs().getLastMessageFromServeur().split("\\+")[1]));
-						
+
 						fin=true;
 					}
 					else {
