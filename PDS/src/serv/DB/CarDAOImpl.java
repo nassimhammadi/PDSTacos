@@ -272,8 +272,8 @@ public Car findByLicense( String license ) throws DAOException {
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "select * from Car";
-      
+        String sql = "select * from car where id_car IN (SELECT id_car FROM logs_breakdowns where date_repared IS NULL AND id_bike IS NULL)";
+            
         try {
            ResultSet rs = ordre.executeQuery(sql);
            while(rs.next()){
