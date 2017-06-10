@@ -371,7 +371,7 @@ public class Indicator extends JFrame{
 				e.printStackTrace();
 			}
 			dispose();
-			IndicatorResultat ir= new IndicatorResultat(c,id_client,nbRep);
+			IndicatorResultat ir= new IndicatorResultat(c,id_client,nbRep,periode_r);
 		}
 	}
 

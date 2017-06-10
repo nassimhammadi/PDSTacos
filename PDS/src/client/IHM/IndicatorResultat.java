@@ -22,15 +22,17 @@ public class IndicatorResultat extends JFrame{
 	private Client c;
 	private int id_client;
 	private PerformanceList Res;
+	private String periode;
 	
 	
 	
 	
 	
-	public IndicatorResultat(Client c, int id_client,PerformanceList res) {
+	public IndicatorResultat(Client c, int id_client,PerformanceList res,String periode) {
 		this.c = c;
 		this.id_client= id_client;
 		this.Res = res;
+		this.periode=periode;
 		
 		
 		
@@ -40,7 +42,7 @@ public class IndicatorResultat extends JFrame{
 		int i=0;
 		System.out.println(this.Res.getListPerf().size());
 		for(Performance p : this.Res.getListPerf()){
-			data[i][0]=i;
+			data[i][0]=periode+" "+i;
 			data[i][1]=p.getNbRep();
 			data[i][2]=p.getDureeOp()/60;
 			i++;
