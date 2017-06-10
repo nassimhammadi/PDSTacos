@@ -218,8 +218,8 @@ public class BikeDAOImpl {
        } catch (SQLException ex) {
            Logger.getLogger(BikeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
        }
-       String sql = "select * from Bike";
-       
+       String sql = "select * from bike where id_bike IN (SELECT id_bike FROM logs_breakdowns where date_repared IS NULL AND id_car IS NULL)";
+          
        try {
           ResultSet rs = ordre.executeQuery(sql);
           while(rs.next()){
