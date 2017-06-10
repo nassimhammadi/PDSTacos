@@ -355,7 +355,7 @@ public class requestToServer {
 					Car c=cdao.findByLicense(ca.getLicense_number());
 					// Cas 1 : v�hicule existe dans la BDD
 					if (!(c==null)){
-					cdao.update(ca);
+					cdao.updateByLicense(ca);
 					reponse="update";
 					}
 					// Cas 2 : v�hicule non pr�sent dans la BDD
@@ -460,7 +460,7 @@ public class requestToServer {
 						// On v�rifie l'existence du v�hicule
 						Bike b=bikedao.find(bike.getId());
 						// Cas 1 : v�hicule existe dans la BDD
-						if (!b.equals(null)){
+						if (!(b==null)){
 						bikedao.update(bike);
 						reponse="update";
 						}
@@ -474,7 +474,7 @@ public class requestToServer {
 						String motif_breakdown=listParam.get(Parameter.MOTIF_BREAKDOWN);
 						int id_breakdown=Integer.parseInt(listParam.get(Parameter.ID_BREAKDOWN));
 						int id_employee=Integer.parseInt(listParam.get(Parameter.ID));
-						log_breakdown lb=new log_breakdown(0,b.getId(), id_employee, id_breakdown, motif_breakdown);
+						log_breakdown lb=new log_breakdown(0,bike.getId(), id_employee, id_breakdown, motif_breakdown);
 						breakdao.insert(lb);
 						return reponse;
 					default :
