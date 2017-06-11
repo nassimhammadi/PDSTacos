@@ -78,8 +78,10 @@ public class MenuPrincipal extends JFrame {
 	
 	 class Monitorer implements ActionListener{
 		    
-		    public void actionPerformed(ActionEvent arg0) {
+
+			public void actionPerformed(ActionEvent arg0) {
 		      dispose();
+		      client.IHM.Monitorer hm = new client.IHM.Monitorer(c);
 		      
 		    }
 	

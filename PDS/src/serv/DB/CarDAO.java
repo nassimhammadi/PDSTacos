@@ -20,7 +20,7 @@ public interface CarDAO {
 	 * @throws DAOException
 	 */
     void insert( Car c) throws DAOException;
-    
+    ListCar findAllOccured() throws DAOException;
     /**
      * Find a vehicle into the database
      * @param id The vehicle id

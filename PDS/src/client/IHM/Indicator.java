@@ -330,10 +330,18 @@ public class Indicator extends JFrame{
 			String rep="";
 			java.sql.Date dateBegin_r = (java.sql.Date) dateBegin.getModel().getValue();
 			java.sql.Date dateEnd_r = (java.sql.Date) dateEnd.getModel().getValue();
+			
+			if (dateBegin_r == null || dateEnd_r == null){
+				JOptionPane.showMessageDialog(null, "A date value must be provided!","Warning",JOptionPane.ERROR_MESSAGE);
+				return;
+			} 
+			
 			if (dateBegin_r.compareTo(dateEnd_r) > 0){
 				JOptionPane.showMessageDialog(null, "Date Begin must be before Date End !","Warning",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
+			
 			String vehicletype_r= vehicletype.getSelectedItem().toString();
 			String [] strings= operationtype.getSelectedItem().toString().split(". ");
 			String operationtype_r= strings[0];
@@ -363,7 +371,7 @@ public class Indicator extends JFrame{
 				e.printStackTrace();
 			}
 			dispose();
-			IndicatorResultat ir= new IndicatorResultat(c,id_client,nbRep);
+			IndicatorResultat ir= new IndicatorResultat(c,id_client,nbRep,periode_r);
 		}
 	}
 

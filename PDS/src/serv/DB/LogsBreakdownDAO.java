@@ -2,6 +2,7 @@ package serv.DB;
 
 import serv.model.ListPieces;
 import serv.model.LogsBreakdown;
+import serv.model.LogsBreakdownList;
 
 public interface LogsBreakdownDAO {
 		
@@ -19,7 +20,7 @@ public interface LogsBreakdownDAO {
 	     */
 	    LogsBreakdown findCar( int id_car, int id_bd ) throws DAOException;
 	    
-	    
+	    LogsBreakdownList findCar (int id) throws DAOException;
 	    
 	    /**
 	     * Update a Bike into the database

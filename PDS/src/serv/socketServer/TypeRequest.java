@@ -10,5 +10,8 @@ public enum TypeRequest {
 	 SELECTB,
 	 IND_SELECTNBREP,
 	 FINISH,
-	 FINISHB
+	 FINISHB,
+	 OCCURED,
+	 FINISHED,
+	 SELECT_MONITORER
 }

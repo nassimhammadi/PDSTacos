@@ -17,6 +17,7 @@ import serv.model.ListPieces;
 import serv.model.Bike;
 import serv.model.ListVehicle;
 import serv.model.LogsBreakdown;
+import serv.model.LogsBreakdownList;
 import serv.model.PerformanceList;
 import serv.model.UserList;
 import serv.model.Breakdown;
@@ -58,6 +59,7 @@ public class requestToServer {
 	private LogsBreakdown logB;
 	private ListPieces listP;
 	private PerformanceList nbRep;
+	private LogsBreakdownList bd_l;
 	/*
 	 * M?thode permettant de traduire et d'executer la requ?te du client
 	 */
@@ -98,6 +100,12 @@ public class requestToServer {
 				Json<PerformanceList> jV3 = new Json<PerformanceList>(PerformanceList.class);
 				String jsonNbRep = jV3.serialize(nbRep);
 				return reponse ="selectNbRep/"+jsonNbRep;
+				
+			case SELECT_MONITORER:
+				this.bd_l = ldimpl.findCar(Integer.parseInt(listParam.get(Parameter.ID)));
+				Json<LogsBreakdownList> jV4 = new Json<LogsBreakdownList>(LogsBreakdownList.class);
+				String jsonLogCar4 = jV4.serialize(bd_l);
+				return reponse = "selectCarLog/"+jsonLogCar4;
 				
 			}
 		
@@ -325,6 +333,16 @@ public class requestToServer {
 				/*
 				 * UPDATE PREND 1 param :  le nouveau vehicule
 				 */
+			case OCCURED: 
+				this.listC = cdao.findAllOccured();
+				Json<ListCar> jV = new Json<ListCar>(ListCar.class);
+				String jsonCar = jV.serialize(listC);
+				return reponse = "selectAllCarOccured/"+jsonCar;
+			case FINISHED:
+				this.listC = cdao.findAllFinished();
+				Json<ListCar> jV2 = new Json<ListCar>(ListCar.class);
+				String jsonCar2 = jV2.serialize(listC);
+				return reponse = "selectAllCarRepared/"+jsonCar2;
 			case INSERT:
 				switch (listParam.size()){
 				case 0 : //RIEN
