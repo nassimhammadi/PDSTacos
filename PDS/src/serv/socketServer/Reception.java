@@ -2,6 +2,7 @@ package serv.socketServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.SocketException;
 /***
  * 
  * @author lazaredantz
@@ -24,22 +25,27 @@ public class Reception implements Runnable {
 	}
 	
 	public void run() {
-		
-		while(true){
+		boolean fin=false;
+		while(!fin){
 	        try {
 	        	
 	        	
 	        	
 			message = in.readLine();
 			ccs.setLastMessageClient(message);
-			System.out.println("Le client a formulï¿½ la requï¿½te suivante :");
+			System.out.println("Le client a formul? la requ?te suivante :");
 			System.out.println(login+" : "+message);
 			
 			
-		    } catch (IOException e) {
-				
+		    } catch (SocketException e) {
+				fin=true;
+				System.out.println("client déconnecté");
+			} 
+	        catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	        
 		}
 	}
 
