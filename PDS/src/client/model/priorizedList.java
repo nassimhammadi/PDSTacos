@@ -2,15 +2,15 @@ package client.model;
 
 import java.sql.Date;
 import java.util.ArrayList;
-
+import serv.model.*;
 public class priorizedList {
 	private ArrayList<priorizedListObject> priorizedList;
 	
 	
 	
-	public priorizedList(ArrayList<priorizedListObject> priorizedList) {
+	public priorizedList(ArrayList<priorizedListObject> al) {
 		super();
-		this.priorizedList = priorizedList;
+		this.priorizedList = al;
 	}
 
 
