@@ -95,7 +95,7 @@ public class Indicator extends JFrame{
 		this.id_client = id_client;
 		
 		// Add Menu
-		MenuBar menu = new MenuBar();
+		MenuBar menu = new MenuBar(this,client, id_client);
 		JPanel panelNord = new JPanel();
 		Color c=new Color(1f,0f,0f,.5f);
 		panelNord.setBackground(c);

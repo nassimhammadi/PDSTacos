@@ -557,7 +557,4 @@ public class MonitorerManager extends JFrame{
 
     }
 
-    public static void main(String[] args){
-    	MonitorerManager essai = new MonitorerManager();
-    }
-    }
+}

@@ -138,7 +138,7 @@ public class HomeManager extends JFrame{
 		this.id_client=id_client;
 		this.jf = this;
 		// Add Menu
-		MenuBar menu = new MenuBar();
+		MenuBar menu = new MenuBar(this, cli, id_client);
 		JPanel panelNord = new JPanel();
 		Color c=new Color(1f,0f,0f,.5f);
 		panelNord.setBackground(c);
@@ -153,8 +153,8 @@ public class HomeManager extends JFrame{
 		JPanel panelWest1 = new JPanel(new GridLayout(5,1));
 		panelWest1.setBackground(Color.white);
 		panelWest1.setPreferredSize(new Dimension(300, 200));
-		panelWest1.setBorder(new TitledBorder("Listes des informations sur le véhicule : "));
-		panelWest1.add(new JLabel("Identifiant du véhicule :"));
+		panelWest1.setBorder(new TitledBorder("Listes des informations sur le vï¿½hicule : "));
+		panelWest1.add(new JLabel("Identifiant du vï¿½hicule :"));
 		id_search = new JTextField();
 		JButton search = new JButton("Rechercher");
 		panelWest1.add(id_search);
@@ -166,14 +166,14 @@ public class HomeManager extends JFrame{
 		JPanel panelWest2 = new JPanel(new GridLayout(10,2));
 		panelWest2.setBackground(Color.white);
 		panelWest2.setPreferredSize(new Dimension(300, 200));
-		panelWest2.setBorder(new TitledBorder("Mettre à jour un véhicule : "));
+		panelWest2.setBorder(new TitledBorder("Mettre ï¿½ jour un vï¿½hicule : "));
 		panelWest2.add(new JLabel("Identifiant :"));
 		id_up = new JTextField();
 		panelWest2.add(id_up);
-		panelWest2.add(new JLabel("Type de véhicule :"));
+		panelWest2.add(new JLabel("Type de vï¿½hicule :"));
 		JPanel panelWest22 = new JPanel(new GridLayout(1,2));
 		ct1_up = new Checkbox("Voiture",cbg_type_up,true);
-		ct2_up = new Checkbox("Vélo",cbg_type_up,false);
+		ct2_up = new Checkbox("Vï¿½lo",cbg_type_up,false);
 		ct2_up.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {    
 
@@ -196,7 +196,7 @@ public class HomeManager extends JFrame{
 		panelWest2.add(im_j_up);
 		im_up = new JTextField();
 		panelWest2.add(im_up);
-		panelWest2.add(new JLabel("Année du véhicule :"));
+		panelWest2.add(new JLabel("Annï¿½e du vï¿½hicule :"));
 		year_up = new JTextField();
 		panelWest2.add(year_up);
 		panelWest2.add(new JLabel("Motorisation :"));
@@ -209,10 +209,10 @@ public class HomeManager extends JFrame{
 		panelWest2.add(new JLabel("Marque :"));
 		brand_up = new JTextField();
 		panelWest2.add(brand_up);
-		panelWest2.add(new JLabel("Modèle :"));
+		panelWest2.add(new JLabel("Modï¿½le :"));
 		model_up = new JTextField();
 		panelWest2.add(model_up);
-		panelWest2.add(new JLabel("Présence dans le dépôt :"));
+		panelWest2.add(new JLabel("Prï¿½sence dans le dï¿½pï¿½t :"));
 		JPanel panelWest4 = new JPanel(new GridLayout(1,2));
 		cp1_up = new Checkbox("Oui",cbg_update_presence,true);
 		cp2_up = new Checkbox("Non",cbg_update_presence,false);
@@ -229,8 +229,8 @@ public class HomeManager extends JFrame{
 		JPanel panelEast1 = new JPanel(new GridLayout(5,1));
 		panelEast1.setBackground(Color.white);
 		panelEast1.setPreferredSize(new Dimension(300, 200));
-		panelEast1.setBorder(new TitledBorder("Supprimer un véhicule de la base : "));
-		panelEast1.add(new JLabel("Identifiant du véhicule :"));
+		panelEast1.setBorder(new TitledBorder("Supprimer un vï¿½hicule de la base : "));
+		panelEast1.add(new JLabel("Identifiant du vï¿½hicule :"));
 		id_del = new JTextField();
 		JButton delete_btn = new JButton("Supprimer");
 		deleteListener dpl = new deleteListener(this);
@@ -242,18 +242,18 @@ public class HomeManager extends JFrame{
 		JPanel panelEast2 = new JPanel(new GridLayout(10,2));
 		panelEast2.setBackground(Color.white);
 		panelEast2.setPreferredSize(new Dimension(300, 200));
-		panelEast2.setBorder(new TitledBorder("Ajouter un véhicule : "));
+		panelEast2.setBorder(new TitledBorder("Ajouter un vï¿½hicule : "));
 		/* panelEast2.add(new JLabel("Identifiant :"));
         id_ins = new JTextField();
         panelEast2.add(id_ins);*/
-		panelEast2.add(new JLabel("Type de véhicule :"));
+		panelEast2.add(new JLabel("Type de vï¿½hicule :"));
 		JPanel panelEast22 = new JPanel(new GridLayout(1,2));
 		ct1_ins = new Checkbox("Voiture",cbg_type,true);
-		ct2_ins = new Checkbox("Vélo",cbg_type,false);
+		ct2_ins = new Checkbox("Vï¿½lo",cbg_type,false);
 		ct2_ins.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {    
 
-				im_j_ins.setText("Identifiant vélo");
+				im_j_ins.setText("Identifiant vï¿½lo");
 				im_ins.setText("");
 			}
 		});
@@ -271,7 +271,7 @@ public class HomeManager extends JFrame{
 		panelEast2.add(im_j_ins);
 		im_ins = new JTextField();
 		panelEast2.add(im_ins);
-		panelEast2.add(new JLabel("Année du véhicule :"));
+		panelEast2.add(new JLabel("Annï¿½e du vï¿½hicule :"));
 		year_ins = new JTextField();
 		panelEast2.add(year_ins);
 		panelEast2.add(new JLabel("Motorisation :"));
@@ -284,7 +284,7 @@ public class HomeManager extends JFrame{
 		panelEast2.add(new JLabel("Marque :"));
 		brand_ins = new JTextField();
 		panelEast2.add(brand_ins);
-		panelEast2.add(new JLabel("Modèle :"));
+		panelEast2.add(new JLabel("Modï¿½le :"));
 		model_ins = new JTextField();
 		panelEast2.add(model_ins);
 		cp1_ins = new Checkbox("Oui",cbg_insert_presence,true);
@@ -310,7 +310,7 @@ public class HomeManager extends JFrame{
 		JPanel panelSouth =  new JPanel(new GridLayout(1,1));
 		panelSouth.setBackground(Color.white);
 		panelSouth.setPreferredSize(new Dimension(300,350));
-		panelSouth.setBorder(new TitledBorder("Informations sur le véhicule : "));
+		panelSouth.setBorder(new TitledBorder("Informations sur le vï¿½hicule : "));
 		//   panelSouth.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
 
@@ -324,7 +324,7 @@ public class HomeManager extends JFrame{
 		southLeft.add(Box.createGlue());
 
 
-		present = new JRadioButton("Présent dans le dépôt");
+		present = new JRadioButton("Prï¿½sent dans le dï¿½pï¿½t");
 		southLeft.add(present);
 
 
@@ -334,13 +334,13 @@ public class HomeManager extends JFrame{
 		southLeft.add(immatricul);
 
 		southLeft.add(Box.createGlue());
-		southLeft.add(new JLabel("Type de véhicule : "));
+		southLeft.add(new JLabel("Type de vï¿½hicule : "));
 		type = new JLabel();
 		southLeft.add(type);
 
 
 		southLeft.add(Box.createGlue());
-		southLeft.add(new JLabel("Année de mise en circulation : "));
+		southLeft.add(new JLabel("Annï¿½e de mise en circulation : "));
 		yearv = new JLabel();
 		southLeft.add(yearv);
 
@@ -357,7 +357,7 @@ public class HomeManager extends JFrame{
 		southLeft.add(brand);
 
 		southLeft.add(Box.createGlue());
-		southLeft.add(new JLabel("Modèle : "));
+		southLeft.add(new JLabel("Modï¿½le : "));
 		model = new JLabel();
 		southLeft.add(model);
 
@@ -372,7 +372,7 @@ public class HomeManager extends JFrame{
 		int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 		int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED; 
 		JScrollPane jsp=new JScrollPane(southRight,v,h);
-		jsp.setBorder(new TitledBorder("Historique des réparations : "));
+		jsp.setBorder(new TitledBorder("Historique des rï¿½parations : "));
 		BoxLayout layoutSouthRight = new BoxLayout(southRight, BoxLayout.Y_AXIS);
 		southRight.setLayout(layoutSouthRight);
 
@@ -515,23 +515,26 @@ public class HomeManager extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Object[][] donnees =new Object[listC.getL_b().size()+listBike.getA_b().size()][4];
+        Object[][] donnees =new Object[listC.getL_b().size()+listBike.getA_b().size()][5];
         int i=0;
 		for(Car c : listC.getL_b()){
 		    donnees[i][0]=c.getId();
 		    donnees[i][1]=c.getLicense_number();
 		    donnees[i][2]=c.getModel();
 		    donnees[i][3]=c.getDuration();
+		    donnees[i][4]=c.getLocation();
 		    i++;
 		} 	
 		for(Bike b : listBike.getA_b()){
 		    donnees[i][0]=b.getId();
-		    donnees[i][1]="Vélo";
+		    donnees[i][1]="Vï¿½lo";
 		    donnees[i][2]=b.getModel();
 		    donnees[i][3]=b.getDuration();
+		    donnees[i][4]=b.getLocation();
+		    
 		    i++;
 		}  
-        String[] entetes = {"Identifiant", "Immatriculation", "Model", "Durée"};
+        String[] entetes = {"Identifiant", "Immatriculation", "Model", "Durï¿½e", "Emplacement"};
  
         JTable tableau = new JTable(donnees, entetes);
  
@@ -703,7 +706,7 @@ public class HomeManager extends JFrame{
 			if(cm1_ins.getState()){
 				m_ins = false;
 			}
-			//présence
+			//prï¿½sence
 			if(cp1_ins.getState()){
 				p_ins = true;
 			}
@@ -747,7 +750,7 @@ public class HomeManager extends JFrame{
 	/**
 	 * 
 	 * @author nassimhammadi laurahollard
-	 * Processus attendant une réponse du serveur
+	 * Processus attendant une rï¿½ponse du serveur
 	 */
 	class checkMessageChange implements Runnable{
 
@@ -773,7 +776,7 @@ public class HomeManager extends JFrame{
 
 					if (c.getCcs().getLastMessageFromServeur().equals("update")){
 						JOptionPane d2 = new JOptionPane();
-						d2.showMessageDialog(jf, "Véhicule mis à jour");
+						d2.showMessageDialog(jf, "Vï¿½hicule mis ï¿½ jour");
 						fin=true;
 						southRight.removeAll();
 
@@ -792,7 +795,7 @@ public class HomeManager extends JFrame{
 							present.setSelected(false);
 							type.setText("");
 							JOptionPane d = new JOptionPane();
-							d.showMessageDialog(jf, "Véhicule non trouvé");
+							d.showMessageDialog(jf, "Vï¿½hicule non trouvï¿½");
 							fin = true; 
 							break;
 						}
@@ -822,13 +825,13 @@ public class HomeManager extends JFrame{
 							if(Integer.parseInt(v.getYear()) == 1){
 								type.setText("Voiture");
 							}
-							else type.setText("Vélo");
+							else type.setText("Vï¿½lo");
 						}
 						fin = true;
 					}
 					else if (part1.equals("insert")){
 						JOptionPane d3 = new JOptionPane();
-						d3.showMessageDialog(jf, "Véhicule inséré");
+						d3.showMessageDialog(jf, "Vï¿½hicule insï¿½rï¿½");
 						fin = true;
 						southRight.removeAll();
 
@@ -837,7 +840,7 @@ public class HomeManager extends JFrame{
 					}	
 					else if (part1.equals("delete")){
 						JOptionPane d3 = new JOptionPane();
-						d3.showMessageDialog(jf, "Véhicule supprimé");
+						d3.showMessageDialog(jf, "Vï¿½hicule supprimï¿½");
 						fin = true;
 						southRight.removeAll();
 						displayAllVehicle();

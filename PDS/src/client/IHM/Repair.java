@@ -152,7 +152,7 @@ public class Repair extends JFrame {
     	cbg = new CheckboxGroup();
     	buttonGo = new JButton("Go");
         // Add Menu
-        MenuBar menu = new MenuBar();
+        MenuBar menu = new MenuBar(this,cli, id);
         JPanel panelNord = new JPanel();
         Color c=new Color(1f,0f,0f,.5f);
         panelNord.setBackground(c);

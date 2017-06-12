@@ -30,11 +30,11 @@ public class MenuPrincipal extends JFrame {
 		this.c = c;
 		this.id_client= id_client;
 		
-		JButton traiterVehicule= new JButton("Traiter Véhicule");
+		JButton traiterVehicule= new JButton("Traiter Vï¿½hicule");
 		traiterVehicule.addActionListener(new TraiterVehiculeListener());
-		JButton reparer= new JButton("Réparer");
+		JButton reparer= new JButton("Rï¿½parer");
 		reparer.addActionListener(new Reparer());
-		JButton monitorer= new JButton("Monitorer activité du dépot");
+		JButton monitorer= new JButton("Monitorer activitï¿½ du dï¿½pot");
 		monitorer.addActionListener(new Monitorer());
 		JButton indicateurPerf= new JButton("Indicateur de Performance");
 		indicateurPerf.addActionListener(new Indicateur());
@@ -81,7 +81,7 @@ public class MenuPrincipal extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 		      dispose();
-		      client.IHM.Monitorer hm = new client.IHM.Monitorer(c);
+		      client.IHM.Monitorer hm = new client.IHM.Monitorer(c, id_client);
 		      
 		    }
 	

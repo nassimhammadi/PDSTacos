@@ -24,7 +24,8 @@ public class Car {
     private String model;
     private String dateEntry;
     private int duration;
-
+    private int location;
+    
     /**
      * Blank constructor
      */
@@ -244,6 +245,14 @@ public Car(  String yearV, Boolean electric, Boolean present, String brandV, Str
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public int getLocation() {
+		return location;
+	}
+
+	public void setLocation(int location) {
+		this.location = location;
 	}
 
     /**
