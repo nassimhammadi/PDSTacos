@@ -21,7 +21,7 @@ public class Serveur {
  	public void launch(){
 		
 		try {
-			ss = new ServerSocket(2009);
+			ss = new ServerSocket(2008);
 			System.out.println("Le serveur est à l'écoute du port "+ss.getLocalPort());
 			
 			t = new Thread(new Accepter_connexion(ss));

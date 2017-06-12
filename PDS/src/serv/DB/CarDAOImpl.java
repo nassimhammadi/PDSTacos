@@ -38,6 +38,9 @@ public class CarDAOImpl implements CarDAO {
      */
     private Connection connection;
     private Statement ordre;
+    private Statement ordre2;
+    private Statement ordre3;
+    private Statement ordre4;
     /**
      * Class contructor
      * @param daoFactory an instance of DAOFactory
@@ -304,6 +307,48 @@ public Car findByLicense( String license ) throws DAOException {
         
     }
 	
+	public ListCar findAll2(  ) throws DAOException {
+        
+	       
+        ListCar list = null;
+        ArrayList<Car> a_c = new ArrayList<Car>();
+        try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select * from car where id_car IN (SELECT id_car FROM logs_breakdowns)";
+            
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+               int identifiant = rs.getInt(1);
+               String license = rs.getString(2) ;
+               String year = rs.getString(3);
+               Boolean is_electric = rs.getBoolean(4);
+               Boolean is_present = rs.getBoolean(5);
+               String brand = rs.getString(6);
+               String model = rs.getString(7);
+               Date dateEntry = rs.getDate(8);
+               int duration=calculDuration(license);
+               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
+               a_c.add(c);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        list = new ListCar(a_c);
+        return list;
+        
+    }
+	
 	public ListCar findAllOccured(  ) throws DAOException {
         
 	       
@@ -346,6 +391,70 @@ public Car findByLicense( String license ) throws DAOException {
         
     }
 	
+	public String findAllCountOccured() throws DAOException{
+		int a=0;
+		String count = "";
+			
+		
+		 try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select COUNT(*) from LOGS_BREAKDOWNS where DATE_OCCURED=CURRENT_DATE ";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+               a=rs.getInt(1);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        count = String.valueOf(a);
+		return count;
+		
+	}
+	
+	public String findAllCountRepared() throws DAOException{
+		int a=0;
+		String count = "";
+			
+		
+		 try {
+             ordre = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "select COUNT(*) from LOGS_BREAKDOWNS where DATE_REPARED=CURRENT_DATE ";
+      
+        try {
+           ResultSet rs = ordre.executeQuery(sql);
+           while(rs.next()){
+               a=rs.getInt(1);
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            ordre.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        count = String.valueOf(a);
+		return count;
+		
+	}
+	
 	public ListCar findAllFinished(  ) throws DAOException {
         
 	    ArrayList<Integer> a_i = new ArrayList<Integer>();
@@ -357,6 +466,25 @@ public Car findByLicense( String license ) throws DAOException {
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            ordre2 = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+        try {
+            ordre3 = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+        try {
+            ordre4 = connection.createStatement();
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
         
         String sql1 = "select Distinct id_car from logs_breakdowns   ";
         try {
@@ -372,14 +500,15 @@ public Car findByLicense( String license ) throws DAOException {
         
         for(Integer i: a_i){
         	int inte = i;
+        	System.out.println("inte : "+inte);
         	String sql2 = "select COUNT(*) from logs_breakdowns  where id_car="+inte;
         	 try {
-                 ResultSet rs4 = ordre.executeQuery(sql2);
+                 ResultSet rs4 = ordre2.executeQuery(sql2);
                  while(rs4.next()){
                      int count2 = rs4.getInt(1);
                      String sql3 = "select COUNT(*) from logs_breakdowns where date_repared is not null and id_car="+inte;
                      try {
-                         ResultSet rs3 = ordre.executeQuery(sql3);
+                         ResultSet rs3 = ordre3.executeQuery(sql3);
                          while(rs3.next()){
                              
                              count1=rs3.getInt(1);
@@ -391,7 +520,7 @@ public Car findByLicense( String license ) throws DAOException {
                      if(count2==count1){
                     	 String sql = "select * from Car c where id_car ="+inte;
                     	 try {
-                             ResultSet rs2 = ordre.executeQuery(sql);
+                             ResultSet rs2 = ordre4.executeQuery(sql);
                              while(rs2.next()){
                                  int identifiant = rs2.getInt(1);
                                  String license = rs2.getString(2) ;
@@ -416,12 +545,28 @@ public Car findByLicense( String license ) throws DAOException {
         }
        
       
+        
+        list = new ListCar(a_c);
         try {
             ordre.close();
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        list = new ListCar(a_c);
+        try {
+            ordre2.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            ordre3.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            ordre4.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return list;
         
     }

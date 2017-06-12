@@ -33,7 +33,7 @@ public class Client {
 		try {
 			
 			System.out.println("Demande de connexion");
-			socket = new Socket("127.0.0.1",2009);
+			socket = new Socket("127.0.0.1",2008);
 			System.out.println("Connexion etablie avec le serveur :"); // Si le message s'affiche c'est que je suis connecté
 			ccs=new Chat_ClientServeur(socket);
 			t1 = new Thread(ccs);

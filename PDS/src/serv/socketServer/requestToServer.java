@@ -297,7 +297,11 @@ public class requestToServer {
 					return reponse = "selectCar/"+jsonVehicle2;
 					
 				}
-
+			case SELECTB:
+				this.listC = cdao.findAll2();
+				Json<ListCar> jV7 = new Json<ListCar>(ListCar.class);
+				String jsonCar7 = jV7.serialize(listC);
+				return reponse = "selectAllCar/"+jsonCar7;
 			case DELETE : 
 				switch (listParam.size()){
 				case 1 :
@@ -338,6 +342,13 @@ public class requestToServer {
 				Json<ListCar> jV = new Json<ListCar>(ListCar.class);
 				String jsonCar = jV.serialize(listC);
 				return reponse = "selectAllCarOccured/"+jsonCar;
+			case FINISHB:
+				String j2 = cdao.findAllCountOccured();
+				System.out.println("j2 " +j2);
+				return reponse = "selectAllCountOccured/"+j2;
+			case SELECTID:
+				String j3 = cdao.findAllCountRepared();
+				return reponse = "selectAllCountRepared/"+j3;
 			case FINISHED:
 				this.listC = cdao.findAllFinished();
 				Json<ListCar> jV2 = new Json<ListCar>(ListCar.class);

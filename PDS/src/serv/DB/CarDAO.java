@@ -30,6 +30,8 @@ public interface CarDAO {
     
     Car findAndDeletePrio( int id,int id_prio ) throws DAOException;
     
+    String findAllCountOccured() throws DAOException;
+    String findAllCountRepared() throws DAOException;
     /**
      * Update a vehicle into the database
      * @param id The vehicle id

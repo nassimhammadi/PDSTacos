@@ -42,7 +42,11 @@ public class Monitorer extends JFrame{
 	private JButton search;
 	private JTextField IDVehicule;
 	private LogsBreakdownList lbl;
-	
+	private String count;
+	private JLabel dateCJ;
+	private String format;
+	private java.text.SimpleDateFormat  formater;
+	private java.util.Date date;
 	public Monitorer(Client cli){
 		this.c = cli;
 	    this.setTitle("Activity of Deposit - Workflow");
@@ -124,13 +128,13 @@ public class Monitorer extends JFrame{
 		    
 	        south.setBorder(new TitledBorder("Cumul Journée"));
 	        
-	        String format = "dd/MM/yy hh:mm:ss"; 
+	        format = "dd/MM/yy hh:mm:ss"; 
 
-	        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format ); 
-	        java.util.Date date = new java.util.Date(); 
+	        formater = new java.text.SimpleDateFormat( format ); 
+	        date = new java.util.Date(); 
 
 	       
-	        JLabel dateCJ = new JLabel("Aujourd'hui (" + formater.format( date ) + "), il y a eu " + sizeOfPrioList +"voitures réparés");
+	        dateCJ = new JLabel("Aujourd'hui (" + formater.format( date ) + "), il y a eu " + sizeOfPrioList +" voitures réparés");
 	        
 		    south.add(dateCJ);
 		    
@@ -252,7 +256,7 @@ public class Monitorer extends JFrame{
 		String identif ="";
 		String rep = "";
 		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
-		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECT,"",param);
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECTB,"",param);
 		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
 		String jsonAuth = jsonRTS.serialize(rts);
 		rep=c.getCcs().getLastMessageFromServeur();
@@ -428,6 +432,47 @@ public class Monitorer extends JFrame{
     	west.updateUI();
     	setVisible(true);
 	}
+	
+	public void getCountOccured(){
+		String identif ="";
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.FINISHB,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void getCountRepared(){
+		String identif ="";
+		String rep = "";
+		LinkedHashMap<Parameter,String> param=new LinkedHashMap<>();
+		requestToServer rts=new requestToServer(AllClasses.CAR,TypeRequest.SELECTID,"",param);
+		Json<requestToServer>  jsonRTS= new Json<requestToServer>(requestToServer.class);
+		String jsonAuth = jsonRTS.serialize(rts);
+		rep=c.getCcs().getLastMessageFromServeur();
+		c.getCcs().setLastMessageToServer(jsonAuth);
+		checkMessageChange cmc= new checkMessageChange(rep);
+		t_all=new Thread(cmc);
+		t_all.start();
+		try {
+			t_all.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 class searchListener implements ActionListener{
 
@@ -480,9 +525,11 @@ class checkMessageChange implements Runnable{
 				String [] strings = string.split("/");
 				String part1 = strings[0];
 				String part2 ="";
+				
 				if(strings.length==2){
 					part2 = strings[1];
 				}
+				
 				 if(part1.equals("selectAllPrio")){
 					Json <priorizedList> myJSon= new Json<priorizedList>(priorizedList.class);
 					 
@@ -510,7 +557,7 @@ class checkMessageChange implements Runnable{
 				}
 				else if(part1.equals("selectAllCarOccured")){
 						Json <ListCar> myJSon3= new Json<ListCar>(ListCar.class);
-
+						
 					try {
 							listC= myJSon3.deSerialize(part2);
 						System.out.println("All :"+listC);
@@ -518,8 +565,25 @@ class checkMessageChange implements Runnable{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+			
+					getCountOccured();
 					fin =true;
 				}
+				 
+				else if(part1.equals("selectAllCountOccured")){
+					count = part2;
+		
+				
+				dateCJ.setText("Aujourd'hui il y a eu "+count+" voiture entrée avec ce statut");
+				fin =true;
+			}
+				else if(part1.equals("selectAllCountRepared")){
+					count = part2;
+		
+				
+				dateCJ.setText("Aujourd'hui il y a eu "+count+" voiture entrée avec ce statut");
+				fin =true;
+			}
 				else if(part1.equals("selectAllCarRepared")){
 					Json <ListCar> myJSon3= new Json<ListCar>(ListCar.class);
 
@@ -530,6 +594,7 @@ class checkMessageChange implements Runnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				getCountRepared();
 				fin =true;
 			}
 				else if(part1.equals("selectCarLog")){
