@@ -19,6 +19,7 @@ public class Bike {
     private String model;
     private String dateEntry;
     private int duration;
+    private int location;
 
     /**
      * Blank constructor
@@ -54,6 +55,17 @@ public class Bike {
         this.model = modelV;
         this.dateEntry = dateE.toString();
         this.duration=duration;
+    }
+    public Bike(int identifiant, String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE, int duration, int location){
+        this.id= identifiant;
+        this.year = yearV;
+        this.is_electric = electric;
+        this.is_present = present;
+        this.brand = brandV;
+        this.model = modelV;
+        this.dateEntry = dateE.toString();
+        this.duration=duration;
+        this.location=location;
     }
     /**
      * 

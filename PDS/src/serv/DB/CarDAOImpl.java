@@ -38,6 +38,7 @@ public class CarDAOImpl implements CarDAO {
      */
     private Connection connection;
     private Statement ordre;
+    private Statement ordre2;
     /**
      * Class contructor
      * @param daoFactory an instance of DAOFactory
@@ -164,6 +165,50 @@ public Car findByLicense( String license ) throws DAOException {
      * Insert a CAR into the database
      * @param id The CAR's id
      */
+    
+    public int lookForAvailableLocation(){
+    	int place=0;
+    	
+    	try {
+            ordre = connection.createStatement();
+            ordre2 = connection.createStatement();
+             
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }
+      for (int i=1; i<50; i++){
+       String sql = "SELECT * FROM CAR WHERE LOCATION="+i;
+       
+       
+       String sql2 = "SELECT * FROM BIKE WHERE LOCATION="+i;
+      
+       try {
+           ResultSet rs = ordre.executeQuery(sql);
+
+           ResultSet rs2 = ordre2.executeQuery(sql2);
+           // Si la requête sur car et sur bike n'a pas de résultat
+           if (!rs.next() && !rs2.next()){
+        	   place=i;
+        	   return place;
+           }
+           
+           
+       } catch (SQLException ex) {
+           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+       }   
+      }
+      try {
+          ordre.close();
+          ordre2.close();
+      } catch (SQLException ex) {
+          Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+    	return place;
+    	
+    }
+    
+    
     public void insert(Car c) throws DAOException {
        
         String license = c.getLicense_number() ;
@@ -173,14 +218,18 @@ public Car findByLicense( String license ) throws DAOException {
         String brand = c.getBrand();
         String model = c.getModel();
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        
+        int location=lookForAvailableLocation();
+        if (location==0){
+        	System.out.println("Le depot est plein");
+        	return;
+        }
         try {
              ordre = connection.createStatement();
              
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "INSERT INTO CAR (LICENSE_NUMBER,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL,DATE_ENTRY) VALUES('"+license+"',"+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"','"+date+"')";
+        String sql = "INSERT INTO CAR (LICENSE_NUMBER,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL,DATE_ENTRY, LOCATION) VALUES('"+license+"',"+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"','"+date+"','"+location+"')";
        
         try {
             ordre.executeUpdate(sql);
@@ -211,12 +260,17 @@ public Car findByLicense( String license ) throws DAOException {
         String brand = c.getBrand();
         String model = c.getModel();
         
+        int location=lookForAvailableLocation();
+        if (location==0){
+        	System.out.println("Le depot est plein");
+        	return;
+        }
         try {
              ordre = connection.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "UPDATE CAR SET LICENSE_NUMBER= '"+license+"',YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"' where ID_CAR = "+id; 
+        String sql = "UPDATE CAR SET LICENSE_NUMBER= '"+license+"',YEAR_VEHICLE="+year+",IS_ELECTRIC="+is_electric+", IS_PRESENT ="+is_present+", BRAND='"+brand+"', MODEL='"+model+"', LOCATION='"+location+"' where ID_CAR = "+id; 
       
         try {
             ordre.executeUpdate(sql);
@@ -286,7 +340,8 @@ public Car findByLicense( String license ) throws DAOException {
                String model = rs.getString(7);
                Date dateEntry = rs.getDate(8);
                int duration=calculDuration(license);
-               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration);
+               int location=rs.getInt(9);
+               Car c = new Car(identifiant, license, year, is_electric, is_present, brand, model,dateEntry.toString(), duration, location);
                a_c.add(c);
            }
         } catch (SQLException ex) {

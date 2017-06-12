@@ -24,6 +24,7 @@ public class Car {
     private String model;
     private String dateEntry;
     private int duration;
+    private int location;
 
     /**
      * Blank constructor
@@ -62,6 +63,20 @@ public class Car {
         this.model = modelV;
         this.dateEntry = dateE;
         this.duration=duration;
+    }
+    
+    
+    public Car(int identifiant, String license , String yearV, Boolean electric, Boolean present, String brandV, String modelV, String dateE, int duration, int location){
+        this.id= identifiant;
+        this.license_number = license;
+        this.year = yearV;
+        this.is_electric = electric;
+        this.is_present = present;
+        this.brand = brandV;
+        this.model = modelV;
+        this.dateEntry = dateE;
+        this.duration=duration;
+        this.location=location;
     }
     /**
      * 

@@ -19,6 +19,7 @@ public class Bike {
     private String model;
     private String dateEntry;
     private int duration;
+    private int location;
 
     /**
      * Blank constructor
@@ -221,6 +222,14 @@ public class Bike {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public int getLocation() {
+		return location;
+	}
+
+	public void setLocation(int location) {
+		this.location = location;
 	}
 
     /**

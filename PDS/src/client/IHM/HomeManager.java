@@ -515,13 +515,14 @@ public class HomeManager extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Object[][] donnees =new Object[listC.getL_b().size()+listBike.getA_b().size()][4];
+        Object[][] donnees =new Object[listC.getL_b().size()+listBike.getA_b().size()][5];
         int i=0;
 		for(Car c : listC.getL_b()){
 		    donnees[i][0]=c.getId();
 		    donnees[i][1]=c.getLicense_number();
 		    donnees[i][2]=c.getModel();
 		    donnees[i][3]=c.getDuration();
+		    donnees[i][4]=c.getLocation();
 		    i++;
 		} 	
 		for(Bike b : listBike.getA_b()){
@@ -529,9 +530,11 @@ public class HomeManager extends JFrame{
 		    donnees[i][1]="V�lo";
 		    donnees[i][2]=b.getModel();
 		    donnees[i][3]=b.getDuration();
+		    donnees[i][4]=b.getLocation();
+		    
 		    i++;
 		}  
-        String[] entetes = {"Identifiant", "Immatriculation", "Model", "Dur�e"};
+        String[] entetes = {"Identifiant", "Immatriculation", "Model", "Dur�e", "Emplacement"};
  
         JTable tableau = new JTable(donnees, entetes);
  
