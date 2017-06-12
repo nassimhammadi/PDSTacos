@@ -427,7 +427,14 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
 		       } catch (SQLException ex) {
 		           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 		       }
-		        
+		       
+		       String clo = "UPDATE Car set location = null, is_present = false where id_car="+id_v;
+		       try {
+			          ordre.executeUpdate(clo);
+			          
+			       } catch (SQLException ex) {
+			           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+			       }
 	       }
 	       try {
 	           ordre.close();
@@ -487,6 +494,14 @@ public PerformanceList countRep(String vehicletype, int id_ope, int id_emp, Date
 	       } catch (SQLException ex) {
 	           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
 	       }
+	       
+	       String clo = "UPDATE Bike set location = null, is_present = false where id_bike="+id_v;
+	       try {
+		          ordre.executeUpdate(clo);
+		          
+		       } catch (SQLException ex) {
+		           Logger.getLogger(CarDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		       }
 	        
        }
        try {
