@@ -305,6 +305,7 @@ public class Repair extends JFrame {
 		checkMessageChange cmc= new checkMessageChange(rep);
 		t_all=new Thread(cmc);
 		t_all.start();
+		
 	}
 
 	public void displayAllVehicle(){
@@ -346,6 +347,7 @@ public class Repair extends JFrame {
     		}
     		else{
     			if(i == 0){
+    				
     				id_carF=pList.getId_car();
     			}
     			
@@ -545,6 +547,7 @@ public class Repair extends JFrame {
 			checkMessageChange cmc= new checkMessageChange(rep);
 			Thread t=new Thread(cmc);
 			t.start();
+			
 			dispose();
 			
 			
@@ -629,6 +632,10 @@ public class Repair extends JFrame {
 	 			checkMessageChange cmc= new checkMessageChange(rep);
 	 			Thread t=new Thread(cmc);
 	 			t.start();
+	 			try{ t.join();}
+	 			catch(InterruptedException e){
+	 				e.printStackTrace();
+	 			}
 	         }
 			else{
 				String identif=String.valueOf(prioListObject.getId_bike());
