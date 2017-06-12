@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import serv.model.ListVehicle;
-import serv.model.Vehicule;
+import serv.model.priorizedList;
 import serv.model.priorizedList;
 import serv.model.priorizedListObject;
 
@@ -62,16 +62,19 @@ public class priorizedListDAOimpl implements priorizedListDAO {
             a_p.add(p);
            }
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(priorizedListDAOimpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
         try {
             ordre.close();
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(priorizedListDAOimpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         list = new priorizedList(a_p);
+        
         return list;
         
     }
@@ -81,36 +84,33 @@ public class priorizedListDAOimpl implements priorizedListDAO {
      * Insert a vehicle into the database
      * @param id The vehicle's id
      */
-    public void insert(Vehicule v) throws DAOException {
+    public void insert(priorizedList v) throws DAOException {
+    	
+    	
+    	
+
+        try {
+			ordre = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
        
-        String license = v.getLicense_number() ;
-        String year = v.getYear();
-        int type = v.getType();
-        Boolean is_electric = v.getIs_electric();
-        Boolean is_present = v.getIs_present();
-        String brand = v.getBrand();
-        String model = v.getModel();
+    	for(priorizedListObject o: v.getPriorizedList()){
+    		Date Date_occ=o.getDate_occured();
+    		int Id_bike=o.getId_bike();
+    		int Id_car=o.getId_car();
+    		String model=o.getModel();
+    		int prio=o.getPrio();
+    	    String sql = "INSERT INTO PRIORIZEDLIST (ID_CAR,MODEL,PRIORITY,DATE_ENTRY) VALUES('"+Id_car+"','"+model+"',"+prio+",'"+Date_occ+"')";
+    	       
         
         try {
-             ordre = connection.createStatement();
-             
+             ordre.executeUpdate(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(priorizedListDAOimpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql = "INSERT INTO VEHICLES (LICENSE_NUMBER,TYPE_VEHICLE,YEAR_VEHICLE,IS_ELECTRIC,IS_PRESENT,BRAND,MODEL) VALUES('"+license+"',"+type+","+year+","+is_electric+","+is_present+",'"+brand+"','"+model+"')";
-       
-        try {
-            ordre.executeUpdate(sql);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            ordre.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(VehiculeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    	}
 	}
 
 	@Override
