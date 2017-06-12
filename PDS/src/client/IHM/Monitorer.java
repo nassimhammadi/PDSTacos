@@ -43,10 +43,11 @@ public class Monitorer extends JFrame{
 	private JTextField IDVehicule;
 	private LogsBreakdownList lbl;
 	
-	public Monitorer(Client cli){
+	public Monitorer(Client cli, int id_client){
 		this.c = cli;
 	    this.setTitle("Activity of Deposit - Workflow");
 	    this.setSize(1150, 1150);
+	    MenuBar menu = new MenuBar(this, cli, id_client);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setLocationRelativeTo(null);
 	    //On définit le layout à utiliser sur le content pane
@@ -57,6 +58,7 @@ public class Monitorer extends JFrame{
 	    
         centrewest.setBackground(Color.white);
 	    JPanel nord = new JPanel(new GridLayout(1,2));
+	    nord.add(menu.getMenu());
 	    nord.setBackground(Color.white);
 	    nord.setPreferredSize(new Dimension(50,50));
 	    
@@ -552,7 +554,5 @@ class checkMessageChange implements Runnable{
 
 }
 
-public static void main(String[] args){
-	Monitorer essai = new Monitorer(null);
-}
+
 }

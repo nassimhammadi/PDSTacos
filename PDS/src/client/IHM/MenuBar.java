@@ -8,9 +8,16 @@ package client.IHM;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import client.socketClient.Client;
 
 /**
  *
@@ -18,7 +25,7 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar {
     private JMenuBar jmenu = new JMenuBar();
-    private JMenu deconnexion = new JMenu("Déconnexion");
+    private JButton deconnexion = new JButton("Retour au menu principal");
     private JMenuItem sd = new JMenuItem("Se déconnecter");
     private JMenu management = new JMenu("Gestion");
     private JMenu repairs = new JMenu("Réparation");
@@ -38,31 +45,30 @@ public class MenuBar {
     private JMenuItem bike = new JMenuItem("Vélo");
     private JMenuItem car = new JMenuItem("Voiture");
     private JMenuItem component = new JMenuItem("Pièces");
+    private JFrame mf;
+    private Client cl;
+    private int id;
 
     /**
      * Constructor which create the Menu of the panel
      */
-    public MenuBar(){
-        this.references.add(ref_bike);
-        this.references.add(ref_component);
-        this.references.add(ref_employees);
-        this.history.add(histo_repairs);
-        this.history.add(histo_deposit);
-        this.management.add(stock);
-        this.management.add(references);
-        this.management.add(history);
-        this.management.add(performance);
-        this.repairs.add(support);
-        this.repairs.add(repairing);
-        this.information.add(bike);
-        this.information.add(car);
-        this.information.add(component);
-        this.deconnexion.add(sd);
-        this.jmenu.add(management);
-        this.jmenu.add(repairs);
-        this.jmenu.add(information);
+    public MenuBar(JFrame myFrame, Client c, int id_c){
+       
         this.jmenu.add(deconnexion);
+        this.mf= myFrame;
+        cl = c;
+        id = id_c;
        //  ActivityDeposit.setJmenuBar(performance);
+        deconnexion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mf.dispose();
+				MenuPrincipal m = new MenuPrincipal(cl, id);
+				
+			}
+        	
+        });
     }
     
     /**
