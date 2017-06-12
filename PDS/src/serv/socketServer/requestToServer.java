@@ -263,6 +263,11 @@ public class requestToServer {
 				Json<ListPieces> jV = new Json<ListPieces>(ListPieces.class);
 				String jsonPieces = jV.serialize(listP);
 				return reponse = "selectAllPieces/"+jsonPieces;
+			case SELECTB: 
+				this.listP= pdao.findListB();
+				Json<ListPieces> jV2 = new Json<ListPieces>(ListPieces.class);
+				String jsonPieces2 = jV2.serialize(listP);
+				return reponse = "selectAllPieces/"+jsonPieces2;
 			}
 		case CAR : 
 			CarDAOImpl cdao= new CarDAOImpl(co);

@@ -76,6 +76,41 @@ public class PiecesDAOImpl implements PiecesDAO{
 		return list;
 	}
 
+	public ListPieces findListB() throws DAOException{
+		Pieces b;
+		ListPieces list = null;
+		ArrayList<Pieces> a_p = new ArrayList<Pieces>();
+		try {
+			ordre = connection.createStatement();
+		} catch (SQLException ex) {
+			Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		String sql = "select * from PIECES" ;
+
+		try {
+			ResultSet rs = ordre.executeQuery(sql);
+			while(rs.next()){
+				int id_piece = rs.getInt(1) ;
+				String name = rs.getString(2) ;
+				int cost = rs.getInt(3) ;
+				int stock = rs.getInt(4) ;
+				
+				b = new Pieces(id_piece, name, cost, stock);
+				a_p.add(b);
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+
+		try {
+			ordre.close();
+		} catch (SQLException ex) {
+			Logger.getLogger(BreakdownDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		list = new ListPieces(a_p);
+		return list;
+	}
 	@Override
 	public void update(Pieces b) throws DAOException {
 		// TODO Auto-generated method stub

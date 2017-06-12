@@ -21,6 +21,8 @@ public interface PiecesDAO {
 	    
 	    ListPieces findList(int id) throws DAOException;
 	    
+	    ListPieces findListB() throws DAOException;
+	    
 	    /**
 	     * Update a Bike into the database
 	     * @param id The Bike id

@@ -39,7 +39,7 @@ public class MenuPrincipal extends JFrame {
 		JButton indicateurPerf= new JButton("Indicateur de Performance");
 		indicateurPerf.addActionListener(new Indicateur());
 		JButton commanderPiece = new JButton("commanderPiece");
-		
+		commanderPiece.addActionListener(new Piece());
 		
 		GridLayout gl= new GridLayout(5,1);
 		gl.setVgap(10);
@@ -92,6 +92,15 @@ public class MenuPrincipal extends JFrame {
 		    public void actionPerformed(ActionEvent arg0) {
 		      dispose();
 		      Indicator HM= new Indicator(c,id_client);
+		    }
+	
+		  }
+	 
+	 class Piece implements ActionListener{
+		    
+		    public void actionPerformed(ActionEvent arg0) {
+		      dispose();
+		      Pieces HM= new Pieces(c,id_client);
 		    }
 	
 		  }
