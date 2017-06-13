@@ -8,7 +8,12 @@ package serv.DB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import serv.model.FillpriorizedList;
+import serv.model.priorizedList;
+import serv.model.priorizedListObject;
 
 /**
  *
@@ -62,7 +67,24 @@ public class ConnectionPool {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
+			
 		}
+		
+		try {
+			ArrayList<priorizedListObject> al =FillpriorizedList.sort_List(FillpriorizedList.fill_List());
+			Connection c=pool.get(0);
+			priorizedListDAOimpl dao=new priorizedListDAOimpl(c);
+			priorizedList list=new priorizedList(al);
+			dao.insert(list);
+			ConnectionToPool(c);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	/**
